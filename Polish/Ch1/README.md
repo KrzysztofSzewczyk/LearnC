@@ -41,6 +41,7 @@ Po uruchomieniu rozpocznie się konfiguracja.
 Po kliknięciu "Next >" pojawi się dialog, w którym należy zaznaczyć 'Yes, I want to use this feature'. Na następnej stronie nie czynimy zmian i klikamy "Next >". Rozpocznie się cachowanie plików. Następnie zaznaczamy OK. Dev-C++ zostanie uruchomione.
 
 W okienku wskazówek możemy znaleźć ciekawe informacje.
+
 ![Screenshot](Screenshot_2.bmp "Screenshot")
 
 Z menu Plik wybieramy opcję Nowy, a następnie Plik Źródłowy. Teraz, umiesz już obsłużyć w podstawowym stopniu IDE.
