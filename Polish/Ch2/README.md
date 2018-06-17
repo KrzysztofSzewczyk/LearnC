@@ -190,3 +190,18 @@ main() {
  printf("%d %d", a, b);       /* Błąd, b już nie istnieje! */
 }
 ```
+
+Stała różni się od zmiennej tylko tym, że nie można jej przypisać innej wartości w trakcie działania programu. Wartość stałej ustala się w kodzie programu i nigdy ona nie ulega zmianie. Stałą deklaruje się z użyciem słowa kluczowego const w sposób następujący:
+
+```
+const typ nazwa_stałej=wartość;
+```
+
+Dobrze jest używać stałych w programie, ponieważ unikniemy wtedy pomyłek a kompilator może często zoptymalizować ich użycie (np. od razu podstawiając ich wartość do kodu).
+
+```
+const int START=5;
+int i=START;
+START=4;  /* Błąd. */
+int j=START;
+```
