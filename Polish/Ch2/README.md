@@ -97,7 +97,7 @@ Nazwy funkcji piszemy małymi literami: `print`, `sum`, `max`.
 
 Zmienna z definicji to pewien fragment pamięci o ustalonym rozmiarze, który posiada identyfikator oraz przechowuje pewną wartość, zależną od typu zmiennej.
 
-Aby móc skorzystać ze zmiennej należy ją przed użyciem zadeklarować, to znaczy poinformować kompilator, jak zmienna będzie się nazywać i jaki typ ma mieć. Przykład:
+Aby móc skorzystać ze zmiennej należy ją przed użyciem zadeklarować, to znaczy poinformować kompilator, jak zmienna będzie się nazywać i jaki typ ma mieć. **Uwaga: Jeśli typ zmiennej to int, i jest to zmienna globalna, możemy pominąć 'int'.** Przykład:
 
 ```c
 int a;
@@ -148,16 +148,16 @@ char //słowo kluczowe
 dodaj dwie liczby //spacje
 ```
 
-Zmienne mogą być dostępne dla wszystkich funkcji programu - nazywamy je wtedy zmiennymi globalnymi.
+Zmienne mogą być dostępne dla wszystkich funkcji programu - nazywamy je wtedy zmiennymi globalnymi. **Jeśli funkcja zwraca wartość int, możemy ominąć 'int'!**
 
 ```c
-int a,b;
+a,b;
 
 void f(void) {
     a=3;
 }
  
-int main(void) {
+main(void) {
     b=3;
     a=2;
     return 0;
@@ -165,3 +165,28 @@ int main(void) {
 ```
 
 Uwaga: Zmienne globalne są domyślnie inicjalizowane zerem.
+
+Zmienne, które funkcja deklaruje w swoim bloku nazywamy zmiennymi lokalnymi. Czy będzie błędem nazwanie tą samą nazwą zmiennej globalnej i lokalnej?. Nie. W danej funkcji da się używać tylko jej zmiennej lokalnej. Tej konstrukcji należy z wiadomych względów unikać.
+
+```c
+a = 1; 
+
+main(void) {
+    int a=2;
+    printf("%d", a); /* =2 */
+}
+```
+
+Czas życia zmiennych ilustruje poniższy przykład:
+
+```c
+main() {
+ int a = 10;
+ {
+   int b = 10;
+   printf("%d %d", a, b);
+ }
+
+ printf("%d %d", a, b);       /* Błąd, b już nie istnieje! */
+}
+```
