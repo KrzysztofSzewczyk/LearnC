@@ -28,3 +28,12 @@ W 1983 roku ANSI powołało komitet X3J11 w celu ustanowienia standardu języka 
 
 C posiada 13 typów podstawowych i 34 słów kluczowych (C89) - jest to bardzo prosty język.
 
+## Jak używać kompilatora?
+
+Przez długi czas nie będziesz potrzebował używać kompilatora bezpośrednio (tj. z wiersza polecenia używanego przez ciebie systemu operacyjnego). Zamiast tego, lepiej jest pobrać wyspecjalizowane środowisko, któro pomoże Ci w programowaniu. Zawsze będzie ci prościej kliknąć jeden przycisk zamiast wpisywać długie komendy w wierszu polecenia i ręcznie tworzyć pliki budujące twoją aplikację.
+
+W tej książce będę opisywał środowisko znane również jako Dev-C++. Możesz je pobrać z [tu](https://downloads.sourceforge.net/project/dev-cpp/Binaries/Dev-C%2B%2B%204.9.9.2/devcpp-4.9.9.2_setup.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fdev-cpp%2Ffiles%2FBinaries%2FDev-C%252B%252B%25204.9.9.2%2Fdevcpp-4.9.9.2_setup.exe%2Fdownload&ts=1529244990).
+
+Po uruchomieniu rozpocznie się konfiguracja.
+
+![Screenshot](Screenshot_1.bmp "Screenshot")
