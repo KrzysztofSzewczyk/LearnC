@@ -45,3 +45,5 @@ W okienku wskazówek możemy znaleźć ciekawe informacje.
 ![Screenshot](Screenshot_2.bmp "Screenshot")
 
 Z menu Plik wybieramy opcję Nowy, a następnie Plik Źródłowy. Teraz, umiesz już obsłużyć w podstawowym stopniu IDE.
+
+**[Powrót do spisu treści](..)**
