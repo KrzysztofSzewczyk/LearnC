@@ -1,9 +1,9 @@
 # Spis Treści
- 1. Wstęp - Czemu warto uczyć się C?
+ 1. [Ch1](Wstęp - Czemu warto uczyć się C?)
    - O języku C
    - Czego potrzebujesz do programowania w C
    - Jak używać kompilatora?
- 2. C dla początkującego
+ 2. [Ch2](C dla początkującego)
    - Pierwszy program
    - Podstawowe pojęcia
    - Zmienne w C
@@ -12,14 +12,14 @@
    - Procedury i funkcje
    - Procedury wejścia i wyjścia
    - Zadania
- 3. Bardziej zaawansowane aspekty programowania w C
+ 3. [Ch3](Bardziej zaawansowane aspekty programowania w C)
    - Tablice
    - Napisy
    - Wskaźniki
    - Własne typy, struktury, unie, typy wyliczeniowe
    - Zaawansowane operacje matematyczne
    - Powszechne praktyki
- 4. Struktura programu
+ 4. [Ch4](Struktura programu)
    - Biblioteki
    - Biblioteka standardowa
    - Własne biblioteki
@@ -29,14 +29,14 @@
    - Przenośność programów
    - Współpraca C i innych języków
    - Ćwiczenia
- 5. Rozszerzenie
+ 5. [Ch5](Rozszerzenie)
    - Tablice, cz. II
    - Wskaźniki, cz. II
    - Bezpieczne programowanie, błędy, wyjątki.
- 6. Biblioteka standardowa
+ 6. [Ch6](Biblioteka standardowa)
    - Indeks alfabetyczny
    - Indeks tematyczny
- 7. Wstęp do Assemblera x86
+ 7. [Ch7](Wstęp do Assemblera x86)
    - Co to Assembler?
    - Program "Hello, World!"
    - Zmienne
@@ -46,9 +46,9 @@
    - Konwencje wywoływania, ramki stosu
    - Optymalizacja
    - Spis instrukcji
- 8. Assembler i DOS
+ 8. [Ch8](Assembler i DOS)
    - Czemu Ms-DOS?
    - Przerwania
    - Pamięć wideo
- 9. Programowanie systemów operacyjnych z użyciem Assemblera i C
+ 9. [Ch9](Programowanie systemów operacyjnych z użyciem Assemblera i C)
    - Spis treści w konstrukcji...
