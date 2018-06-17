@@ -118,7 +118,7 @@ Niepoprawnie:
    int a = 17;
    printf("%d", a);
    int b; /*Deklaracja po instrukcji, błąd!*/
-   kopia_wieku = wiek;
+   b = a;
 }
 ```
 
@@ -128,8 +128,40 @@ Poprawnie:
 {
    int a = 17, b;
    printf("%d", a);
-   kopia_wieku = wiek;
+   b = a;
 }
 ```
 
 Zmienne tego samego typu można deklarować po przecinku. `int x, y;` == `int x; int y;`
+**W C, nie są inicjalizowane zmienne lokalne. Oznacza to, że w nowo zadeklarowanej zmiennej znajdują się śmieci - to, co wcześniej zawierał przydzielony zmiennej fragment pamięci. Aby uniknąć błędów, dobrze jest inicjalizować wszystkie zmienne w momencie zadeklarowania.**
+
+Zasady nazywania zmiennych:
+ * Pierwszy znak : litera lub _
+ * Zakaz używania słów kluczowych (już są użyte). Po zmianie wielkości liter jednak będą dopuszczalne
+ * Wielkość liter odróżnia nazwy, `odleglosc` i `Odleglosc` to dwie różne zmienne
+ * Długość nazwy - niektóre kompilatory pozwalają na użycie do 247 znaków
+Przykłady niedopuszczalnych nazw:
+```c
+1x  //zaczyna się od cyfry
+x+y //znak specjalny
+char //słowo kluczowe
+dodaj dwie liczby //spacje
+```
+
+Zmienne mogą być dostępne dla wszystkich funkcji programu - nazywamy je wtedy zmiennymi globalnymi.
+
+```c
+int a,b;
+
+void f(void) {
+    a=3;
+}
+ 
+int main(void) {
+    b=3;
+    a=2;
+    return 0;
+}
+```
+
+Uwaga: Zmienne globalne są domyślnie inicjalizowane zerem.
