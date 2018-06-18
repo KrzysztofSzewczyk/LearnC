@@ -429,4 +429,21 @@ a = (b>=c) ? b : c;     /* Jeśli b jest większe bądź równe c, to zwróć b.
 
 Wartości wyrażeń są przy tym operatorze obliczane tylko jeżeli zachodzi taka potrzeba, np. w wyrażeniu `1 ? 1 : f()` funkcja f() nie zostanie wywołana. 
 
+ * **Operator przecinka** powoduje on obliczanie wartości wyrażeń od lewej do prawej po czym zwrócenie wartości ostatniego wyrażenia. W zasadzie, w normalnym kodzie programu ma on niewielkie zastosowanie, gdyż zamiast niego lepiej rozdzielać instrukcje zwykłymi średnikami. Używa się go jednak w instrukcji sterującej for. 
 
+ * **Operator sizeof** zwraca rozmiar w bajtach podanego typu lub podanego wyrażenia. Ma on dwa rodzaje: `sizeof(typ)` i `sizeof wyrazenie`. Przykładowo:
+ 
+ ```c
+ printf("sizeof(int) = %d", sizeof(int));
+ ```
+ 
+ Operator ten jest często wykorzystywany przy dynamicznej alokacji pamięci, co zostanie opisane w rozdziale poświęconym wskaźnikom.
+
+Pomimo, że w swej budowie sizeof przypomina funkcję, to jednak nią nie jest. Wynika to z trudności w implementacji takowej funkcji - jej specyfika musiałaby odnosić się bezpośrednio do kompilatora. Ponadto jej argumentem musiałby być typ, a nie zmiennq. W C nie jest możliwe przekazywanie typu jako argumentu. Często zdarza się, że rozmiar zmiennej musi być wiadomy jeszcze w czasie kompilacji - to ewidentnie wyklucza implementację sizeof() jako funkcji. Wynikiem operatora sizeof jest zmienna typu size_t.
+
+ * **Inne operatory**:
+  * operator `[]` - później opisany przy tablicach;
+  * jednoargumentowe operatory `*` i `&` później opisane przy wskaźnikach;
+  * operatory `.` i `->` później opisane przy strukturach;
+  * operator `()` - wywołania funkcji,
+  * operator `()` grupujący wyrażenia.
