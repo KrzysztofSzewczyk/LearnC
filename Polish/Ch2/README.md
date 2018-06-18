@@ -220,3 +220,24 @@ W języku C wyróżniamy następujące typy zmiennych (wg rozmiaru):
    * float - typ zmiennoprzecinkowy, reprezentujący liczby rzeczywiste (4 bajty); Są dokładnie opisane w IEEE 754.
    * double - typ zmiennopozycyjny podwójnej precyzji (8 bajtów);
  * inne: typy złożone
+
+
+Wg lokalizacji definicji typy dzielimy na wbudowane, które zna kompilator; oraz zdefiniowane przez użytkownika typy danych, które należy kompilatorowi opisać.
+
+* int - typ przeznaczony jest do liczb całkowitych. Liczby te możemy zapisać na kilka sposobów, dziesiętnie: `12,42,15`, oktalnie: `044, 031` i heksadecymalnie: `0xFF, 0x1A, 0x80`.
+
+* float - przeznaczony jest do liczb zmiennoprzecinkowych. Istnieją dwa sposoby zapisu, dziesiętny: `3.14, 1.72` i wykładniczy: `8e3, 9.2e-4`
+
+* double ("podwójny") - przeznaczony dla liczb zmiennoprzecinkowych podwójnej precyzji. Oznacza to, że liczba zajmuje zazwyczaj w dwa razy więcej pamięci niż float, ale ma też dwa razy lepszą dokładność. Domyślnie ułamki wpisane w kodzie są typu double. Możemy to zmienić dodając na końcu literę "f":
+
+```c
+1.5f /* <-- float */
+1.5  /* <-- double */
+```
+
+* char - typ znakowy umożliwiający zapis znaków w ASCII. Może być traktowany jako liczba z zakresu 0 do 255. Znaki zapisujemy w pojedynczych cudzysłowach, by odróżnić je od łańcuchów tekstowych. Przykład:   `'x'. '#'. ']'`. Pojedynczy cudzysłów zapisujemy jako '\'' a null (czyli zero, które kończy napisy) jako '\0' lub 0.
+
+* void - można go używać tam, gdzie oczekiwana jest nazwa typu. void nie jest właściwym typem, bo nie można utworzyć zmiennej takiego typu; jest to "pusty" typ (ang. void = "pusty"). Typ void przydaje się do zaznaczania, że funkcja nie zwraca żadnej wartości lub że nie przyjmuje żadnych parametrów (więcej o tym później). Można też tworzyć zmienne typu "wskaźnik na void" 
+
+* 
+
