@@ -402,3 +402,31 @@ int main(void) {
     return 0;
 }
 ```
+
+ * **Operatory logiczne**. Analogicznie do części operatorów bitowych, definiuje się operatory logiczne takie jak:
+   * negację: "!"
+   * koniunkcję: "&&"
+   * alternatywę: "||"
+
+Działają one bardzo podobnie do operatorów bitowych, jednak zamiast operować na poszczególnych bitach, biorą pod uwagę wartość logiczną argumentów.
+
+W przypadku operatorów logicznych nie używamy specjalnego typu danych do operacji logicznych. Można je stosować do liczb (np. typu int), tak samo jak operatory bitowe albo arytmetyczne. Operatory logiczne w wyniku dają zawsze albo 0 albo 1. 
+
+ * **Operator wyrażenia warunkowego** to operator ?:. Jest to jedyny operator w tym języku przyjmujący trzy argumenty.
+
+```c
+a ? b : c
+```
+
+Jego działanie wygląda następująco: najpierw oceniana jest wartość logiczna wyrażenia a; jeśli jest ono prawdziwe, to zwracana jest wartość b, jeśli natomiast wyrażenie a jest nieprawdziwe, zwracana jest wartość c.
+
+Praktyczne zastosowanie - znajdowanie większej z dwóch liczb:
+
+```c
+a = (b>=c) ? b : c;     /* Jeśli b jest większe bądź równe c, to zwróć b. 
+                           W przeciwnym wypadku zwróć c. */
+```
+
+Wartości wyrażeń są przy tym operatorze obliczane tylko jeżeli zachodzi taka potrzeba, np. w wyrażeniu `1 ? 1 : f()` funkcja f() nie zostanie wywołana. 
+
+
