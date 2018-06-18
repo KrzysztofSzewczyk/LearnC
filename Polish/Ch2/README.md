@@ -214,10 +214,9 @@ Każda zmienna musi mieć określony swój typ w miejscu deklaracji i tego typu 
 
 W języku C wyróżniamy następujące typy zmiennych (wg rozmiaru):
 
-    * podstawowe :
-        char - jednobajtowe liczby całkowite, służy do przechowywania znaków;
-        int- typ całkowity, o długości domyślnej dla danej architektury komputera;
-        float - typ zmiennopozycyjny (zwany również zmiennoprzecinkowym), reprezentujący liczby rzeczywiste (4 bajty); Są dokładnie opisane w IEEE 754.
+ * podstawowe:
+        char - jednobajtowe liczby całkowite;
+        int - typ całkowity o długości domyślnej dla danej architektury komputera (przeważnie 4 bajty);
+        float - typ zmiennoprzecinkowy, reprezentujący liczby rzeczywiste (4 bajty); Są dokładnie opisane w IEEE 754.
         double - typ zmiennopozycyjny podwójnej precyzji (8 bajtów);
-    * dodatkowe :
-        typy złożone
+ * inne: typy złożone
