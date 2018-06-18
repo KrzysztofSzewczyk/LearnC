@@ -447,3 +447,24 @@ Pomimo, że w swej budowie sizeof przypomina funkcję, to jednak nią nie jest. 
   * operatory `.` i `->` później opisane przy strukturach;
   * operator `()` - wywołania funkcji,
   * operator `()` grupujący wyrażenia.
+
+Priorytet operatorów:
+
+```
+`. nawiasy
+2. jednoargumentowe przyrostkowe: [] . -> wywołanie funkcji postinkrementacja postdekrementacja
+3. jednoargumentowe przedrostkowe: ! ~ + - * & sizeof preinkrementacja predekrementacja rzutowanie
+4. * / %
+5. + -
+6. << >>
+7. < <= > >=
+8. == !=
+9. &
+10. ^
+11. |
+12. &&
+13. ||
+14. ?:
+15. operatory przypisania
+16. ,
+```
