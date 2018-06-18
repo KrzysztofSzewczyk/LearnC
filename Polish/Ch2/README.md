@@ -271,3 +271,134 @@ int:
     
 short int: > 16 bitów;
 long int: > 32 bity;
+
+`volatile` (ang. ulotny) - kompilator wyłączy dla takiej zmiennej różne optymalizacje, za to wygeneruje kod, który będzie odwoływał się zawsze do komórek pamięci danego obiektu. Zapobiegnie to błędowi, gdy obiekt zostaje zmieniony przez część programu, która nie ma zauważalnego dla kompilatora związku z danym fragmentem kodu lub nawet przez zupełnie inny proces. Modyfikator `volatile` jest rzadko stosowany i przydaje się w wąskich zastosowaniach, jak współbieżność, współdzielenie zasobów i przerwania systemowe.
+
+Zmienna, której będziemy używać w swoim programie bardzo często, może mieć nadany modyfikator `register`. Kompilator może wtedy umieści zmienną w rejestrze, do którego ma szybki dostęp, co przyśpieszy odwołania do tej zmiennej. Nie mamy żadnej gwarancji, że zmienna tak zadeklarowana rzeczywiście się tam znajdzie, chociaż dostęp do niej może zostać przyspieszony w inny sposób.
+
+`static` pozwala na zdefiniowanie zmiennej statycznej. Statyczność polega na zachowaniu wartości pomiędzy kolejnymi definicjami tej samej zmiennej. Jest to przydatne w funkcjach. Gdy zdefiniujemy zmienną w ciele funkcji, to zmienna ta będzie od nowa definiowana wraz z domyślną wartością (jeżeli taką podano). W wypadku zmiennej określonej jako statyczna, jej wartość się nie zmieni przy ponownym wywołaniu funkcji.
+
+`extern` oznacza zmienne globalne zadeklarowane w innych jednostkach - informujemy kompilator, żeby nie szukał jej w aktualnym pliku.
+
+## Operatory
+
+W języku C wyróżniamy następujące operatory:
+ * **Przypisania**, przypisuje wartośc prawego argumentu lewemu. Np: `int a = 42, b; b = a;`. Tego operatora można użyć kaskadowo, np: `int a, b, c; a = b = c = 84;`
+ * **a #= b (#: `+, -, *, /, %, &, |, ^, <<, >>` => `a = a # (b)`)**, to skrócony zapis różnych operatorów. Przykład:
+ 
+```c
+int a = 1; a += 9;     /* a = a + 9; */
+a *= a + 6; /* a = a * (a + 6); */
+a %= 2;     /* a = a % 2; */
+```
+
+ * **Rzutowanie niejawne**, polega na zamianie jednego typu na inny bez wyraźnej deklaracji w kodzie. Przykład:
+ 
+```c
+int i = 42.7;            /* double -> int */
+float f = i;             /* int -> float */
+double d = f;            /* float -> double */
+unsigned u = i;          /* int -> unsigned int */
+f = 4.2;                 /* double -> float */
+i = d;                   /* double -> int */
+char *str = "foo";       /* const char* -> char* (const x -> x nie jest dopuszczalne, ale ciągi stanowią wyjątek) */
+const char *cstr = str;  /* char* -> const char* */
+void *ptr = str;         /* char* -> void* */
+```
+
+* **Rzutowanie jawne**, to zamiana z jednego typu na inny z wyraźną deklaracją w kodzie. Przykład:
+
+```c
+float d = 3.14; /* rzutowanie niejawne, double -> float */
+int pi = (int)d; /* rzutowanie jawne, float -> int */
+pi = (unsigned)pi * 2; /* rzutowanie jawne, signed -> unsigned */
+```
+ 
+ * **Artmetyczne**. **Uwaga**: W arytmetyce komputerowej nie działa prawo łączności oraz rozdzielności. Wynika to z ograniczonego rozmiaru zmiennych, które przechowują wartości. C definiuje następujące operatory arytmetyczne:
+  * dodawanie ("`+`"),
+  * odejmowanie ("`-`"),
+  * mnożenie ("`*`"),
+  * dzielenie ("`/`"),
+  * modulo ("`%`") określone tylko dla liczb całkowitych.
+  
+  Przykłady:
+```c
+int a=7, b=2;
+printf ("%d\n", a % b); /* => 1 */
+
+float a = 7 / 2;
+printf("%f\n", a); /* => 3, Wynik operacji jest takiego typu, jak największy z argumentów. Oznacza to, że operacja wykonana na dwóch liczbach całkowitych nadal ma typ całkowity nawet jeżeli wynik przypiszemy do zmiennej rzeczywistej.*/
+```
+  
+ * **Operatory dodawania i odejmowania** są określone również, gdy jednym z argumentów jest wskaźnik, a drugim liczba całkowita. Ten drugi jest także określony, gdy oba argumenty są wskaźnikami. Aby skrócić zapis wprowadzono dodatkowe operatory: inkrementacji ("++") i dekrementacji ("--"), które dodatkowo mogą być pre- lub postfiksowe:
+ 
+ ```c
+ int a, b, c;
+ a = 3;
+ b = a--; /* b=3 a=2 */
+ c = --b; /* b=2 c=2 */
+ c = b++; /* b=3 c=2 */
+ a = ++b; /* b=4 c=4 */
+ ```
+ 
+Czasami użycie operatorów postfiksowych jest nieco mniej efektywne (kompilator musi stworzyć zmienną tymczasową).
+ * Oprócz podstawowych operacji matematycznych, język C został wyposażony także w **operatory bitowe**, zdefiniowane dla liczb całkowitych. Są to:
+
+  * negacja bitowa (NOT)("~"),
+  * koniunkcja bitowa (AND)("&"),
+  * alternatywa bitowa (OR)("|") i
+  * alternatywa rozłączna (XOR) ("^").
+
+Działają one na poszczególnych bitach przez co mogą być szybsze od innych operacji. Działanie tych operatorów można zdefiniować za pomocą poniższych tabel:
+
+```
+ "~" | a     "&" | a | b     "|" | a | b     "^" | a | b
+-----+---   -----+---+---   -----+---+---   -----+---+---
+  0  | 1      0  | 0 | 0      0  | 0 | 0      0  | 0 | 0
+  1  | 0      0  | 1 | 0      1  | 1 | 0      1  | 1 | 0
+              0  | 0 | 1      1  | 0 | 1      1  | 0 | 1
+              1  | 1 | 1      1  | 1 | 1      0  | 1 | 1
+```
+ * **Przesunięcie bitowe** operatory te przesuwają one w danym kierunku bity lewego argumentu o liczbę pozycji podaną jako prawy argument:
+ 
+```c
+  a   | a<<1 | a<<2 | a>>1 | a>>2
+------+------+------+------+------
+ 0001 | 0010 | 0100 | 0000 | 0000
+ 0011 | 0110 | 1100 | 0001 | 0000
+ 0101 | 1010 | 0100 | 0010 | 0001
+ 1000 | 0000 | 0000 | 1100 | 1110
+ 1111 | 1110 | 1100 | 1111 | 1111
+ 1001 | 0010 | 0100 | 1100 | 1110
+```
+
+```c
+#include <stdio.h>
+
+main(void) {
+    printf("6<<2=%d\n", 6<<2);  /* => 24 */
+    printf("6>>2=%d\n", 6>>2);  /* => 1 */
+    return 0;
+}
+```
+
+ * **Operatory porównania**. W C występują następujące operatory porównania:
+    * równe ("=="),
+    * różne ("!="),
+    * mniejsze ("<"),
+    * większe (">"),
+    * mniejsze lub równe ("<="),
+    * większe lub równe (">=").
+
+Wykonują one odpowiednie porównanie swoich argumentów i zwracają jedynkę jeżeli warunek jest spełniony lub zero jeżeli nie jest.
+
+```c
+#include <stdio.h>
+int main(void) {
+    if (2 == 3)
+        printf("Rowne\n");
+    else
+        printf("Nie rowne\n");
+    return 0;
+}
+```
