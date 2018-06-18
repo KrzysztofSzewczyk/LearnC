@@ -239,5 +239,35 @@ Wg lokalizacji definicji typy dzielimy na wbudowane, które zna kompilator; oraz
 
 * void - można go używać tam, gdzie oczekiwana jest nazwa typu. void nie jest właściwym typem, bo nie można utworzyć zmiennej takiego typu; jest to "pusty" typ (ang. void = "pusty"). Typ void przydaje się do zaznaczania, że funkcja nie zwraca żadnej wartości lub że nie przyjmuje żadnych parametrów (więcej o tym później). Można też tworzyć zmienne typu "wskaźnik na void" 
 
-* 
+* size_t - to typ zdefiniowany w nagłówku `stddef.h`, jako alias do liczby całkowitej bez znaku. Użycie size_t może poprawić przenośność i czytelność kodu. Czym dokładnie jest size_t? Sprawdźmy to:
 
+```sh
+$ echo | gcc -E -xc -include 'stddef.h' - | grep size_t #=> typedef unsigned int size_t;
+```
+
+Specyfikatory to takie słowa kluczowe, które zmieniają znaczenie typu danych.
+
+Jak komputer może przechować liczbę ujemną. W przypadku przechowywania liczb ujemnych musimy w zmiennej przechować jeszcze jej znak. Jak wiadomo, zmienna składa się z szeregu bitów. W przypadku użycia zmiennej pierwszy bit z lewej strony (nazywany także bitem najbardziej znaczącym) przechowuje znak liczby. Efektem tego jest spadek "pojemności" zmiennej, czyli zmniejszenie największej wartości, którą możemy przechować w zmiennej.
+
+Signed oznacza liczbę ze znakiem, unsigned - bez znaku (nieujemną). Mogą być zastosowane do typów: char i int i łączone ze specyfikatorami short i long (gdy ma to sens).
+
+```c
+signed char a;      /* -128 do 127 */
+unsigned char b;    /* 0 do 255    */
+```
+
+Jeśli przy signed lub unsigned nie podamy typu, kompilator przyjmie wartość domyślną - int. 
+Jeżeli nie podamy żadnego ze specyfikatora wtedy liczba jest domyślnie przyjmowana jako signed (uwaga: nie dotyczy `char`!).
+Liczby bez znaku pozwalają nam zapisać większe liczby przy tej samej wielkości zmiennej - ale trzeba uważać, by nie zejść z nimi poniżej zera - wtedy "przewijają" się na sam koniec zakresu, co może powodować błędy w programach. 
+
+Short i long są wskazówkami dla kompilatora, by zarezerwował dla danego typu mniej (lub więcej) pamięci. Mogą być zastosowane do dwóch typów: int i double (tu tylko long), mając różne znaczenie.
+Jeśli przy short lub long nie napiszemy, o jaki typ nam chodzi, kompilator przyjmie domyślny typ - int.
+Należy pamiętać, że to jedynie życzenie wobec kompilatora - w niektórych kompilatorach typy int i long int mają ten sam rozmiar. Standard języka C nakłada jedynie na kompilatory następujące ograniczenia:
+
+int:
+    > 16 bitów
+    >= short
+    < long;
+    
+short int: > 16 bitów;
+long int: > 32 bity;
