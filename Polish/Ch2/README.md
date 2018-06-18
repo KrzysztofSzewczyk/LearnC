@@ -205,3 +205,19 @@ int i=START;
 START=4;  /* Błąd. */
 int j=START;
 ```
+
+Dla komputera każdy obszar w pamięci jest taki sam - to zlepek bajtów, w takiej postaci zupełnie nieprzydatny dla programisty i użytkownika. Podczas pisania programu musimy wskazać, w jaki sposób ten ciąg ma być interpretowany.
+
+Typ zmiennej wskazuje właśnie sposób, w jaki pamięć, w której znajduje się zmienna będzie wykorzystywana. Określając go przekazuje się kompilatorowi informację, ile pamięci trzeba zarezerwować dla zmiennej, a także w jaki sposób wykonywać na niej operacje.
+
+Każda zmienna musi mieć określony swój typ w miejscu deklaracji i tego typu nie może już zmienić. Lecz co jeśli mamy zmienną jednego typu, ale potrzebujemy w pewnym miejscu programu innego typu danych? W takim wypadku stosujemy konwersję (rzutowanie) jednej zmiennej na inną zmienną. Rzutowanie zostanie opisane później, w następnym podrozdziale.
+
+W języku C wyróżniamy następujące typy zmiennych (wg rozmiaru):
+
+    * podstawowe :
+        char - jednobajtowe liczby całkowite, służy do przechowywania znaków;
+        int- typ całkowity, o długości domyślnej dla danej architektury komputera;
+        float - typ zmiennopozycyjny (zwany również zmiennoprzecinkowym), reprezentujący liczby rzeczywiste (4 bajty); Są dokładnie opisane w IEEE 754.
+        double - typ zmiennopozycyjny podwójnej precyzji (8 bajtów);
+    * dodatkowe :
+        typy złożone
