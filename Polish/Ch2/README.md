@@ -362,7 +362,7 @@ Działają one na poszczególnych bitach przez co mogą być szybsze od innych o
  * **Przesunięcie bitowe** operatory te przesuwają one w danym kierunku bity lewego argumentu o liczbę pozycji podaną jako prawy argument:
  
 ```c
-  a   | a<<1 | a<<2 | a>>1 | a>>2
+   a  | a<<1 | a<<2 | a>>1 | a>>2
 ------+------+------+------+------
  0001 | 0010 | 0100 | 0000 | 0000
  0011 | 0110 | 1100 | 0001 | 0000
@@ -404,9 +404,9 @@ int main(void) {
 ```
 
  * **Operatory logiczne**. Analogicznie do części operatorów bitowych, definiuje się operatory logiczne takie jak:
-   * negację: "!"
-   * koniunkcję: "&&"
-   * alternatywę: "||"
+   * negację: `!`
+   * koniunkcję: `&&`
+   * alternatywę: `||`
 
 Działają one bardzo podobnie do operatorów bitowych, jednak zamiast operować na poszczególnych bitach, biorą pod uwagę wartość logiczną argumentów.
 
@@ -451,7 +451,7 @@ Pomimo, że w swej budowie sizeof przypomina funkcję, to jednak nią nie jest. 
 Priorytet operatorów:
 
 ```
-`. nawiasy
+1. nawiasy
 2. jednoargumentowe przyrostkowe: [] . -> wywołanie funkcji postinkrementacja postdekrementacja
 3. jednoargumentowe przedrostkowe: ! ~ + - * & sizeof preinkrementacja predekrementacja rzutowanie
 4. * / %
