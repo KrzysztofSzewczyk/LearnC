@@ -468,3 +468,86 @@ Priorytet operatorów:
 15. operatory przypisania
 16. ,
 ```
+
+## Sterowanie przebiegiem programu
+
+C jest językiem imperatywnym - oznacza to, że instrukcje wykonują się jedna po drugiej w takiej kolejności w jakiej są napisane. Aby móc zmienić kolejność wykonywania instrukcji potrzebne są instrukcje sterujące. 
+
+Instrukcja sterująca `if` wygląda tak:
+
+```c
+if (statement) {
+   /* blok wykonany, jeśli statement jest prawdziwe */
+}
+/* ... */
+```
+
+Istnieje możliwość reakcji na nieprawdziwość wyrażenia - należy wtedy użyć słowa kluczowego else:
+
+```c
+if (x) {
+   /* blok wykonany, jeśli x jest prawdziwe */
+} else {
+   /* blok wykonany, jeśli x nie jest prawdziwe */
+}
+```
+
+Popatrzmy teraz na bardziej praktyczne zastosowanie tej konstrukcji:
+
+```c
+#include <stdio.h>
+ 
+int main (void) {
+   int a, b;
+   a = 4;
+   b = 6;
+   if (a == b) {
+     printf ("a = b\n");
+   } else {
+     printf ("a =/= b\n");
+   }
+   return 0;
+}
+```
+
+Stosowany jest też krótszy zapis warunków logicznych, korzystający z tego, jak C rozumie prawdę i fałsz, liczba całkowita różna od zera oznacza prawdę a liczba całkowita równa zero oznacza fałsz. Przykład:
+
+Jeśli zmienna a jest typu int, zamiast:
+
+```c
+if (a == 1) puts("Tak!");
+```
+
+Można to zrobić tak:
+
+```c
+if(a) puts("Tak!");
+```
+
+Czasami można użyć operatora wyrażenia warunkowego zamiast konstrukcji `if`:
+
+```c
+if (a)
+   b = 1/a;
+else
+   b = 0;
+```
+
+=>
+
+```c
+b = a ? 1/a : 0;
+```
+
+Aby ograniczyć wielokrotne stosowanie instrukcji if możemy użyć switch.
+
+```c
+switch (statement) {
+   case wartosc1: /* instrukcje, jeśli statement == wartosc1 */
+     break;
+   case wartosc2: /* instrukcje, jeśli statement == wartosc2 */
+     break;
+   default: /* instrukcje, jeśli żaden z wcześniejszych warunków nie został spełniony */
+     break;
+}
+```
