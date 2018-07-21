@@ -1,9 +1,9 @@
 # Spis Treści
- 1. [Wstęp - Czemu warto uczyć się C?](Ch1)
+ 1. [Wstęp - Czemu warto uczyć się C?](Ch1) Ukończono: [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) / [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star)
    - O języku C
    - Czego potrzebujesz do programowania w C
    - Jak używać kompilatora?
- 2. [C dla początkującego](Ch2)
+ 2. [C dla początkującego](Ch2) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) / [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star)
    - Pierwszy program
    - Podstawowe pojęcia
    - Zmienne w C
