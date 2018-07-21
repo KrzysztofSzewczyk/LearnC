@@ -551,3 +551,69 @@ switch (statement) {
      break;
 }
 ```
+
+Należy pamiętać o użyciu instrukcji break po zakończeniu listy instrukcji następujących po case. Jeśli tego nie zrobimy, program przejdzie do wykonywania instrukcji z następnego case. Przykład błędu spowodowanego tym:
+
+```
+#include <stdio.h>
+
+a,b;
+
+main (void) {
+    printf ("A=");
+    scanf ("%d", &a);
+    printf ("B=");
+    scanf ("%d", &b);
+    switch (b) {
+        case  0: printf ("Nie mozna dzielic przez zero.\n"); /* !!! break; */
+        default: printf ("a/b=%d\n", a/b); /* Potencjalny błąd, dzielenie przez zero! */
+    }
+    return 0;
+}
+```
+
+Czasami jednak, nie-dodawanie break jest zamierzone (fall-through):
+
+```
+#include <stdio.h>
+
+main (void) {
+    int a = 4;
+    switch (a%2) {
+        case 0:
+            printf ("Liczba %d dzieli się przez 2\n", a);
+            break;
+        case -1:
+        case 1:
+            printf ("Liczba %d nie dzieli się przez 2\n", a);
+            break;
+    }
+    return 0;
+}
+```
+
+Czasami zdarza się że program musi wykonać wielokrotnie jakiś określony fragment kodu.
+Do tego możemy użyć tzw. pętli. Pętla while wykonuje się jeśli warunek jest prawdziwy.
+
+```
+main(void) {
+    while(warunek) {
+        /* ... */
+    }
+}
+```
+
+Działający przykład pętli while:
+
+```
+#include <stdio.h>
+
+main (void) {
+    int a = 1;
+    while (a <= 5) { /* zapętlaj dopóki a nie przekracza 5 */
+        printf ("%d^2=%d\n", a, a*a); /* wypisz a^2 */
+        a++; /* inkremenacja a */
+    }
+    return 0;
+}
+```
