@@ -1,9 +1,9 @@
 # Spis Treści
- 1. [Wstęp - Czemu warto uczyć się C?](Ch1) Ukończono: [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) / [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star)
+ 1. [Wstęp - Czemu warto uczyć się C?](Ch1) Ukończono: ![][star] ![][star] ![][star] / ![][star] ![][star] ![][star]
    - O języku C
    - Czego potrzebujesz do programowania w C
    - Jak używać kompilatora?
- 2. [C dla początkującego](Ch2) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) / [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star) [![Star](https://github.com/kspalaiologos/LearnC/raw/master/common/star.png "")](Star)
+ 2. [C dla początkującego](Ch2) Ukończono:  ![][star] ![][star] ![][star] ![][star] ![][star] / ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
    - Pierwszy program
    - Podstawowe pojęcia
    - Zmienne w C
@@ -52,3 +52,5 @@
    - Pamięć wideo
  9. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9)
    - Spis treści w konstrukcji...
+
+[star]: https://github.com/kspalaiologos/LearnC/raw/master/common/star.png ""
