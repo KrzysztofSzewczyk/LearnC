@@ -680,3 +680,94 @@ Pisząc absolutnie wszystko w tym repozytorium, miałem w głowie jedną ważną
 Jeśli gdziekolwiek - na forum, pod postem na grupie, ktokolwiek używa postinkrementacji w pętli - **to nie znaczy że kod jest nieprawidłowy**. Po prostu będzie mniej lub bardziej niewydajny. Większość kodu (na nieszczęście) pisze się wyłącznie dla wygody programisty, zamiast pod wydajność w mniej lub bardziej krytycznych miejscach.
 Jeśli myślisz że zamienienie i++ i ++i nie ma prawie żadnych konsekwencji - mylisz się, i często trzeba przystosowywać warunek i treść pętli do używanego typu inkrementacji lub dekrementacji. (Uwaga: jeśli będziesz używać konstrukcji typu ++i+i++, nie licz na to że będziesz mieć kolegów w świecie programowania)
 
+Większość pętli ma to do siebie, że może nie wykonać się ani razu. Jak temu zapobiec? Użycie for/while ze zmienionym warunkiem aby pętla wykonała się conajmniej raz nie jest dobrym pomysłem. Osobiście, rzadko spotykam pętle do..while, aczkolwiek może ona się przydać Tobie.
+
+Składnia jest bardzo intuicyjna:
+
+```
+do {
+    expr2;
+} while(expr1);
+expr3;
+```
+
+W tym przykładzie, expr1 jest warunkiem pętli, expr2 jest kodem zawartym w środku pętli, a expr3 jest kodem który wykona się na końcu pętli.
+
+Przykład pętli do..while, oblicza kwadrat liczb od 1 do 10:
+
+```
+int a;
+do printf ("%d ", a*a); while (++a <= 10);
+```
+
+Instrukcja break pozwala opuścić każdą pętlę w dowolnym momencie:
+
+```
+int a;
+for (a = 1; a != 9; ++a) {
+    if (a == 5) break;
+    printf ("%d\n", a);
+}
+```
+
+I tutaj pojawia się problem. Jak wyjść z takiej konstrukcji:?
+
+```
+while(...) {
+    for(...) {
+        if(i == 49) /*Tu należy przerwać pętlę*/
+    }
+}
+```
+
+Najprościej takich konstrukcji jest po prostu, unikać.
+Jeśli jednak taka się zdarzy - sam nie wiem, co może się stać jeśli użyję break. Jeśli już taka sytuacja się przydarzy, trzeba użyć instrukcji goto. Instrukcji goto używa się następująco:
+
+```
+etykieta:
+/* blablabla */
+goto etykieta; /* Skoczy do kodu w miejscu `etykieta`, i rozpocznie jego wykonywanie */
+```
+
+Instrukcje goto mogą komplikować program i generować różne bliżej nie określone błędy, więc NIE zalecam ci ich używania w kontekście innym niż ten powyżej. Poprawiony program wygląda tak:
+
+```
+while(...) {
+    for(...) {
+        if(i == 49) goto label;
+    }
+}
+label:
+```
+
+Kompilator GCC w wersji >=4.0 jest uczulony na etykiety zamieszczone przed nawiasem klamrowym, zamykającym blok instrukcji. Niedopuszczalne jest umieszczanie etykiety zaraz przed klamrą, która kończy blok instrukcji, zawartych np. w pętli for. Można natomiast stosować etykietę przed klamrą kończącą daną funkcję. 
+
+Czasami spotykamy się z pętlami które nie mają wyraźnego końca. Przykład:
+
+```
+while(1) {}
+for(;;) {}
+```
+
+Takie pętle są używane stosunkowo często w programowaniu. Uwaga:
+
+```
+int a = 0;
+for(;;) {
+   if(a <= 10) break;
+   a++;
+}
+```
+
+Taki kod absolutnie **nie ma** prawa istnienia i używanie tej "techniki" może być ruinujące jakość kodu.
+
+W przeciwieństwie do break, która przerywa wykonywanie pętli instrukcja continue powoduje przejście do następnej iteracji, o ile tylko warunek pętli jest spełniony. Pętla poniżej dla każdej wartości większej niż 5 nie wyświetli "A" i wykona 10 pełnych iteracji:
+
+```
+int i;
+for (i = 0 ; i < 10 ; ++i) {
+    printf("A");
+    if (i > 5) continue ;
+    printf("B");
+}
+```
