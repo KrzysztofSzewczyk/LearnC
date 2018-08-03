@@ -21,6 +21,7 @@ Aby uruchomić nasz program, naciśnij F9. Najpierw jednak, zapisz plik gdziekol
 Jeśli ukazało ci się okno konsoli z napisem "Hello, World!", środowisko którego używasz działa poprawnie.
 
 Uwaga: W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że tak można robić i tak się czasami robi, ale użycie Y będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
+Uwaga2: Oczywiście jest szansa na to że gdziekolwiek może się pojawić drobny błąd, ponieważ sam podręcznik nie jest jeszcze ukończony. Bardzo miłe byłoby zgłaszanie ewentualnych błędów.
 
 ## Podstawowe pojęcia
 
