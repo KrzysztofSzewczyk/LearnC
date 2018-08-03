@@ -771,3 +771,98 @@ for (i = 0 ; i < 10 ; ++i) {
     printf("B");
 }
 ```
+
+## Instrukcje wejścia-wyjścia
+
+W C do komunikacji z użytkownikiem służą odpowiednie funkcje. Używając funkcji, nie musimy wiedzieć, w jaki sposób komputer wykonuje jakieś zadanie, interesuje nas tylko to, co ta funkcja robi. Funkcje niejako "wykonują za nas część pracy", ponieważ nie musimy pisać być może setek lub tysięcy linijek kodu, żeby np. wypisać tekst na ekranie (wbrew pozorom - kod funkcji wyświetlającej tekst na ekranie jest dość skomplikowany). Jeszcze taka uwaga - gdy piszemy o jakiejś funkcji, zazwyczaj lecz nie zawsze podając jej nazwę dopisujemy na końcu nawias. 
+
+W pierwszym przykładzie została użyta jedna z dostępnych funkcji wyjścia, printf(). Z punktu widzenia swoich możliwości jest to jedna z bardziej skomplikowanych funkcji, a jednocześnie jest jedną z częściej używanych jeśli chodzi o wyjście. Przyjrzyjmy się ponownie kodowi pierwszego programu. 
+
+```
+#include <stdio.h>
+ 
+main(void) {
+    printf("Hello World!");
+}
+```
+
+Prototyp funkcji printf() wygląda tak:
+
+```
+printf(const char * format, ...);
+```
+
+`...` oznacza, że po parametrze format możemy przekazać jeszcze inne argumenty, których typ nie jest do końca określony.
+printf() korzysta z tych argumentów, aby wyświetlać dane na terminal które przeplatają się np z liczbami lub innymi ciągami wewnątrz. Przykład:
+
+```
+int i = 2;
+printf("Liczbami całkowitymi są m.in. %d i %d.\n", 1, i);
+```
+
+Format to napis ujęty w cudzysłowy, który określa ogólny kształt tego, co ma być wyświetlone. Format jest drukowany tak, jak go napiszemy, jednak niektóre znaki zostaną w nim zmienione na co innego. Przykładowo, ciąg `\n` (będący technicznie jednym znakiem) jest zamieniany na znak nowej linii (patrz niżej). Natomiast procent jest zmieniany na jeden z argumentów znajdujących się po ciągu formatu. Po procencie następuje specyfikator, instruujący printf(), jak wyświetlić dany argument. W tym przykładzie %d (od decimal) oznacza, że argument ma być wyświetlony jak liczba całkowita. W związku z tym, że \ i % mają specjalne znaczenie, aby wydrukować je, należy użyć ich podwójnie (%%, \\).
+
+Uwaga: Jeśli jesteś już doświadczonym programistą, prawdopodobnie wiesz że w sensie technicznym to kompilator podmienia sobie '\n' na znak nowej linii, ale dla zachowania prostoty mojego wywodu, porównuję % i \.
+
+Czasami możemy się pomylić:
+
+```
+printf("%i %s %i", 21, 37, "blablabla"); /* właściwie: "%i %i %s" */
+```
+
+Zachowanie printf() w tym momencie można uznać za niezdefiniowane.
+Przy włączeniu ostrzeżeń (opcja -Wall lub -Wformat w GCC) kompilator powinien nas ostrzec, gdy format nie odpowiada podanym elementom. Kompilatory aktualnie są na tyle mądre że potrafią czasami "optymalizować" printf().
+
+Funkcja printf() nie jest wyjątkową konstrukcją języka i łańcuch formatujący może być podany do funkcji jako zmienna. W związku z tym możliwa jest np. taka konstrukcja:
+
+```
+#include <stdio.h>
+
+main(void) {
+     char buf[10];
+     scanf("%9s", buf); /* wczytaj ciąg znaków od użytkownika do zmiennej buf, będący długości conajwyżej 9 znaków. */
+     printf(buf);
+}
+```
+
+Jednak ten kod ma jeden bardzo poważny mankament. Jak już pamiętasz, jeśli podamy niewłaściwy format, np użytkownik wpisze %s kiedy taki ciąg nie został podany, może stać się coś niezbyt ciekawego. Aby temu zapobiec, musimy poprawić nasz kod:
+
+```
+#include <stdio.h>
+
+main(void) {
+     char buf[10];
+     scanf("%9s", buf); /* wczytaj ciąg znaków od użytkownika do zmiennej buf, będący długości conajwyżej 9 znaków. */
+     printf("%s", buf);
+}
+```
+
+Najpopularniejsze formaty:
+
+```
+printf("%d", d); -> int
+printf("%f", f); -> float/double
+printf("%c", c); -> char
+printf("%s", s); -> char * (lub char[])
+```
+
+Funkcja puts() przyjmuje jako swój argument ciąg znaków, który następnie bezmyślnie wypisuje na ekran kończąc go znakiem przejścia do nowej linii. W ten sposób, "Hello World" można zrobić tak:
+
+```
+#include <stdio.h>
+ 
+main(void) {
+    puts("Hello World!");
+}
+```
+
+Możemy bardzo prosto zaimplementować swoją własną wersję puts:
+
+```
+int myputs(char * s) {
+    for(;*s;s++)
+        putchar(*s);
+    putchar('\n');
+}
+```
+
