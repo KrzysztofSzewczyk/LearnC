@@ -984,3 +984,24 @@ do  {
 } while (result != EOF);
 ```
 
+Kolejna funkcja to gets(). Wczytuje ona jedną linię. Aczkolwiek jej używanie jest wysoce niezalecane, ponieważ może się wydarzyć to samo co podczas wykonania `scanf("%s", string);` - bufor może się przepełnić.
+
+Bezpieczniejszy odpowiednik gets() to fgets(). Wspominałem wcześniej o fputs() - ta funkcja jest z tego samego zakresu.
+Jej wykonanie wygląda następująco:
+
+```
+fgets(bufor, dlugosc, stdin);
+```
+
+Jedyna różnica to stały (ale tylko chwilowo, jak zabrniesz dalej z nauką C to zrozumiesz jego znacznie) parametr stdin, oraz zmienna określająca długość bufora, na której mam zamiar się skupić. Funkcja czyta tekst aż do napotkania znaku przejścia do nowej linii, który także zapisuje w wynikowej tablicy. Jeżeli brakuje miejsca w tablicy to funkcja przerywa czytanie, w ten sposób, aby sprawdzić czy została wczytana cała linia, czy tylko jej część należy sprawdzić czy ostatnim znakiem jest znak przejścia do nowej linii. Jeżeli nastąpił jakiś błąd lub na wejściu nie ma już danych funkcja zwraca wartość NULL (o niej dowiesz się więcej w rozdziale o wskaźnikach).
+
+Przykład użycaia fgets():
+
+```
+char buf[128];
+fputs("Jak sie nazywasz? > ", stdout);
+fgets(buf, 126, stdin);
+printf("Witaj %s!", buf);
+```
+
+## Funkcje
