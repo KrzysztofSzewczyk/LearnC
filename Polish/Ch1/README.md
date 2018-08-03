@@ -34,6 +34,14 @@ Przez długi czas nie będziesz potrzebował używać kompilatora bezpośrednio 
 
 W tej książce będę opisywał środowisko znane również jako Dev-C++. Możesz je pobrać z [tu](https://downloads.sourceforge.net/project/dev-cpp/Binaries/Dev-C%2B%2B%204.9.9.2/devcpp-4.9.9.2_setup.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fdev-cpp%2Ffiles%2FBinaries%2FDev-C%252B%252B%25204.9.9.2%2Fdevcpp-4.9.9.2_setup.exe%2Fdownload&ts=1529244990).
 
+Uwaga: Jeśli jesteś doświadczonym programistą i nie lubisz Dev-C++ - to nie jest środowisko którym trzeba posługiwać się do końca życia. Orwell Dev-C++ jest znośne, aczkolwiek Bloodsheed Dev-C++ jest bardziej popularne - stąd bierze się zła sława Dev'a.
+
+Jeśli jesteś natomiast początkującym programistą, radzę Ci zmienić potem środowisko, na np. Microsoft Visual C++ lub po prostu posługiwać się konsolą i edytorem.
+
+Jeśli jesteś programistą który zna już inny język, możesz spokojnie zainstalować inne środowisko i się do niego dostosować (bo zakładam, że potrafisz).
+
+Uwaga: Nie sugeruj się nazwą! Dev-C++ można używać do programowania w C.
+
 Po uruchomieniu rozpocznie się konfiguracja.
 
 ![Screenshot](Screenshot_1.bmp "Screenshot")
