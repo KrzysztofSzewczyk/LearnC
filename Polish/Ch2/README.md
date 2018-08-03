@@ -670,4 +670,12 @@ for(i = 5 i <= 10; ++i)
 for(i = 5; i <= 10; printf("%d ", i++));
 ```
 
+Jeśli chodzi o expr3 w pętli, jest z nią związana najważniejsza rzecz którą wyjaśnię.
+Sam często robię to w **zły** sposób, bo jest mi tak wygodnie.
+Moim pierwszym językiem był C++, z którego pozostało mi kilka zwyczajów jeśli chodzi o kod źródłowy.
+Jednym z takich zwyczajów było używanie `i++` - postinkrementacji. (Uwaga: to wcale nie jest tak, że w C++ cały czas używamy postinkrementacji - kurs z którego się uczyłem, zalecał używanie `i++`)
+**Nie powinno się tak robić**. Post-inkrementacja powoduje, że tworzony jest obiekt tymczasowy, który jest zwracany jako wynik operacji (choć wynik ten nie jest nigdzie czytany). Jedno kopiowanie liczby do zmiennej tymczasowej nie jest drogie, ale w pętli takie kopiowanie odbywa się po każdym przebiegu pętli. Dodatkowo, w C++ podobną konstrukcję stosuje się do obiektów - kopiowanie obiektu może być już czasochłonną czynnością. Dlatego w pętli for teoretycznie należy stosować wyłącznie ++i.
+Pisząc absolutnie wszystko w tym repozytorium, miałem w głowie jedną ważną myśl - żeby dać mojemu czytelnikowi wybór.
+Jeśli gdziekolwiek - na forum, pod postem na grupie, ktokolwiek używa postinkrementacji w pętli - **to nie znaczy że kod jest nieprawidłowy**. Po prostu będzie mniej lub bardziej niewydajny. Większość kodu (na nieszczęście) pisze się wyłącznie dla wygody programisty, zamiast pod wydajność w mniej lub bardziej krytycznych miejscach.
+Jeśli myślisz że zamienienie i++ i ++i nie ma prawie żadnych konsekwencji - mylisz się, i często trzeba przystosowywać warunek i treść pętli do używanego typu inkrementacji lub dekrementacji. (Uwaga: jeśli będziesz używać konstrukcji typu ++i+i++, nie licz na to że będziesz mieć kolegów w świecie programowania)
 
