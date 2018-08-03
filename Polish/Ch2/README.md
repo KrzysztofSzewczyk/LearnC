@@ -20,6 +20,8 @@ int main(void) {
 Aby uruchomić nasz program, naciśnij F9. Najpierw jednak, zapisz plik gdziekolwiek jako `main.c`. Końcówka `.c` jest bardzo ważna!
 Jeśli ukazało ci się okno konsoli z napisem "Hello, World!", środowisko którego używasz działa poprawnie.
 
+Uwaga: W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że tak można robić i tak się czasami robi, ale użycie Y będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
+
 ## Podstawowe pojęcia
 
 Dla właściwego zrozumienia języka C niezbędne jest przyswojenie pewnych ogólnych informacji.
@@ -617,3 +619,55 @@ main (void) {
     return 0;
 }
 ```
+
+Od instrukcji while czasami wygodniejsza jest instrukcja for. Umożliwia ona wpisanie ustawiania zmiennej, sprawdzania warunku i inkrementowania zmiennej w jednej linijce co często zwiększa czytelność kodu. Szkielet instrukcji for jest następujący:
+
+```
+for (expr1; expr2; expr3) {
+    expr4;
+}
+expr5
+```
+
+Zasada działania tej pętli jest podobna w językach takich jak Java lub C#, więc jeśli znasz już te języki, możesz pominąć mały opis poniżej.
+expr1 to wyrażenie wykonywane przed pierwszym przebiegiem pętli. Przeważnie jest inicjalizacją zmiennej, lub po prostu go nie ma. Uwaga: w środku expr1 **nie można** deklarować zmiennych, tak samo jak w środku jakiegokolwiek bloku.
+expr2 to wyrażenie pełniące taką samą funkcję jak warunek pętli while.
+expr3 to instrukcja wykonywana **po każdym** przejściu pętli.
+expr4 to kod który będzie znajdował się w pętli.
+expr5 to kod który może wykonać się tuż po expr3.
+
+Jeśli w pętli for nie ma instrukcji continue, możemy ją (ale nie musimy, a nawet nie powinniśmy) zastąpić ją pętlą while w taki sposób:
+
+```
+{
+   expr1;
+   while (expr2) {
+     expr4;
+     expr3;
+   }
+   expr5;
+ }
+```
+
+Ważną rzeczą jest tutaj to, żeby zrozumieć i zapamiętać jak tak naprawdę działa for. Początkującym programistom nieznajomość tego faktu może sprawić wiele problemów.
+W pierwszej kolejności w pętli for wykonuje się expr1. Wykonuje się ono zawsze, nawet jeżeli warunek przebiegu pętli jest od samego początku fałszywy.
+Po wykonaniu expe1, for sprawdza warunek zawarty w expr2, jeżeli jest on prawdziwy (!= 0), to wykonywane jest expr4, czyli najczęściej to co znajduje się między klamrami, lub gdy ich nie ma, następna **pojedyncza** instrukcja. W szczególności musimy pamiętać, że sam średnik też jest instrukcją (którą można porównać do `NOP`-no operation/tł. brak operacji, w Assemblerze).
+Gdy expr4 zostanie już wykonane, expr3 zostaje wykonane. Należy zapamiętać, że expr3 zostanie wykonane, nawet jeżeli była to już ostatnia iteracja pętli pętli. Poniższe 3 przykłady pętli for w rezultacie dadzą ten sam wynik. Wypiszą na ekran liczby od 5 do 10.
+
+```
+int i;
+
+/* #1 - nawiasy klamrowe nie są potrzebne, aczkolwiek mogą się tu znajdować */
+for(i = 5; i <= 10; ++i) {
+    printf("%d ", i);
+}
+
+/* #2 - wersja bez nawiasów klamrowych której używam w większości przypadków */
+for(i = 5 i <= 10; ++i) 
+    printf("%d ", i);
+
+/* #3 - przykład bardziej ilustrujący użycie expr3 do wykonania działań pętli, nie zalecam używania go. */
+for(i = 5; i <= 10; printf("%d ", i++));
+```
+
+
