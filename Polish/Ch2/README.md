@@ -894,4 +894,93 @@ main(void) {
    return 0;
 }
 ```
+=>
+```
+ 0  1  2  3  4  5  6  7  8  9
+10 11 12 13 14 15 16 17 18 19
+20 21 22 23 24 25 26 27 28 29
+30 31 32 33 34 35 36 37 38 39
+40 41 42 43 44 45 46 47 48 49
+```
+
+Znasz już podstawowe funkcje wyjścia, czas na funkcje wejścia.
+Najprostszą funkcją będzie funkcja main() która może pobierać parametry, ale o tym później!
+
+Rozpoczniemy od funkcji scanf(), która działa podobnie do printf(), ale odwrotnie. Przykład poniżej pobiera liczbę od użytkownika, i wyświetla jej kwadrat na ekranie:
+
+```
+#include <stdio.h>
+
+main(void) {
+    int a = 0;
+    printf ("A=");
+    scanf ("%d", &a);
+    printf ("%d^2=%d\n", a*a); 
+}
+```
+
+Jedyna linijka która może być problematyczna to ta:
+
+```
+scanf ("%d", &a);
+```
+
+Wykonujemy tutaj funkcję scanf. Pojawia się tu operator &.
+
+Przy wykonaniu funkcji scanf jeśli podajemy jej parametr który nie jest typem wskaźnikowym (tzn. nie ma gwiazdki jak w `char *`) ani tablicą (tzn. nie ma nawiasów kwadratowych jak w `char[]`), dodajemy & na początku. Potem wyjaśnię Ci, czemu jest to niezbędne.
+
+Brak & jest częstym błędem wśród początkujących programistów. Ponieważ funkcja scanf() akceptuje zmienną liczbę argumentów to nawet kompilator może mieć kłopoty z wychwyceniem takich błędów (standard nie wymaga od kompilatora wykrywania takich pomyłek), choć kompilator GCC radzi sobie z tym jeżeli podamy mu argument -Wformat który był wspomniany przy okazji printf().
+
+Należy bardzo uważać podczas wczytywania ciągów. Na poniższym przykładzie przedstawię wrażliwy kod:
+
+```
+#include <stdio.h>
+main(void) {
+    char ciag[100];     /* 1 */
+    scanf("%s", ciag);  /* 2 */
+}
+```
+
+W linijce oznaczonej jako 1, deklarujemy nowy ciąg znaków o maksymalnej długości 99 (+tzw. null terminator, który kończy ciąg).
+Druga linijka wczytuje natomiast nieokreśloną ilość znaków - to znaczy, że może wczytać ich 100. Potencjalne bum? Spróbuj sam.
+Uruchom kod i wpisz tam trochę ponad 100 znaków, albo zmniejsz rozmiar tabalicy do 5 (`char ciag[5];`) zamiast odliczać znaki.
+
+Poprawna wersja kodu powyżej wygląda następująco:
+
+```
+#include <stdio.h>
+ 
+main(void) {
+    char ciag[100];
+    scanf("%99s", ciag);
+    return 0;
+}
+```
+
+Tutaj ustalamy, że wczytane może być tylko 99 znaków (rezerwujemy jeden na wspomniany wcześniej null terminator).
+
+Funkcja scanf() zwraca również liczbę poprawnie wczytanych zmiennych lub EOF, jeżeli nie ma już danych w strumieniu lub nastąpił błąd. Załóżmy dla przykładu, że chcemy stworzyć program, który odczytuje po kolei liczby i wypisuje ich kwadraty. W pewnym momencie liczby się kończą lub jest wprowadzana liczba w niepoprawnym formacie, wtedy program powinien zakończyć działanie. Aby to zrobić, należy sprawdzać wartość zwracaną przez funkcję scanf() w warunku pętli. Przykład:
+
+```
+#include <stdio.h>
+
+main(void) {
+    int n;
+    while (scanf("%d", &n) == 1)
+        printf("%d\n", n*n);
+}
+```
+
+Rozpatrzmy teraz trochę bardziej skomplikowany przykład. Otóż, ponownie jak poprzednio nasz program będzie wypisywał trzecią potęgę podanej liczby, ale tym razem musi ignorować błędne dane (tzn. pomijać ciągi znaków, które nie są liczbami) i kończyć działanie tylko w momencie, gdy nastąpi błąd odczytu lub koniec pliku (jeśli jakikolwiek został przekierowany do standardowego wejścia). Przykład zawiera kod funkcji main():
+
+```
+int result, n;
+do  {
+    result = scanf("%d", &n);
+    if (result)
+        printf("%d\n", n*n*n);
+    else
+        result = scanf("%*s");
+} while (result != EOF);
+```
 
