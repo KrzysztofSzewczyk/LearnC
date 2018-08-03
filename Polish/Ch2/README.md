@@ -866,3 +866,32 @@ int myputs(char * s) {
 }
 ```
 
+Opisując funkcję fputs() przenosimy się do przyszłości (a konkretnie do rozdziału operacji na plikach), ale warto o niej wspomnieć teraz, gdyż umożliwia ona wypisanie argumentu bez wypisania na końcu znaku przejścia do nowej linii.
+
+```
+#include <stdio.h>
+ 
+main(void) {
+    fputs("Hello World!", stdount); /* stdout -> standard out; standardowe wyjście */
+}
+```
+
+Jeszcze inna funkcja służąca do wypisywania danych na ekranie to putchar(). Ta funkcja powinna być już Ci znana, działa podobnie jak `printf("%c",x);`. Przykład jej użycia; wypisuje "w tabelce" liczby od 0 do 49:
+
+```
+#include <stdio.h>
+main(void) {
+   int i;
+   for (i = 0; i < 50; ++i) {
+       if (i % 10) {
+           putchar(' ');
+       }
+       printf("%2d", i);
+       if ((i % 10)==9)  {
+         putchar('\n');
+       }
+   }
+   return 0;
+}
+```
+
