@@ -1005,3 +1005,43 @@ printf("Witaj %s!", buf);
 ```
 
 ## Funkcje
+
+W matematyce pod pojęciem funkcji rozumiemy twór, który pobiera pewną liczbę argumentów i zwraca wynik (uwaga, nie chcę urazić potencjalnych matematyków więc pokojowo stwierdzę że nie znam się na tym). Jeśli dla przykładu weźmiemy funkcję cos(x) to x będzie zmienną rzeczywistą, która określa kąt, a w rezultacie otrzymamy inną liczbę rzeczywistą - cosinus tego kąta. 
+
+W C funkcja (czasami nazywana głównie przez programistów +60 podprogramem) to wydzielona część programu, która przetwarza argumenty i ewentualnie zwraca wartość, która następnie może być wykorzystana jako argument w innych wyrażeniach lub funkcjach. Funkcja może posiadać własne zmienne lokalne.
+
+Po lekturze poprzednich części tego dokumentu mógłbyś podać kilka funkcji, z których korzystałeś - printf, scanf, puts, fgets ...
+
+```
+for(i=1; i <= 10; ++i) {
+  printf("%d ", i*i);
+}
+for(i=1; i <= 20; ++i) {
+  printf("%d ", i*i);
+} 
+for(i=1; i <= 10; ++i) {
+  printf("%d ", i*i);
+}
+```
+
+Wyobraź sobie taki kod. Mógłbyś zmniejszyć jego rozmiar używając goto, zmiennych tymczasowych, etc...; jednak jest to WYSOCE niezalecane, i przez WYSOCE mam na myśli **niedopuszczalne**. Więc trzeba wymyślić inny sposób. I w tym momencie, przychodzą na pomoc twórcy ogólnej teorii programowania i programowania proceduralnego.
+
+Zamiast powtarzać się w kodzie, zawsze lepiej jest zredukować jego rozmiar dzięki funkcjom. Innym, niemniej ważnym powodem używania funkcji jest rozbicie programu na fragmenty wg. ich funkcjonalności. Oznacza to, że jeden duży program dzieli się na mniejsze funkcje, które są "wyspecjalizowane" w wykonywaniu określonych czynności. Dzięki temu łatwiej jest zlokalizować błąd. Ponadto takie funkcje można potem przenieść do innych programów i ewentualnie przygotować bibliotekę, ale o tym później.
+
+"Dobrze jest uczyć się na przykładach". To od początku mojej kariery w programowaniu było moim mottem - 
+
+Rozważmy następujący kod:
+
+```
+suma (x, y) int x; int y; {
+    int wynik;
+    wynik = x + y;
+    return wynik;
+}
+```
+
+`int iloczyn (x,y) int x; int y;` to nagłówek funkcji, który opisuje, jakie argumenty przyjmuje funkcja i jaką wartość zwraca (funkcja może przyjmować wiele argumentów, lecz może zwracać tylko jedną wartość; można to bardziej sprecyzować, ale ta wiedza powinna wystarczyć Ci na początek). Na początku podajemy typ zwracanej wartości - u nas int; jeśli zwracanym typem ma być int, możemy go pominąć. Następnie mamy nazwę funkcji i w nawiasach listę argumentów po nazwach. Po nawiasach robimy "deklarację" tych parametrów używając typu, nazwy, i średnika.
+
+Ciało funkcji (czyli wszystkie wykonywane w niej operacje) umieszczamy w nawiasach klamrowych. Pierwszą instrukcją w tej funkcji jest deklaracja zmiennej - jest to zmienna lokalna, czyli niewidoczna poza funkcją. Dalej przeprowadzamy odpowiednie działania i zwracamy rezultat za pomocą instrukcji return. 
+
+
