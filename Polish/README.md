@@ -36,7 +36,7 @@
  6. [Biblioteka standardowa C](Ch6) Poziom trudności: ![][star]
    - Indeks alfabetyczny
    - Indeks tematyczny
- 7. [Wstęp do Assemblera x86](Ch7) ![][star] ![][star] ![][star] ![][star] ![][star]
+ 7. [Wstęp do Assemblera x86](Ch7) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
    - Co to Assembler?
    - Program "Hello, World!"
    - Zmienne
@@ -46,11 +46,11 @@
    - Konwencje wywoływania, ramki stosu
    - Optymalizacja
    - Spis instrukcji
- 8. [Assembler i DOS](Ch8)![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
+ 8. [Assembler i DOS](Ch8) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
    - Czemu Ms-DOS?
    - Przerwania
    - Pamięć wideo
- 9. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
+ 9. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
    - Spis treści w konstrukcji...
 
 [star]: https://github.com/kspalaiologos/LearnC/raw/master/common/star.png ""
