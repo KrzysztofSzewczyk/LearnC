@@ -665,7 +665,7 @@ for(i = 5; i <= 10; ++i) {
 }
 
 /* #2 - wersja bez nawiasów klamrowych której używam w większości przypadków */
-for(i = 5 i <= 10; ++i) 
+for(i = 5; i <= 10; ++i) 
     printf("%d ", i);
 
 /* #3 - przykład bardziej ilustrujący użycie expr3 do wykonania działań pętli, nie zalecam używania go. */
@@ -1188,3 +1188,110 @@ int main(void) {
 
 Próba wykonania tego programu zakończy się błędem "segmentation fault"; aczkolwiek na systemach bez ochrony pamięci możliwe byłoby kontynuowanie działania programu.
 Jest szansa, że znajdziemy praktyczny użytek tej konstrukcji w dziale o programowaniu systemów operacyjnych.
+
+Przykładowa funkcja wraz z wywołaniem wygląda tak:
+
+```
+#include <stdio.h>
+
+int suma(int a, int b) {
+    return a + b;
+}
+ 
+int main(void) {
+    int m = suma (4, 5);
+    printf ("4 + 5 = %d\n", m);
+}
+```
+
+return to słowo kluczowe języka C, w przypadku funkcji służy ono do przerwania funkcji (i przejścia do następnej instrukcji w funkcji wywołującej) lub zwrócenia wartości. W przypadku procedur powoduje przerwania procedury bez zwracania wartości. Użycie tej instrukcji jest bardzo proste i wygląda tak:
+
+```
+return zwracana_wartość;
+```
+
+lub dla procedur (funkcji zwracających void; nic):
+
+```
+return;
+```
+
+Możliwe jest użycie kilku instrukcji return w obrębie jednej funkcji. Wielu programistów uważa jednak, że lepsze jest użycie jednej instrukcji return na końcu funkcji, gdyż ułatwia to śledzenie przebiegu programu.
+Zwracana wartość
+
+W C zwykle przyjmuje się, że 0 oznacza poprawne zakończenie funkcji:
+
+```
+return 0;
+```
+
+a wszelkie inne wartości oznaczają niepoprawne zakończenie:
+
+```
+return 1;
+```
+
+Ta wartość może być oczywiście wykorzystana przez inne instrukcje, np. if:
+
+```
+
+int funkcja(x) {
+    return x - 1;
+}
+
+int main() {
+    if(funkcja(1)) return 1;
+    else return 0;
+}
+
+```
+
+Możesz, oczywiście, zwracać więcej danych niż 1, aczkolwiek znacznie wybiega to za materiał który znasz (i poznasz niedługo):
+
+```
+#include <stdio.h>
+
+typedef struct {
+	int r1;
+	float r2;
+	char r3;
+	char r4[100];
+	double r5;
+} rtype;
+
+rtype f(void) {
+	rtype ret = {9, 8.7, 'O', "Hello World", 65.432};
+	return ret;
+}
+
+int main(void) {
+	rtype data;
+    data = f();
+	printf("{%d, %f, %c, %s, %f}\n", data.r1, data.r2, data.r3, data.r4, data.r5);
+}
+```
+
+Jeśli nie rozumiesz kodu powyżej - to nic złego. Do struktur przejdziemy nieco później i na chwilę obecną możesz potraktować to również jako ciekawostkę.
+
+Kolejna metoda którą możemy zastosować to użycie wskaźników:
+
+```
+#include <stdio.h>
+
+/* Niezbyt wydajna metoda */
+void swap (int * a, int * b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main(void) {
+    int x=4, y=2;
+    printf("x=%d ; y= %d\n", x,y); 
+    swap(&x, &y);
+    printf("x=%d ; y= %d\n", x,y);
+}
+```
+
+Uwaga: Wskaźniki, tablice, struktury - masz prawo nie wiedzieć co to. Dowiesz się tego w następnych rozdziałach.
+
