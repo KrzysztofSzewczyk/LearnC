@@ -1396,4 +1396,38 @@ int fac(int n) {
 }
 ```
 
-Musimy być ostrożni przy funkcjach rekurencyjnych, gdyż łatwo za ich pomocą utworzyć funkcję, która będzie wywoływała sama siebie w nieskończoność, a co za tym idzie będzie zawieszać program. Tutaj pierwszymi instrukcjami if ustalamy "warunki stopu", gdzie kończy się wywoływanie funkcji przez samą siebie, a następnie określamy, jak funkcja będzie wywoływać samą siebie (odjęcie jedynki od argumentu, co do którego wiemy, że jest dodatni, gwarantuje, że dojdziemy do warunku stopu w skończonej liczbie kroków). 
+Musimy być ostrożni przy funkcjach rekurencyjnych, gdyż łatwo za ich pomocą utworzyć funkcję, która będzie wywoływała sama siebie w nieskończoność, a co za tym idzie będzie zawieszać program. Tutaj pierwszymi instrukcjami if ustalamy "warunki stopu", gdzie kończy się wywoływanie funkcji przez samą siebie, a następnie określamy, jak funkcja będzie wywoływać samą siebie (odjęcie jedynki od argumentu, co do którego wiemy, że jest dodatni, gwarantuje, że dojdziemy do warunku stopu w skończonej liczbie iteracji).
+
+Warto też zauważyć, że funkcje rekurencyjne czasami mogą być znacznie wolniejsze niż podejście nierekurencyjne (iteracyjne, przy użyciu pętli). Flagowym przykładem może tu być funkcja obliczająca wyrazy ciągu Fibonacciego.
+
+```
+int count;
+
+unsigned fibr(unsigned n) {
+    ++count;
+    return n<2 ? n : (fibr(n-2) + fibr(n-1));
+}
+
+unsigned fibi (unsigned n) {
+    unsigned a = 0, b = 0, c = 1;
+    ++count;
+    if (!n) return 0;
+    while (--n) {
+        ++count;
+        a = b;
+        b = c;
+        c = a + b;
+    }
+    return c;
+}
+```
+
+W języku C nie można tworzyć zagnieżdżonych funkcji (funkcji wewnątrz innych funkcji). 
+
+Jeśli nie podamy żadnych parametrów funkcji, to funkcja będzie używała zmiennej liczby parametrów. Aby wymusić pustą listę argumentów, należy użyć `int f(void)` (tylko prototypy / deklaracje).
+
+Jeśli nie użyjemy w funkcji instrukcji return, wartość zwracana będzie przypadkowa.
+
+Nie jest możliwe przekazywanie typu jako argumentu.
+
+**[Powrót do spisu treści](..)**
