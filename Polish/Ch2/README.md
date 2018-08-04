@@ -1430,4 +1430,64 @@ Jeśli nie użyjemy w funkcji instrukcji return, wartość zwracana będzie przy
 
 Nie jest możliwe przekazywanie typu jako argumentu.
 
+## Obsługa plików
+
+Wcześniej wspominaliśmy funkcje f* (np. fgets(), fputs() ...). Zawsze podawaliśmy stdout lub stdin. Jest też stderr, pozwalające zapisywać dane do strumienia błędu (tam raportujemy błędy). Teraz nauczę Ciebie korzystania z plików w C.
+
+Każdy z nas, korzystając na co dzień z komputera przyzwyczaił się do tego, że plik ma określoną nazwę. Jednak, w pisaniu programu, posługiwanie się całą nazwą niosłoby ze sobą co najmniej dwa problemy, duże zużycie pamięci - przechowywanie całej nazwy pliku zajmuje niepotrzebnie pamięć i ryzyko błędów (ale o tym później).
+
+Programiści korzystają z identyfikatora pliku, który jest pojedynczą liczbą całkowitą. Dzięki temu kod programu jest czytelniejszy i nie trzeba korzystać ciągle z pełnej nazwy pliku. Jednak sam plik nadal jest identyfikowany po swojej nazwie. Aby "przetworzyć" nazwę pliku na odpowiednią liczbę korzystamy z funkcji open lub fopen. Różnica wyjaśniona została poniżej.  Istnieją dwie metody obsługi czytania i pisania do plików, wysokopoziomowa i niskopoziomowa (tylko \*nix, Windows oferuje WinAPI). Nazwy funkcji z pierwszej grupy zaczynają się od litery "f" (np. fopen(), fread(), fwrite()), a identyfikatorem pliku jest wskaźnik na strukturę typu FILE. Owa struktura to pewna grupa zmiennych, która przechowuje dane o pliku. Szczegółami nie musisz się przejmować, funkcje biblioteki standardowej same zajmują się wykorzystaniem struktury FILE. Programista może więc zapomnieć, czym tak naprawdę jest struktura FILE i traktować taką zmienną jako identyfikator pliku. Druga grupa to funkcje typu read(), open(), write() i close(). Podstawowym identyfikatorem pliku jest liczba całkowita, która identyfikuje dany plik w systemie operacyjnym. Liczba ta w systemach typu UNIX jest nazywana deskryptorem pliku. Należy pamiętać, że nie wolno używać funkcji z obu tych grup jednocześnie w stosunku do jednego pliku, tzn. nie można najpierw otworzyć pliku za pomocą fopen(), a następnie odczytywać danych z tego samego pliku za pomocą read().
+
+Czym różnią się oba podejścia do obsługi plików? Metoda wysokopoziomowa ma swój własny bufor, w którym znajdują się dane po odczytaniu z dysku a przed wysłaniem ich do programu użytkownika. W przypadku funkcji niskopoziomowych dane kopiowane są bezpośrednio z pliku do pamięci programu. W praktyce używanie funkcji wysokopoziomowych jest prostsze a przy czytaniu danych małymi porcjami również często szybsze i właśnie ten model zostanie tutaj zaprezentowany. 
+
+Skupimy się teraz na najprostszym z możliwych zagadnień - zapisie i odczycie pojedynczych znaków oraz całych ciągów.
+Napiszmy zatem nasz pierwszy program, który stworzy plik "abc.txt" i umieści w nim tekst "Hello world!": 
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (void) {
+    FILE * f = fopen("abc.txt", "w"); /* Uwaga! Gwiazdka */
+    char * tekst = "Hello world!";
+    if (!f) {
+        printf("Couldn't open abc.txt!\n");
+        exit(1);
+    }
+    fprintf(f, "%s", tekst); /* Zapisywanie ciągu */
+    fclose(f); /* Zamykanie pliku */
+}
+```
+
+Teraz omówimy najważniejsze elementy programu. Jak już było wspomniane wyżej, do identyfikacji pliku który jest otwarty używa się wskaźnika na strukturę FILE (czyli `FILE *`). Funkcja fopen zwraca ów wskaźnik w przypadku poprawnego otwarcia pliku, bądź też NULL, gdy plik nie może zostać otwarty. Pierwszy argument funkcji to nazwa pliku, natomiast drugi to tryb dostępu - w oznacza "write" (zapisywanie). Zwrócony uchwyt do pliku będzie mógł być wykorzystany jedynie w funkcjach zapisujących dane. I odwrotnie, gdy otworzymy plik podając tryb r ("read", wczytywanie), będzie można z niego jedynie czytać dane. Funkcja fopen została dokładniej opisana w odpowiedniej części rozdziału o bibliotece standardowej. 
+
+Po zakończeniu korzystania z pliku należy plik zamknąć. Robi się to za pomocą funkcji fclose. Jeśli zapomnimy o zamknięciu pliku, wszystkie dokonane w nim zmiany nie zostaną zapisane. (Dla doświadczonych programistów: jeśli nie flushowałeś bufora, dane znikną i nie zostaną zapisane, natomiast jeśli bufor został zapisany do pliku, taki problem nie ma miejsca)
+
+Można zauważyć, że do zapisu do pliku używamy funkcji fprintf, która wygląda bardzo podobnie do printf - jedyną różnicą jest to, że w fprintf musimy jako pierwszy argument podać identyfikator pliku. Nie jest to przypadek - obie funkcje tak naprawdę robią to samo. Używana do wczytywania danych z klawiatury funkcja scanf też ma swój odpowiednik wśród funkcji operujących na plikach, nosi ona nazwę fscanf. W rzeczywistości język C traktuje tak samo klawiaturę i plik - są to źródła danych, podobnie jak ekran i plik, do których można dane kierować. Jest to myślenie typowe dla systemów typu UNIX, jednak dla użytkowników przyzwyczajonych do systemu Windows albo języków typu Pascal może być to co najmniej dziwne. Nie da się ukryć, że między klawiaturą i plikiem na dysku zachodzą podstawowe różnice i dostęp do nich odbywa się inaczej - jednak funkcje języka C pozwalają nam o tym zapomnieć i same zajmują się szczegółami technicznymi. Z punktu widzenia programisty, urządzenia te sprowadzają się do nadanego im identyfikatora. Uogólnione pliki nazywa się w C strumieniami. Każdy program w momencie uruchomienia "otrzymuje" od razu trzy otwarte strumienie,  stdin (wejście) do odczytywania danych wpisywanych przez użytkownika, stdout (wyjście) do wyprowadzania informacji dla użytkownika i stderr (wyjście błędów) do powiadamiania o błędach. Aby korzystać ze standardowych strumieni, musimy dołączyć plik nagłówkowy stdio.h. Nie musimy otwierać ani zamykać strumieni standardowych (tak jak w przypadku niestandardowych plików za pomocą fopen i fclose). Warto tutaj zauważyć, że konstrukcja: `fprintf (stdout, "Hello World!");` jest równoważna konstrukcji `printf ("Hello World!");`. Podobnie jest z funkcją scanf(), `fscanf (stdin, "%d", &var);` działa tak samo jak `scanf("%d", &var);`.
+
+Jeśli nastąpił błąd, możemy się dowiedzieć o jego przyczynie na podstawie zmiennej errno zadeklarowanej w pliku nagłówkowym errno.h. Możliwe jest też wydrukowanie komunikatu o błędzie za pomocą funkcji perror. Na przykład używając:
+
+```
+FILE * f;
+f = fopen ("/jakaś/fikcyjna/ściezka", "r");
+if(!fp) {
+   perror("Blad");
+   exit(EXIT_FAILURE);
+}
+```
+
+Komunikat błędu będzie wyglądał tak: `Blad: No such file or directory`.
+Inny sposób z użyciem errno wygląda tak:
+
+```
+/* Na początku pliku */
+#include <errno.h>
+
+/* Gdzieś w funkcji main() */
+FILE * f;
+errno = 0;
+f = fopen("/jakaś/fikcyjna/ścieżka", "r");
+printf("Kod bledu: %d", errno);
+```
+
 **[Powrót do spisu treści](..)**
