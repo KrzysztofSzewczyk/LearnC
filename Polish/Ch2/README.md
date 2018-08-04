@@ -1103,3 +1103,88 @@ int f2(int p) {
 
 Osobiście nie mam "ulubionego stylu" i czasami używam pierwszego, ale dość rzadko drugiego.
 Najważniejszą rzeczą jest to, żeby nie mieszać styli i konwencji.
+
+Zauważyłeś zapewne, że używając funkcji printf() lub scanf() po argumencie zawierającym tekst z odpowiednimi modyfikatorami mogłeś podać praktycznie nieograniczoną liczbę argumentów. Zapewne deklaracja obu funkcji zadziwi Cię jeszcze bardziej:
+
+```
+/* Gdzieś w STDIO.H */
+int printf(const char *format, ...);
+int scanf(const char *format, ...);
+```
+
+Jak widzisz w deklaracji zostały użyte trzy kropki. Otóż język C ma możliwość przekazywania teoretycznie nieograniczonej liczby argumentów do funkcji (jedynym ograniczeniem jest rozmiar stosu programu).
+
+Ważne jest to, aby umieć dostać się do odpowiedniego argumentu oraz poznać jego typ (używając funkcji printf, mogliśmy wpisać jako argument dowolny typ danych). Do tego celu możemy użyć wszystkich ciekawostek, zawartych w pliku nagłówkowym stdarg.h.
+
+Załóżmy, że chcemy napisać prostą funkcję, która dajmy na to, mnoży wszystkie swoje argumenty (zakładamy, że argumenty są typu int). Przyjmujemy przy tym, że ostatni argument kończący mnożenie będzie równy 0. Będzie ona wyglądała tak: 
+
+```
+#include <stdarg.h>
+ 
+int multiply(int a, ...) {
+    va_list args;
+    int result = 1, t;
+    va_start(args, a);
+    for (t = a; t; t = va_arg(args, int)) {
+        result *= t;
+    } 
+    va_end(args);
+    return result;
+}
+```
+
+va_list to specjalny typ danych, w którym przechowywane będą argumenty przekazane do funkcji. va_start inicjuje args do dalszego użytku przez va_arg. Jako drugi parametr musimy podać nazwę ostatniego znanego argumentu funkcji (tj. tego przed kropkami). va_arg odczytuje kolejne argumenty i przekształca je na odpowiedni typ danych. Na zakończenie używane jest va_end - **wywołanie tego jest obowiązkowe**.
+
+Wywołanie funkcji jest banalnie proste i powinieneś już je znać. Ogólny schemat wygląda tak:
+
+```
+nazwa (arg1, arg2, argn);
+```
+
+Jeśli chcemy przypisać zmiennej wartośc jaką zwraca funkcja, będzie to wyglądać następująco:
+
+```
+var = nazwa(arg1, arg2, argn);
+```
+
+Teraz, wyobraź sobie taką funkcję:
+
+```
+void message() {
+  puts("Hello, World!");
+}
+```
+
+I jej wywołanie:
+
+```
+message; /* źle */
+message(); /* dobrze */
+```
+
+Funkcja również jest zmienną (do tego globalną), więc nie możemy jej "wywoływać" tak jak zmiennej:
+
+```
+int num = 42;
+printf("%d", num);
+```
+
+I musimy dodać nawiasy aby wykonać funkcję:
+
+```
+int a = 2, b = 2;
+printf("%d", add(a, b));
+```
+
+Z tego wynika, że możemy też wywoływać zmienne, ale najpierw musimy je rzutować na liczbę. Aboslutnie nie jest to poprawne, ale jest możliwe; aktualnie potraktuj to jako ciekawostkę:
+
+```
+int main(void) {
+    int x = 0;
+    ((void (*)(void))x)();
+    return 0;
+}
+```
+
+Próba wykonania tego programu zakończy się błędem "segmentation fault"; aczkolwiek na systemach bez ochrony pamięci możliwe byłoby kontynuowanie działania programu.
+Jest szansa, że znajdziemy praktyczny użytek tej konstrukcji w dziale o programowaniu systemów operacyjnych.
