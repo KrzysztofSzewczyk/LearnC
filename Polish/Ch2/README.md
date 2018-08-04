@@ -1293,5 +1293,107 @@ int main(void) {
 }
 ```
 
-Uwaga: Wskaźniki, tablice, struktury - masz prawo nie wiedzieć co to. Dowiesz się tego w następnych rozdziałach.
+Uwaga: Wskaźniki, tablice, struktury - masz prawo nie wiedzieć co to. Dowiesz się tego w następnych rozdziałach. Jeśli będziesz znał już zasadę działania tablic, wskaźników i struktur - możesz wrócić tu spowrotem.
 
+Tablice mogą być parametrami funkcji. Można je podawać jako wskaźniki, tablice z nieokreślonym rozmiarem i tablice z określonym rozmiarem. Przykłady kolejno wymienionych metod:
+
+```
+void funkcja(int *tab)    // Jako wskaźnik
+void funkcja(int tab[5])  // Jako tablica z określonym rozmiarem
+void funkcja(int tab[])   // Tablica z nieokreślonym rozmiarem.
+```
+
+Ponieważ tablica jako symbol jest wskaźnikiem do jej pierwszego elementu, możemy korzystać z tablic w sposób następujący:
+
+```
+#include<stdio.h>
+
+void rarray(int tab[], int amount) {
+    int idx;
+    for(idx=0;idx<amount;idx++)
+        scanf("%d",&tab[idx]);
+    fflush(stdin);
+}
+
+void warray(int tab[], int amount) {
+    int idx;
+    for(idx=0;idx<amount;idx++)
+        printf("%d, ",tab[idx]);
+    printf("\n");
+}
+
+int main(void) {
+    int tab[5];
+    printf("Wprowadź 5 liczb: \n");
+    rarray(tab,5);
+    printf("Wprowadzone liczby to: \n");
+    warray(tab,5);
+}
+```
+
+Funkcje mają dostęp do wczytywania i zapisywania danych do tablicy.
+
+Do tej pory we wszystkich programach istniała funkcja main(). Po co tak właściwie ona jest? Otóż jest to funkcja, która zostaje wywołana przez fragment kodu inicjującego pracę programu. Kod ten tworzony jest przez kompilator i nie mamy na niego wpływu. Istotne jest, że każdy program w języku C który w założeniu ma być wykonywalny musi zawierać funkcję main(). Istnieją trzy możliwe prototypy tej funkcji:
+
+```
+int main(void);
+int main(int argc, char * argv[]);
+int main(int argc, char * argv[], char * argp[]);
+```
+
+Argument argc jest liczbą nieujemną określającą, ile ciągów znaków przechowywanych jest w tablicy argv. Wyrażenie `argv[argc]` ma zawsze wartość NULL. Pierwszym elementem tablicy argv, czyli `argv[0]` jest nazwa programu (!) czy komenda, którą program został uruchomiony. Pozostałe przechowują argumenty podane przy uruchamianiu programu. 
+
+Pewien fragment zaznaczyłem wykrzyknikiem - czy `argv[0]` ***jest*** nazwą programu?
+
+Zgadywanki są fajne, ale musisz zajrzeć do standardu, aby się upewnić. Standard twierdzi:
+
+    If the value of argc is greater than zero, the string pointed to by argv[0] represents the program name; argv[0][0] shall be the null character if the program name is not available from the host environment.
+
+(tł. Jeśli wartość argc jest większa od zera, ciąg wskazywany przez `argv[0]` **reprezentuje** nazwę programu; `argv[0][0]` powinno być tzw. null-terminatorem, jeśli nazwa programu nie jest dostępna ze środowiska hosta programu.
+
+`argv[0] jest tylko nazwą programu`, "reprezentuje" jego nazwę, więc niekoniecznie nią jest. Sekcja wcześniej twierdzi:
+
+    If the value of argc is greater than zero, the array members argv[0] through argv[argc-1] inclusive shall contain pointers to strings, which are given implementation-defined values by the host environment prior to program startup.
+
+(tł. Jeśli wartość argc jest większa od zera, elementy tablicy `argv[0]` aż do `argv[argc-1]` włącznie powinny być wskaźnikami
+do ciągów, które są zależne od tych zdefiniowanych w implementacji przez środowisko hosta przed uruchomieniem programu)
+
+Ten fragment jest dosłownie przekopiowany z standardu C99.
+
+To znaczy, że nazwa programu może być pusta, jeśli system operacyjny takiej nie przyznał, i być czymkolwiek innym jeśli host coś dał. Właśnie, czymś innym. Jako programista systemu operacyjnego chętnie przygotowałbym easteregga który sprawia że `argv[0]` jest np. tłumaczone na Somalijski, zaszyfrowane, podane w odwrotnej kolejności bajtów...
+
+Więc `argv[0]` może być nazwą programu lub komendą za pomocą której program został wywołany. Nie ufaj temu!
+
+Jeśli program zostanie wywołany poleceniem `./a.out param1 param2`, argc będzie równe 3 (2 argumenty + `argv[0]`). Jak sprawdzić to na własne oczy? Bardzo prosto:
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char * argv[]) {
+    int i;
+    printf("argc=%d\b", argc);
+    for (i = 0; i<argc; ++i) {
+        printf("#%d: %s\n", i, argv[i]);
+    }
+    return EXIT_SUCCESS; /* !! */
+}
+```
+
+Zwróć uwagę, że z funkcji main zwracamy wartość (jeśli nie zwrócimy, domyślnie zwracane jest 0). Spróbuj uruchomić aplikację z różnymi parametrami i zaobserwować rezultat! Uwaga: EXIT_SUCCESS i EXIT_FAILTURE to dwie zmienne które powinny być zwracane przez main() zależnie od tego, jak zakończyło się wykonanie programu.
+
+main() jeśli chodzi o wykonywanie, niczym nie różni się od innych funkcji i też możemy ją wykonywać, jednak jest to niezalecane.
+
+Poniżej przekażę Ci kilka bardziej zaawansowanych informacji o funkcjach w C, jeśli nie masz ochoty zagłębiać się w szczegóły, możesz spokojnie pominąć tę część i wrócić tu później. 
+
+Język C ma możliwość tworzenia tzw. funkcji rekurencyjnych. Jest to funkcja, która w swojej własnej definicji (ciele) wywołuje samą siebie. Najbardziej klasycznym przykładem może tu być silnia. Funkcja rekurencyjna która oblicza silnię wygląda tak:
+
+```
+int fac(int n) {
+    if (n<0) return 0;
+    if (n==0||n==1) return 1;
+    return n*fac(n-1);
+}
+```
+
+Musimy być ostrożni przy funkcjach rekurencyjnych, gdyż łatwo za ich pomocą utworzyć funkcję, która będzie wywoływała sama siebie w nieskończoność, a co za tym idzie będzie zawieszać program. Tutaj pierwszymi instrukcjami if ustalamy "warunki stopu", gdzie kończy się wywoływanie funkcji przez samą siebie, a następnie określamy, jak funkcja będzie wywoływać samą siebie (odjęcie jedynki od argumentu, co do którego wiemy, że jest dodatni, gwarantuje, że dojdziemy do warunku stopu w skończonej liczbie kroków). 
