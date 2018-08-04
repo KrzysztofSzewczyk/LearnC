@@ -38,7 +38,7 @@ W tej książce będę opisywał środowisko znane również jako Dev-C++. Może
 
 Uwaga: Jeśli jesteś doświadczonym programistą i nie lubisz Dev-C++ - to nie jest środowisko którym trzeba posługiwać się do końca życia. Orwell Dev-C++ jest znośne, aczkolwiek Bloodsheed Dev-C++ jest bardziej popularne - stąd bierze się zła sława Dev'a.
 
-Jeśli jesteś natomiast początkującym programistą, radzę Ci zmienić potem środowisko, na np. Microsoft Visual C++ lub po prostu posługiwać się konsolą i edytorem.
+Jeśli jesteś natomiast początkującym programistą, radzę Ci zmienić potem środowisko, na np. Microsoft Visual Studio lub po prostu posługiwać się konsolą i edytorem.
 
 Jeśli jesteś programistą który zna już inny język, możesz spokojnie zainstalować inne środowisko i się do niego dostosować (bo zakładam, że potrafisz).
 
