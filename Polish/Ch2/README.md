@@ -22,6 +22,7 @@ Jeśli ukazało ci się okno konsoli z napisem "Hello, World!", środowisko któ
 
 Uwaga: W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że tak można robić i tak się czasami robi, ale użycie Y będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
 Uwaga2: Oczywiście jest szansa na to że gdziekolwiek może się pojawić drobny błąd, ponieważ sam podręcznik nie jest jeszcze ukończony. Bardzo miłe byłoby zgłaszanie ewentualnych błędów.
+Uwaga3: Upewnij się, że tryb twojego kompilatora jest przełączony na C89.
 
 ## Podstawowe pojęcia
 
@@ -1040,8 +1041,65 @@ suma (x, y) int x; int y; {
 }
 ```
 
-`int iloczyn (x,y) int x; int y;` to nagłówek funkcji, który opisuje, jakie argumenty przyjmuje funkcja i jaką wartość zwraca (funkcja może przyjmować wiele argumentów, lecz może zwracać tylko jedną wartość; można to bardziej sprecyzować, ale ta wiedza powinna wystarczyć Ci na początek). Na początku podajemy typ zwracanej wartości - u nas int; jeśli zwracanym typem ma być int, możemy go pominąć. Następnie mamy nazwę funkcji i w nawiasach listę argumentów po nazwach. Po nawiasach robimy "deklarację" tych parametrów używając typu, nazwy, i średnika.
+`int iloczyn (x,y) int x; int y;` to nagłówek funkcji, który opisuje, jakie argumenty przyjmuje funkcja i jaką wartość zwraca (funkcja może przyjmować wiele argumentów, lecz może zwracać tylko jedną wartość; można to bardziej sprecyzować, ale ta wiedza powinna wystarczyć Ci na początek). Na początku podajemy typ zwracanej wartości - u nas int; jeśli zwracanym typem ma być int, możemy go pominąć. Następnie mamy nazwę funkcji i w nawiasach listę argumentów po nazwach. Po nawiasach robimy "deklarację" tych parametrów używając typu, nazwy, i średnika. Jeśli funkcja nie przyjmuje parametrów, deklarujemy ją następująco: `funkcja(void)`.
 
 Ciało funkcji (czyli wszystkie wykonywane w niej operacje) umieszczamy w nawiasach klamrowych. Pierwszą instrukcją w tej funkcji jest deklaracja zmiennej - jest to zmienna lokalna, czyli niewidoczna poza funkcją. Dalej przeprowadzamy odpowiednie działania i zwracamy rezultat za pomocą instrukcji return. 
 
+Czasami możemy chcieć przed napisaniem funkcji poinformować kompilator, że dana funkcja istnieje. Kompilator nie wie, jakie funkcje są deklarowane w dalszej części pliku. Dlatego, musimy stworzyć jej prototyp. Prototypy przeważnie umieszcza się w plikach .h (stdio.h, stdlib.h ...), jednak w chwili obecnej będziemy chcieli zadeklarować funkcję w pliku .c:
 
+```
+int f2(int p);
+
+f1(void) {
+    return f2(6);
+}
+
+f2(p) int p; {
+    return p==6?1:f1();
+}
+ 
+main(void) {
+  return f2(1);
+}
+```
+
+Jak możesz zauważyć, deklaracja prototypu wygląda trochę inaczej niż właściwa implementacja funkcji niżej. Taka deklaracja jest częściej spotykana, ponieważ pochodzi z nowszego standardu. Od tej chwili, zalecam Ci deklarować funkcje w taki właśnie sposób - to nie znaczy że musisz, masz wybór.
+
+```
+int f2(int p);
+int f1(void) {
+    return f2(6);
+}
+int f2(int p) {
+    return p==6?1:f1();
+}
+int main(void) {
+    return f2(1);
+}
+```
+
+Jeszcze inną "nowością" jest usunięcie reguły implicit int. To znaczy, że w nowszych standardach musimy dodawać przedrostek int tam, gdzie go dotychczas nie dodawaliśmy. Przy zmiennych globalnych, które kiedyś deklarowaliśmy tak: `a,b;` będziemy musieli dodać przedrostek int: `int a,b;`. Tak samo w przypadku funkcji; `main(void)` teraz jest `int main(void)`.
+
+Od tego momentu, zaczniemy stosować się do C99.
+
+Innym bardzo częstym zwyczajem jest umieszczenie funkcji main() na samej górze pliku (w przeciwieństwie do ogólnie przyjętej konwencji umieszczania jej na dole aby zaoszczędzić konieczność deklaracji prototypów na samej górze pliku). Jeśli zechcielibyśmy umieścić main() na samej górze, kod wyglądałby tak:
+
+```
+int f1(void);
+int f2(int p);
+
+int main(void) {
+  return f2(0);
+}
+
+int f1(void) {
+  return f2(6);
+}
+
+int f2(int p) {
+  return p==6?1:f1();
+}
+```
+
+Osobiście nie mam "ulubionego stylu" i czasami używam pierwszego, ale dość rzadko drugiego.
+Najważniejszą rzeczą jest to, żeby nie mieszać styli i konwencji.
