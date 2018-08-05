@@ -1490,4 +1490,16 @@ f = fopen("/jakaś/fikcyjna/ścieżka", "r");
 printf("Kod bledu: %d", errno);
 ```
 
+## Ćwiczenia
+
+Ćwiczenia w tym dziale są posortowane od najprostszych do najtrudniejszych
+
+ * Napisz program, który wyświetli twoje imię.
+ * Napisz program, który doda dwie liczby wpisane przez użytkownika
+ * Napisz program, który podzieli dwie liczby wpisane przez użytkownika. Uwaga: Obsłuż przypadek, w którym użytkownik wpisuje 0!
+ * Napisz program, który utworzy plik i zapisze w nim imię użytkownika, o które go poprosisz.
+ * Napisz program, który generuje tabliczkę mnożenia. Uwaga: Spraw, żeby wyglądała jak tabelka (tzn, nie rozjechana)
+ * Napisz bardzo prosty kalkulator.
+ * Napisz program, który wczyta z pliku dwie liczby i wyświetli ich iloczyn.
+
 **[Powrót do spisu treści](..)**
