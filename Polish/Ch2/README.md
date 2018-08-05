@@ -1492,8 +1492,6 @@ printf("Kod bledu: %d", errno);
 
 ## Ćwiczenia
 
-Ćwiczenia w tym dziale są posortowane od najprostszych do najtrudniejszych
-
  * Napisz program, który wyświetli twoje imię.
  * Napisz program, który doda dwie liczby wpisane przez użytkownika
  * Napisz program, który podzieli dwie liczby wpisane przez użytkownika. Uwaga: Obsłuż przypadek, w którym użytkownik wpisuje 0!
