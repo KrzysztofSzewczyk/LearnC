@@ -171,3 +171,26 @@ Słowem wstępu; Wskaźniki mogą być dla Ciebie najtrudniejszą częścią ję
 Zmienne w komputerze są przechowywane w pamięci. To wie programista każdego języka, natomiast tylko programiści najlepszych języków są w stanie manualnie przydzielać i obsługiwać pamięć dla zmiennych. W tym celu pomocne są wskaźniki.
 
 Uwaga: Dla ułatwienia przyjmuję, że bajt = 8 bitów, int = 2 bajty, long = 4 bajty, a liczby zapisane są w formacie big endian, co niekoniecznie musi być prawdą na używanej przez Ciebie maszynie.
+
+Wskaźnik (ang. pointer) to rodzaj zmiennej, w której zapisany jest adres w pamięci. Oznacza to, że wskaźnik wskazuje miejsce, gdzie zapisana jest jakaś inna zmienna.
+
+Obrazowo możemy wyobrazić sobie pamięć komputera jako sklep z elektroniką a zmienne jako szufladki. Możemy podać sprzedawcy listę z częściami, które chcemy kupić, a on znajdzie je za nas. Analogia ta nie jest wspaniała, ale pozwala wyobrazić sobie niektóre cechy wskaźników: numer identyfikuje pewną część, kilka numerów może dotyczyć tego samego komponentu, numery na kartce możemy skreślić i użyć do zamówienia innych części, a jeśli poprosimy nieprawidłowy o numer części, to możemy dostać nie tą część, którą chcemy, albo też nie dostać nic (bo takiej części nie ma).
+
+Warto też przytoczyć w tym miejscu definicję adresu. Możemy powiedzieć, że adres to pewna liczba, jednoznacznie definiująca położenie pewnego obiektu. Tymi obiektami mogą być np. zmienne, elementy tablic czy nawet funkcje.
+
+Podstawy używania wskaźników:
+
+```
+* -> wyłuskanie wskaźnika, przykład:
+int * ptr = /* ..., jakiś adres */;
+*ptr -> wyrażenie zwracające dane znajdujące się pod jakimś adresem interpretowane jako określony typ danych.
+
+* -> deklaracja wskaźnika:
+int * wskaznik;
+
+& -> pobranie adresu ze zmiennej, np.
+int zmienna = 42;
+int * wskaznik = &zmienna;
+*wskaznik; /* =42 */
+```
+
