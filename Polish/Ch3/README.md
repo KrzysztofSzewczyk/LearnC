@@ -408,3 +408,30 @@ Funkcja ta zwraca wskaźnik do bloku pamięci o pożądanej wielkości (lub NULL
 Ostatnią funkcją jest funkcja calloc(). Przyjmuje ona dwa argumenty: liczbę elementów tablicy oraz wielkość pojedynczego elementu. Podstawową różnicą pomiędzy funkcjami malloc() i calloc() jest to, że ta druga zeruje wartość przydzielonej pamięci (do wszystkich bajtów wpisuje wartość 0).
 
 Tutaj znajduje się krótka lista, jak definiować wskaźniki oraz co oznaczają poszczególne definicje:
+
+```
+int i;          /* zmienna typu int */
+
+int i[];        /* tablica typu int */
+int *i[];       /* tablica wskaźników na int */
+
+int * i;        /* wskaźnik na int */
+int **i;        /* wskaźnik na wskaźnik na int */
+int (*i)[];     /* wskaźnik na tablicę int */
+int (*i)();     /* wskaźnik na funkcję zwracającą int */
+int ***i;       /* wskaźnik na wskaźnik na wskaźnik na int */
+int (**i)[];    /* wskaźnik na wskaźnik na tablicę int */
+int (**i)();    /* wskaźnik na wskaźnik funkcji zwracającej int */
+int *(*i)[];    /* wskaźnik na tablicę wskaźników na int */
+int *(*i)();    /* wskaźnik na funkcję zwracającą wskaźnik na int*/
+
+int **i[];      /* tablica wskaźników na wskaźniki na int */
+int (*i[])[];   /* tablica wskaźników na tablicę int */
+int (*i[])();   /* tablica wskaźników na funkcje zwracające int */
+
+int i();        /* funkcja zwracająca int */
+int *i();       /* funkcja zwracająca wskaźnik int */
+int **i();      /* funkcja zwracająca wskaźnik na wskaźnik na int */
+int (*i())[];   /* funkcja zwracająca wskaźnik na tablicę int */
+int (*i())();   /* funkcja zwracająca wskaźnik na funkcję zwracającą int */
+```
