@@ -435,3 +435,76 @@ int **i();      /* funkcja zwracająca wskaźnik na wskaźnik na int */
 int (*i())[];   /* funkcja zwracająca wskaźnik na tablicę int */
 int (*i())();   /* funkcja zwracająca wskaźnik na funkcję zwracającą int */
 ```
+
+Jednym z najczęstszych błędów oprócz próby wyłuskania NULL, są odwołania się do obszaru pamięci po jego zwolnieniu. Po wykonaniu funkcji free() nie możemy już wykonywać żadnych odwołań do zwolnionego obszaru. Innymi rodzajami błędów są również odwołania do adresów pamięci które są poza obszarem przydzielonym funkcją malloc() i stosem, zapominanie sprawdzania czy dany wskaźnik nie ma wartości NULL, wycieki pamięci -gubienie wskaźników do zaalokowanej pamięci i zwalnianie tylko części przydzielonej wcześniej pamięci i odwołania do obszarów w których nie ma prawidłowych danych (np. poprzez rzutowanie wskaźnika na nieodpowiedni typ).
+
+Przykład funkcji powodującej wyciek pamięci:
+
+```
+#include <stdlib.h>
+ 
+int main(void) {
+     int *ptr = (int *) malloc(sizeof(int));
+     
+     return 0; /* free()? */
+}
+```
+
+Aby sprawdzić czy program nie ma wycieków pamięci, możemy użyć Valgrinda w następujący sposób:
+(uwaga, musisz najpierw skompilować ten program komendą np. `gcc main.c` jeśli plik nazywa się main.c)
+
+```
+$ valgrind ./a.out
+==20583== Memcheck, a memory error detector
+==20583== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20583== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==20583== Command: ./a.out
+==20583==
+==20583==
+==20583== HEAP SUMMARY:
+==20583==     in use at exit: 4 bytes in 1 blocks
+==20583==   total heap usage: 1 allocs, 0 frees, 4 bytes allocated
+==20583==
+==20583== LEAK SUMMARY:
+==20583==    definitely lost: 4 bytes in 1 blocks
+==20583==    indirectly lost: 0 bytes in 0 blocks
+==20583==      possibly lost: 0 bytes in 0 blocks
+==20583==    still reachable: 0 bytes in 0 blocks
+==20583==         suppressed: 0 bytes in 0 blocks
+==20583== Rerun with --leak-check=full to see details of leaked memory
+==20583==
+==20583== For counts of detected and suppressed errors, rerun with: -v
+==20583== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 3)
+```
+
+Powinno być:
+
+```
+#include <stdlib.h>
+ 
+int main(void) {
+     int *ptr = (int *) malloc(sizeof(int));
+     free(ptr);
+     return 0;
+}
+```
+
+I prawidłowe wyjście:
+
+```
+$ valgrind ./a.out
+==20832== Memcheck, a memory error detector
+==20832== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20832== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==20832== Command: ./a.out
+==20832==
+==20832==
+==20832== HEAP SUMMARY:
+==20832==     in use at exit: 0 bytes in 0 blocks
+==20832==   total heap usage: 1 allocs, 1 frees, 4 bytes allocated
+==20832==
+==20832== All heap blocks were freed -- no leaks are possible
+==20832==
+==20832== For counts of detected and suppressed errors, rerun with: -v
+==20832== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 3)
+```
