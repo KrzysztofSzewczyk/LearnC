@@ -508,3 +508,144 @@ $ valgrind ./a.out
 ==20832== For counts of detected and suppressed errors, rerun with: -v
 ==20832== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 6 from 3)
 ```
+
+## Napisy
+
+Komputer dawno temu przestał być narzędziem wyłącznie do przetwarzania danych. Od programów komputerowych wymaga się też czegoś innego - program w wyniku swojego działania nie ma zwracać danych rozumianych tylko przez autora programu, ale być tak zaprojektowany aby przeciętny użytkownik mógł bez problemu programu używać. Do przechowywania komunikatów służą tzw. ciągi znaków.
+
+Język C nie jest wygodnym narzędziem do manipulacji napisami. Zestaw funkcji umożliwiających operacje na napisach w bibliotece standardowej C jest bardzo mały. Dodatkowo problemem jest sposób przechowywania ciągów w pamięci. Pokażę Ci też, jak stworzyć łańcuch typu linked list.
+
+Z drugiej strony, ciągi mogą być przyczyną wielu trudnych do wykrycia błędów w programach. Warto zrozumieć, jak należy operować na nich i zachować ostrożność w tych miejscach gdzie ciągi są używane.
+
+Przykładowy ciąg znaków wygląda tak:
+
+```
+printf ("Hello, world!");
+```
+
+Jak widać, są to po prostu znaki zamknięte w cudzysłowach. W pamięci każdy napis jest następującym po sobie ciągiem znaków, który kończy się znakiem "null", zapisywanym jako '\0'.
+
+W napisie, do poszczególnych znaków odwołujemy się jak w tablicy:
+
+```
+const char *napis = "Abc";
+printf("%c\n", "C jest proste"[0]); /* C */
+printf("%c\n", napis[2]);      /* c */
+```
+
+Napis w pamięci kończy się zerem umieszczonym tuż za jego zawartością. Odwołanie się do znaku o indeksie równym długości napisu zwróci zero:
+
+```
+printf("%d", "test"[4]);       /* 0 */
+```
+
+Napisy można wczytywać z klawiatury i wypisywać na ekran przy pomocy funkcji scanf, printf i innych, które już poznałeś. Formatem używanym dla napisów jest %s.
+
+```
+printf("%s", zmienna);
+```
+
+Większość funkcji działających na napisach znajduje się w pliku nagłówkowym string.h, który dołączamy podobnie jak np stdio.h lub stdlib.h:
+
+```
+#include <string.h>
+```
+
+Jeśli ciąg jest długi można zapisać go w kilku liniach, przechodząc do następnej musimy na jej końcu postawić znak "\".
+
+```
+printf("to jest \
+przyklad dlugiego ciagu");
+```
+
+Rezultat:
+
+```
+to jest przyklad dlugiego ciagu
+```
+
+Napis, który w programie zajął więcej niż jedną linię, w praktyce zajął tylko jedną. "\" informuje kompilatoo dalszej części ciągu w następnej linijce kodu - "\" nie ma wpływu na prezentację łańcucha. Aby wydrukować napis w kilku liniach należy wstawić do niego \n ("n" pochodzi tu od "new line", czyli "nowa linia").
+
+```
+printf("Abc\ndef\nghi");
+```
+
+W wyniku otrzymamy:
+
+```
+Abc
+def
+ghi
+```
+
+Zmienna, która przechowuje łańcuch znaków, jest tak naprawdę wskaźnikiem do pierwszego elementu tablicy znaków w pamięci. Możemy też myśleć o napisie jako o tablicy znaków.
+
+Możemy wygodnie zadeklarować napis:
+
+```
+const char *tekst  = "Abc"; /* Tego napisu nie możemy modyfikować. Każdy napis typu `char * ` zawsze będzie read only */
+char tekst[] = "Abc";
+char tekst[] = {'A','b','c','\0'};
+```
+
+Kompilator automatycznie przydziela wtedy odpowiednią ilość pamięci (tyle bajtów, ile jest liter plus jeden dla kończącego \0). Jeśli natomiast wiemy, że dany łańcuch powinien przechowywać określoną ilość znaków (nawet, jeśli w deklaracji tego łańcucha podajemy mniej znaków) deklarujemy go w taki sam sposób, jak tablicę jednowymiarową:
+
+```
+char ciag[42] = "Ten tekst musi być krótszy niż 42 znaki";
+```
+
+Należy cały czas pamiętać, że napis jest tak naprawdę tablicą. Jeśli dla napisu zostało zarezerwowane 80 znaków, to przypisanie do niego dłuższego napisu będzie pisaniem po pamięci, której nie chcielibyśmy zmienić.
+
+Deklaracja `const char *napis = "abc";` oraz `char napis[] = "abc";` pomimo, że wyglądają podobnie, bardzo się różnią. W przypadku pierwszej deklaracji próba zmodyfikowania napisu może wyświetlać błąd kompilacji. Dzieje się tak dlatego, że const `char *tekst = "cokolwiek";` deklaruje wskaźnik na stały obszar pamięci.
+
+Pisanie po pamięci może czasami skończyć się błędem dostępu do pamięci ("segmentation fault") i zamknięciem programu, jednak może zdarzyć się jeszcze inna rzecz - można zmienić w ten sposób przypadkowo wartość innych zmiennych. Program zacznie wtedy zachowywać się nieprzewidywalnie - zmienne a nawet stałe, co do których zakładaliśmy, że ich wartość będzie ściśle ustalona, mogą przyjąć taką wartość, jaka absolutnie nie powinna mieć miejsca.
+
+Kluczowy jest też kończący napis znak null. Wszystkie funkcje operujące na napisach opierają właśnie na nim. Strlen szuka rozmiaru napisu idąc od początku i zliczając znaki, aż nie natrafi na znak o kodzie zero. Jeśli napis nie kończy się znakiem null, funkcja będzie szła dalej po pamięci. Na szczęście, wszystkie operacje podstawienia typu `var = "abcdef";` powodują zakończenie napisu nullem (o ile jest na niego miejsce).
+
+W łańcuchu #3 ostatnim znakiem jest znak o wartości zero ('\0'). Jednak łańcuchy mogą zawierać inne sekwencje sterujące, np.:
+
+```
+'\a' - "beep" terminala.
+'\b' - usuwa poprzedzający znak (w konsoli Windowsa cofa kursor w lewo bez usuwania znaku)
+'\f' - wysuniecie strony
+'\r' - powrót karetki
+'\n' - nowy wiersz
+'\'' - apostrof
+'\\' - backslash
+'\t' - tabulacja pozioma
+'\v' - tabulacja pionowa
+'\ohh' - liczba zapisana w systemie oktalnym, gdzie 'hh' należy zastąpić liczbą w tym systemie
+'\xhh' - liczba zapisana w systemie heksadecymalnym, gdzie 'hh' należy zastąpić dwucyfrową liczbą w tym systemie
+'\unnnn' - uniwersalna forma; 'nnnn' należy zastąpić czterocyfrowym identyfikatorem znaku w systemie szesnatkowym.
+```
+
+Znak nowej linii ('\n') jest w różny sposób przechowywany na różnych platformach. W niektórych systemach używa się do tego jednego znaku o kodzie 0x0A (Line Feed - nowa linia). Do tej rodziny zaliczamy systemy z rodziny Unix. Drugą konwencją jest zapisywanie '\n' za pomocą dwóch znaków: LF (Line Feed) + CR (Carriage return - powrót karetki). Znak CR reprezentowany jest przez wartość 0x0D. Kombinacji tych dwóch znaków używaja m.in. Windows. Trzecia grupa systemów używa do tego celu samego znaku CR, oprogramowanie na Commodore i Apple II. W związku z tym plik utworzony w systemie Linux może prezentować się inaczej pod systemem Windows.
+
+Używając zwykłego operatora porównania ==, otrzymamy wynik porównania adresów a nie tekstów, bo ciągi są wskaźnikami.
+
+Do porównywania dwóch ciągów znaków należy użyć funkcji strcmp zadeklarowanej w pliku nagłówkowym string.h. Jako argument przyjmuje dwa napisy i zwraca wartość ujemną jeżeli pierwszy jest mniejszy od drugiego, 0 jeżeli napisy są równe lub wartość dodatnią jeżeli napis pierwszy jest większy od drugiego. Przyjmując kodowanie ASCII "a" jest mniejsze od "b", ale jest większe od "B". Np.:
+
+```
+#include <stdio.h>
+#include <string.h>
+ 
+int main(void) {
+    char str1[100] = {'\0'}, str2[100] = {'\0'};
+    int cmp;
+ 
+    puts("Wpisz dwa ciagi ponizej ");
+    fgets(str1, sizeof str1, stdin);
+    fgets(str2, sizeof str2, stdin);
+ 
+    cmp = strcmp(str1, str2);
+    if (cmp<0) {
+        puts("cmp<0");
+    } else if (cmp>0) {
+        puts("cmp>0");
+    } else {
+        puts("cmp=0");
+    }
+ 
+   return 0;
+}
+```
