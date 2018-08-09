@@ -649,3 +649,121 @@ int main(void) {
    return 0;
 }
 ```
+
+Czasami trzeba porównać tylko fragment napisu, np. sprawdzić czy zaczyna się od jakiegoś tekstu. W takich sytuacjach pomocna jest funkcja strncmp. W porównaniu do strcmp() przyjmuje ona jeszcze jeden argument oznaczający maksymalną liczbę znaków do porównania. Przykład:
+
+```
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char str[100];
+    int cmp;
+    fputs("> ", stdout);
+    fgets(str, 100, stdin);
+    if (!strncmp(str, "abc", 3))
+        puts("Ciag zaczyna sie od 'abc'.");
+    return 0;
+}
+```
+
+Do kopiowania ciągów znaków służy funkcja strcpy, która kopiuje drugi napis w miejsce pierwszego. Musimy pamiętać, by w pierwszym łańcuchu było wystarczająco dużo miejsca.
+
+```
+char napis[100];
+strcpy(napis, "Ala ma kota.");
+```
+
+Bezpieczniej jest używać funkcji strncpy, która kopiuje najwyżej tyle znaków ile podano jako trzeci parametr. Jeżeli drugi napis jest za długi, strncpy() nie kopiuje znaku null na koniec napisu, dlatego zawsze trzeba to robić ręcznie. Przykład:
+
+```
+char napis[100] = { 0 };
+strncpy(napis, "Ala ma kota.", sizeof(napis) - 1);
+```
+
+Do łączenia napisów służy strcat(), która kopiuje drugi napis do pierwszego. Ponownie jak w przypadku strcpy musimy zagwarantować, by w pierwszym łańcuchu było wystarczająco dużo miejsca.
+
+```
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char s1[30] = "Hello, ";
+    const const char * s2 = "world";
+    strcat(s1, s2);
+    puts(s1);
+}
+```
+
+Istnieje strncat, funkcja która skopiuje maksymalnie tyle znaków ile podano jako trzeci argument i dopisze znak null.
+
+```
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char s1[30] = "Hello, ";
+    const const char * s2 = "world";
+    strncat(s1, s2, 2);
+    puts(s1);
+}
+```
+
+Można też wykorzystać trzeci argument do zapewnienia bezpiecznego wywołania funkcji kopiującej. W przypadku zbyt małej tablicy skopiowany zostanie fragment tylko takiej długości, na jaki wystarczy miejsca. Przy podawaniu ilości znaków należy także pamięta, że tablica, do której kopiujemy nie musi być pusta, a więc część pamięci przeznaczona na nią jest już zajęta, jak w poniższym przykładzie. Dlatego od rozmiaru całego napisu do którego dane są kopiowane należy odjąć długość napisu, który już się w nim znajduje.
+
+```
+char s1[10] = "hello ";
+const char * s2 = "world";
+strncat(s1, s2, sizeof(s1)-strlen(s1)-1);
+puts(napis1);
+```
+
+Osoby, które programują w językach skryptowych muszą uważać na łączenie i kopiowanie napisów. Kompilator nie wykryje nadpisania pamięci za napisem i nie przydzieli dodatkowego obszaru pamięci. Czasami program pomimo nadpisywania pamięci za ciągiem będzie nadal działał, co utrudni wykrywanie błędów.
+
+Niektóre ciągi mogą okazać się zabójcze dla bezpieczeństwa programu. "W jaki sposób ciąg może zaszkodzić programowi?" - przykład:
+
+```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(int argc, const char ** argv) {
+    char isvalid = 0;
+    char password[16];
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s password", argv[0]);
+        return EXIT_FAILURE;
+    }
+    strcpy(password, argv[1]);
+    if (!strcmp(password, "123"))
+        isvalid = 1;
+    if (!isvalid) {
+        fputs("Access Deined.\n", stderr);
+        return EXIT_FAILURE;
+    }
+    puts("Access Granted.");
+    return EXIT_SUCCESS;
+}
+```
+
+Uwaga: Ogólnie przyjmuje się, że czysty i prawidłowy kod zawiera komentarze i nazwy zmiennych wyłącznie w języku angielskim. Od tej części podręcznika, zacznę się stosować do tej zasady.
+
+Ten program wykonuje jakąś akcję jeżeli podane jako pierwszy argument hasło jest poprawne. Sprawdźmy czy działa:
+
+```
+$ ./a.out abc
+Access Deined
+$ ./a.out 123
+Access Granted
+```
+
+Użycie funkcji strcpy sprawia, że osoba o potencjalnie złych zamiarach nie musi znać hasła, aby program uznał że zna hasło:
+
+```
+$ ./a.out 111111111111111111111111111111
+Access Granted
+```
+
+Podany został ciąg dłuższy od przewidywanego bufora. Funkcja strcpy() kopiując znaki do bufora password przekroczyła przewidziane dla niego miejsce i kopiowała dalej - tam, gdzie znajdowała się zmienna isvalid. strcpy() wpisała jedynkę do isvalid, co sprawiło że warunek w if się spełnił.
+
+Podany przykład może się różnie zachowywać w zależności od różnych czynników, ale ogólnie mamy do czynienia z poważnym niebezpieczeństwem. Sytuację taką nazywamy przepełnieniem bufora. Należy bardzo uważać na tego typu błędy, a w miejsce strcpy stosować bardziej strncpy.
