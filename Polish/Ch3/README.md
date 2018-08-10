@@ -956,3 +956,51 @@ int main() {
 }
 ```
 
+## Struktury, unie, typy wyliczeniowe
+
+W drugim rozdziale przy okazji omawiania zmiennych, wspomniałem słowo kluczowe typedef. Dobrze byłoby dla Ciebie, aby sobie je przypomnieć, w celu lepszego zrozumienia tematu.
+
+Pierwszym typem złożonym jaki omówimy będzie typ wyliczeniowy - `enum`. Ogólna deklaracja typu wyliczeniowego wygląda następująco:
+
+```
+enum name {VAL1, VAL2, VALN};
+```
+
+Praktyczny przykład typu wyliczeniowego:
+
+```
+enum way {UPWARDS, DOWNWARDS, LEFT, RIGHT};
+enum way var = W_GORE;
+```
+
+Inny przykład (instrukcja switch):
+
+```
+switch(var) {
+    case UPWARDS:
+        printf("Upwards\n");
+        break;
+    case DOWNWARDS:
+        printf("Downwards\n");
+        break;
+    default:
+        printf("Left or right\n");
+}
+```
+
+Wartości w środku `enum` zwykle pisze się wielkimi literami (UPWARDS, RIGHT). C przechowuje wartości typu wyliczeniowego jako liczby całkowite:
+
+```
+var = DOWNWARDS;
+printf("%i\n", var); /* =1; %i = %d */
+```
+
+Można zmienić liczbę, od jakiej rozpocznie się numerowanie:
+
+```
+enum way {
+     UPWARDS, DOWNWARDS=42, LEFT, RIGHT
+};
+
+printf("%i %i\n", DOWNWARDS, LEFT); /* = 42 43 */
+```
