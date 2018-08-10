@@ -284,6 +284,16 @@ Zmienna, której będziemy używać w swoim programie bardzo często, może mie�
 
 `extern` oznacza zmienne globalne zadeklarowane w innych jednostkach - informujemy kompilator, żeby nie szukał jej w aktualnym pliku.
 
+`typedef` to słowo kluczowe, służące do definiowania typów pochodnych np.:
+
+```
+typedef stary_typ nowy_typ;
+typedef int myint;
+```
+
+od tej pory można używać typu myint zamiast int.
+Często używa się typedef w jednej instrukcji razem z definicją typu .
+
 ## Operatory
 
 W języku C wyróżniamy następujące operatory:
