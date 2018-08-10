@@ -927,3 +927,32 @@ Do przechowywania znaków zakodowanych w Unicode należy korzystać z typu wchar
 Unicode określa tylko jakiej liczbie odpowiada jaki znak i nie mówi nic o sposobie dekodowania. Jako że Unicode obejmuje 918 tysięcy znaków, zmienna zdolna pomieścić go w całości musi mieć przynajmniej 3 bajty. Procesory nie funkcjonują na zmiennych o tym rozmiarze, a jedynie na zmiennych o wielkościach 1, 2, 4 oraz 8 bajtów (kolejne potęgi liczby 2). Dlatego też trzeba skorzystać ze zmiennej 4-bajtowej. UTF-32 po prostu przydziela każdemu znakowi Unicode kolejne liczby. Jest to najbardziej intuicyjne i wygodne kodowanie, ale ciągi zakodowane w nim są bardzo obszerne co zajmuje dostępną pamięć, spowalnia działanie aplikacji oraz pogarsza wydajność podczas transferu przez sieć. Poza UTF-32 które opisuję istnieje jeszcze wiele innych kodowań. Najpopularniejsze z nich to UTF-8 - od 1-6 bajtów (dla znaków poniżej 65536 do 3 bajtów) na znak, jest skrajnie niewygodny, gdy potrzebne jest przeprowadzanie operacji na tekście niekorzystając z gotowych funkcji,  UTF-16 - 2/4 bajty na znak, ręczne modyfikacje ciągu są bardziej skomplikowane niż przy UTF-32, UCS-2 - 2 bajty na znak, znaki z numerami powyżej 65535 nie są uwzględnione.
 
 Ręczne operacje na ciągach UTF-8 i UTF-16 są trudne, ponieważ w przeciwieństwie do UTF-32, gdzie można określić, które bajty zajmuje który znak, w tych kodowaniach niezbędne jest wstępne określenie rozmiaru pierwszego znaku. Ponadto, gdy korzystamy z nich nie działają wtedy funkcje udostępniane przez biblioteki C do operowania na ciągach znaków.
+
+| Priorytet | Kodowania |
+|-----------|-----------|
+| mały rozmiar | UTF-8 |
+| łatwość w użytkowaniu | UTF-32, UCS-2 |
+| przenośność | UTF-8 |
+| wydajność | UCS-2, UTF-8 |
+
+Aby zacząć korzystać z UCS-2, musisz "przerzucić się" na typ wchar_t, używać odpowiedników funkcji operujących na typie char pracujących na wchar_t (z reguły w nazwie zamienia się str->wcs np. strcpy-wcscpy, strcmp-wcscmp).
+
+Przykład użycia UCS-2:
+
+```
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    wchar_t* wcs1 = L"Ala ma kota, ";
+    wchar_t* wcs2 = L"bo nie wzięła leków.";
+    wchar_t wcs3[60];
+  
+    wcscpy(wcs3, wcs1);
+    wcscat(wcs3, wcs2);
+    printf("%ls\n", wcs3);
+    return 0;
+}
+```
+
