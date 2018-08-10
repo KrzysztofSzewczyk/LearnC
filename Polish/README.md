@@ -17,7 +17,7 @@
    - Tablice
    - Wskaźniki
    - Napisy
-   - Własne typy, struktury, unie, typy wyliczeniowe
+   - Struktury, unie, typy wyliczeniowe
    - Zaawansowane operacje matematyczne
    - Powszechne praktyki
  4. [Struktura programu w C](Ch4) Poziom trudności: ![][star] ![][star] ![][star]
