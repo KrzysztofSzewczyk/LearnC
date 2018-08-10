@@ -767,3 +767,98 @@ Access Granted
 Podany został ciąg dłuższy od przewidywanego bufora. Funkcja strcpy() kopiując znaki do bufora password przekroczyła przewidziane dla niego miejsce i kopiowała dalej - tam, gdzie znajdowała się zmienna isvalid. strcpy() wpisała jedynkę do isvalid, co sprawiło że warunek w if się spełnił.
 
 Podany przykład może się różnie zachowywać w zależności od różnych czynników, ale ogólnie mamy do czynienia z poważnym niebezpieczeństwem. Sytuację taką nazywamy przepełnieniem bufora. Należy bardzo uważać na tego typu błędy, a w miejsce strcpy stosować bardziej strncpy.
+
+Oto bezpieczna wersja poprzedniego programu:
+
+```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(int argc, const char ** argv) {
+    char isvalid = 0;
+    char password[16];
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s password", argv[0]);
+        return EXIT_FAILURE;
+    }
+    strncpy(password, argv[1], sizeof(password) - strlen(password) - 1);
+    password[sizeof password - 1] = '\0';
+    if (!strcmp(password, "123"))
+        isvalid = 1;
+    if (!isvalid) {
+        fputs("Access Deined.\n", stderr);
+        return EXIT_FAILURE;
+    }
+    puts("Access Granted.");
+}
+```
+
+Bezpiecznymi alternatywami do strcpy i strcat są funkcje strlcpy oraz strlcat opracowane przez OpenBSD i dostępne do pobrania na wolnej licencji, strlcpy, strlcat. strlcpy() działa podobnie do strncpy: `strlcpy (buf, argv[1], sizeof buf);`, jednak jest szybsze i zawsze kończy napis nullem. strlcat() działa jak `strncat(dst, src, size-1)`.
+
+Inną niebezpieczną funkcją jest np. gets() zamiast której należy używać fgets.
+
+Napisy można alokować dynamicznie:
+
+```
+
+```
+
+Zawsze możemy też użyć łańcucha typu linked list:
+
+```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(int argc, const char ** argv) {
+    char isvalid = 0;
+    const char * password;
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s password", argv[0]);
+        return EXIT_FAILURE;
+    }
+    password = malloc(strlen(argv[1]) + 1);
+    if (!password) {
+        fputs("Out of memory.", stderr);
+        return EXIT_FAILURE;
+    }
+    strcpy(password, argv[1]);
+    if (!strcmp(haslo, "123"))
+        isvalid = 1;
+    if (!isvalid) {
+        fputs("Access Deined.\n", stderr);
+        return EXIT_FAILURE;
+    }
+    puts("Access granted.");
+    free(haslo);
+}
+```
+
+Wielu programistów, nieświadomych potencjalnego zagrożenia używa tego typu konstrukcji:
+
+```
+#include <stdio.h>
+int main(int argc, const char ** argv) {
+    printf(argv[1]);
+}
+```
+Jest to bardzo poważny błąd programu! Prawidłowo napisany kod powinien wyglądać następująco:
+
+```
+#include <stdio.h>
+int main(int argc, const char **argv) {
+     printf("%s", argv[1]);
+}
+```
+
+lub:
+
+```
+#include <stdio.h>
+int main(int argc, const char **argv) {
+     puts(argv[1]);
+}
+```
+
+Źródło problemu leży w konstrukcji printf() - przyjmuje ona za pierwszy parametr ciąg, który następnie przeszukuje w poszukiwaniu formatu. Jeśli argv[1] będzie czymś niczym "%s", funkcja printf będzie próbowała wyświetlić ciąg, który nie został podany jako parametr.
