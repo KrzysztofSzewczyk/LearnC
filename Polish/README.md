@@ -14,8 +14,8 @@
    - Zadania
  3. [Bardziej zaawansowane aspekty programowania w C](Ch3) Poziom trudności: ![][star] ![][star] ![][star]
    - Tablice
-   - Napisy
    - Wskaźniki
+   - Napisy
    - Własne typy, struktury, unie, typy wyliczeniowe
    - Zaawansowane operacje matematyczne
    - Powszechne praktyki
