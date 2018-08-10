@@ -9,8 +9,9 @@
    - Zmienne w C
    - Operatory
    - Sterowanie przebiegiem programu
+   - Instrukcje wejścia i wyjścia
    - Procedury i funkcje
-   - Procedury wejścia i wyjścia
+   - Wejście i wyjście do plików
    - Zadania
  3. [Bardziej zaawansowane aspekty programowania w C](Ch3) Poziom trudności: ![][star] ![][star] ![][star]
    - Tablice
