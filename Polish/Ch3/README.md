@@ -861,4 +861,69 @@ int main(int argc, const char **argv) {
 }
 ```
 
-Źródło problemu leży w konstrukcji printf() - przyjmuje ona za pierwszy parametr ciąg, który następnie przeszukuje w poszukiwaniu formatu. Jeśli argv[1] będzie czymś niczym "%s", funkcja printf będzie próbowała wyświetlić ciąg, który nie został podany jako parametr.
+Źródło problemu leży w konstrukcji printf() - przyjmuje ona za pierwszy parametr ciąg, który następnie przeszukuje w poszukiwaniu formatu. Jeśli `argv[1]` będzie czymś niczym "%s", funkcja printf będzie próbowała wyświetlić ciąg, który nie został podany jako parametr.
+
+Czasami łańcuch trzeba interpretować nie jako ciąg znaków, ale jako np. liczbę. Jednak, aby dało się taką liczbę przetworzyć musimy użyć jednej z tych funkcji:
+
+```
+atol, strtol - char * -> long
+atoi - char * -> int
+atoll, strtoll - char * -> long long; istnieje także funckja atoq() - przestarzała, rozszerzenie GNU
+atof, strtod - char * -> double, float
+```
+
+Funkcje `ato*` nie pozwalają na wykrycie błędów przy konwersji i  gdy jest to potrzebne, należy stosować funkcje strto*.
+
+Czasami potrzeba też przekonwertować w drugą stronę - z liczby na łańcuch. Do tego celu służy sprintf() i snprintf(). Funkcja sprintf() jest bardzo podobna do printf(), ale wyniki jej prac zwracane są do pewnego ciągu, a nie zapisywane do strumienia. Należy jednak uważać przy jej użyciu (tak jak wcześniej w przypadku strcpy() i strncpy()). snprintf() dodatkowo przyjmuje jako argument wielkość bufora docelowego.
+Operacje na znakach
+
+Warto też powiedzieć w tym miejscu o operacjach na pojedynczych znakach. Przykład:
+
+```
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main() {
+    int c;
+    while((c = getchar()) != EOF) { /* getchar() wczytuje pojedynczy znak */
+        if(islower(c))
+            c = toupper(c);
+        else if(isupper(c))
+            c = tolower(c);
+        putchar(c);
+    }
+}
+```
+
+Program ten zmienia we wczytywanym tekście wielkie litery na małe i odwrotnie. W tym kodzie wykorzystywane są funkcje operujące na znakach z pliku nagłówkowego `ctype.h`. isupper() sprawdza, czy znak jest wielką literą, toupper() zmienia znak (o ile jest literą) na wielką literę. Analogicznie jest dla funkcji islower() i tolower().
+
+Możesz tak zmodyfikować program, żeby odczytywał dane z pliku podanego jako argument lub wprowadzonego z klawiatury, jako ćwiczenie.
+
+Częste błędy związane z ciągami:
+
+ * Pisanie do niezaalokowanego miejsca
+ ```
+ const char *str;
+ scanf("%s", str);
+ ```
+ * Zapominanie o nullu
+```
+char test[4] = "test"; /* null kończący napis nie zmieścił się */
+```
+ * Nieprawidłowe porównywanie
+```
+char str1[] = "jakis tekst";
+char str2[] = "jakis tekst";
+if(str1 == str2) { /* == porównuje adresy, należy użyć strcmp().  */
+     /* Cośtam */
+}
+```
+
+W dzisiejszych czasach brak obsługi wielu języków praktycznie dyskwalifikuje język. C99 wprowadza możliwość zapisu znaków wg norm Unicode.
+
+Do przechowywania znaków zakodowanych w Unicode należy korzystać z typu wchar_t. Jego rozmiar jest zależny od używanego kompilatora, lecz w większości kompilatorów powinny to być 2 bajty. wchar_t jest częścią C++, w C znajduje się w pliku nagłówkowym stddef.h. Alternatywą jest wykorzystanie gotowych bibliotek (większość jest dostępnych jedynie dla C++ i nie współpracuje z C), które często definiują własne typy, konieczne jest przejście znanych już funkcji jak np. strcpy i strcmp na funkcje dostarczane przez bibliotekę. W tym podręczniku opiszę pierwsze wyjście.
+
+Unicode określa tylko jakiej liczbie odpowiada jaki znak i nie mówi nic o sposobie dekodowania. Jako że Unicode obejmuje 918 tysięcy znaków, zmienna zdolna pomieścić go w całości musi mieć przynajmniej 3 bajty. Procesory nie funkcjonują na zmiennych o tym rozmiarze, a jedynie na zmiennych o wielkościach 1, 2, 4 oraz 8 bajtów (kolejne potęgi liczby 2). Dlatego też trzeba skorzystać ze zmiennej 4-bajtowej. UTF-32 po prostu przydziela każdemu znakowi Unicode kolejne liczby. Jest to najbardziej intuicyjne i wygodne kodowanie, ale ciągi zakodowane w nim są bardzo obszerne co zajmuje dostępną pamięć, spowalnia działanie aplikacji oraz pogarsza wydajność podczas transferu przez sieć. Poza UTF-32 które opisuję istnieje jeszcze wiele innych kodowań. Najpopularniejsze z nich to UTF-8 - od 1-6 bajtów (dla znaków poniżej 65536 do 3 bajtów) na znak, jest skrajnie niewygodny, gdy potrzebne jest przeprowadzanie operacji na tekście niekorzystając z gotowych funkcji,  UTF-16 - 2/4 bajty na znak, ręczne modyfikacje ciągu są bardziej skomplikowane niż przy UTF-32, UCS-2 - 2 bajty na znak, znaki z numerami powyżej 65535 nie są uwzględnione.
+
+Ręczne operacje na ciągach UTF-8 i UTF-16 są trudne, ponieważ w przeciwieństwie do UTF-32, gdzie można określić, które bajty zajmuje który znak, w tych kodowaniach niezbędne jest wstępne określenie rozmiaru pierwszego znaku. Ponadto, gdy korzystamy z nich nie działają wtedy funkcje udostępniane przez biblioteki C do operowania na ciągach znaków.
