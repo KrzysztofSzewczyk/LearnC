@@ -52,6 +52,39 @@
    - Przerwania
    - Pamięć wideo
  9. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
-   - Spis treści w konstrukcji...
+   - Bootloadery
+     - Przedmowa
+     - Wprowadzenie
+     - Historia i podstawowa teoria
+     - Bootloadery
+   - Second-Stage Bootloaders
+     - Architektura systemu i mapowanie pamięci
+     - Tryb chroniony
+     - Programowanie sprzętu bezpośrednio, A20.
+     - Przygotowywanie kompletnego bootloadera
+   - Jądro
+     - Jądro: Podstawy 1
+     - Jądro: Podstawy 2
+     - Podstawowe funkcje biblioteki standardowej, typy jąder.
+     - Przerwania
+     - PIC i PIT
+     - Zarządzanie pamięcią fizyczną
+     - Zarządzanie pamięcią wirtualną
+     - Obsługa klawiatury
+     - Obsługa kontrolera stacji dyskietek
+     - Obsługa DMA
+     - Systemy plików i VFS
+     - Userland
+     - Zarządzanie procesami
+   - Formaty plików
+     - Portable Executable
+   - Mikrokontrolery
+     - 8259A PIC
+     - 8253 PIT
+   - Grafika
+   - Standardy
+     - Multiboot
+     - Scancodes
+     - IA32 i IA64 - kod maszynowy
 
 [star]: https://github.com/kspalaiologos/LearnC/raw/master/common/star.png ""
