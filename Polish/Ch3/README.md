@@ -1056,3 +1056,4 @@ enum way {
 ```
 
 Co spowoduje nadanie tej samej wartości 0 dla elementów UPWARDS i RIGHT - to może skutkować błędem kompilacji, np. w użyciu instrukcji switch powyżej. 
+
