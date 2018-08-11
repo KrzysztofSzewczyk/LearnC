@@ -801,7 +801,33 @@ Inną niebezpieczną funkcją jest np. gets() zamiast której należy używać f
 Napisy można alokować dynamicznie:
 
 ```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
+int main(int argc, const char ** argv) {
+    char isvalid = 0;
+    const char * password;
+    if (argc!=2) {
+        fprintf(stderr, "Usage: %s password", argv[0]);
+        return EXIT_FAILURE;
+    }
+    password = malloc(strlen(argv[1]) + 1); /* +1 dla null */
+    if (!password) {
+        fputs("Out of memory.\n", stderr);
+        return EXIT_FAILURE;
+    }
+    strcpy(password, argv[1]);
+    if (!strcmp(password, "123"))
+        isvalid = 1;
+    if (!isvalid) {
+        fputs("Access Deined.\n", stderr);
+        return EXIT_FAILURE;
+    }
+    puts("Access Granted");
+    free(password);
+    return EXIT_SUCCESS;
+}
 ```
 
 Zawsze możemy też użyć łańcucha typu linked list:
