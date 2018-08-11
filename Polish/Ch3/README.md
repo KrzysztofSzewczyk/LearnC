@@ -1004,3 +1004,29 @@ enum way {
 
 printf("%i %i\n", DOWNWARDS, LEFT); /* = 42 43 */
 ```
+
+Liczby mogą się powtarzać i wcale nie muszą być ustawione w kolejności rosnącej (jak w poprzednim przykładzie):
+
+```
+enum way {
+     UPWARDS=41, DOWNWARDS=42, LEFT=40, RIGHT=43
+};
+
+printf("%i %i\n", DOWNWARDS, LEFT); /* = 42 40 */
+```
+
+Traktowanie przez kompilator typu wyliczeniowego jako liczby pozwala na wydajną ich obsługę, ale też stwarza niebezpieczeństwa. Można przypisywać pod typ wyliczeniowy liczby, nawet nie mające odpowiednika w wartościach, a kompilator może o tym nawet nie ostrzec:
+
+```
+var = 476;
+```
+
+Lub przypisać pod typ wyliczeniowy np takie coś:
+
+```
+enum way {
+     UPWARDS, DOWNWARDS, LEFT=-1, RIGHT
+};
+```
+
+Co spowoduje nadanie tej samej wartości 0 dla elementów UPWARDS i RIGHT - to może skutkować błędem kompilacji, np. w użyciu instrukcji switch powyżej. 
