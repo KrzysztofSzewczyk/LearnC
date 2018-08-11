@@ -72,7 +72,7 @@
      - Zarządzanie pamięcią wirtualną
      - Obsługa klawiatury
      - Obsługa kontrolera stacji dyskietek
-     - Obsługa DMA
+     - DMA
      - Systemy plików i VFS
      - Userland
      - Zarządzanie procesami
