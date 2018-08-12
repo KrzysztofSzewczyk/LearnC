@@ -1,6 +1,7 @@
 # Bardziej zaawansowane aspekty programowania w C
 
 W poprzednim rozdziale wspominałem wskaźniki, tablice i struktury. Nauczysz się posługiwać tym niedługo. Jeśli skończysz lekturę tego działu, możesz wrócić na koniec wcześniejszego - wtedy wiele rzeczy powinno Ci się rozjaśnić.
+Uwaga: Na koniec tego rozdziału postaram się zaznajomić Ciebie bardziej ze środowiskiem Dev-C++ oraz powszechnie używanymi narzędziami w świecie C.
 
 ## Tablice
 
@@ -1057,3 +1058,38 @@ enum way {
 
 Co spowoduje nadanie tej samej wartości 0 dla elementów UPWARDS i RIGHT - to może skutkować błędem kompilacji, np. w użyciu instrukcji switch powyżej. 
 
+Struktury to specjalny typ danych mogący przechowywujący wiele wartości w jednej zmiennej. Od tablic różni się tym, że te wartości mogą być różnych typów. Zmienne zawarte w strukturze nazywamy polami.
+
+Struktury definiuje się w następujący sposób:
+
+```
+struct abc {
+    int f1;
+    int f2;
+    char f3;
+};
+```
+
+gdzie "abc" to nazwa tworzonej struktury.
+Nazewnictwo, ilość i typ pól definiuje się według własnego uznania.
+
+Zmienną posiadającą strukturę tworzy się podając jako jej typ nazwę struktury.
+
+```
+struct abc variable;
+```
+
+Dostęp do poszczególnych pól uzyskuje się przy pomocy kropki.
+
+```
+variable.pole1 = 60;   /* przypisanie liczb do pól */
+variable.pole2 = 2;
+variable.pole3 = 'a';  /* a teraz znaku */
+```
+
+Struktury jako argumenty funkcji mogą być użyte na 2 sposoby:
+
+```
+przekazywanie wartości bez możliwości ich zmiany ( ang. pass by value)
+przekazywanie wartości z możliwością ich zmiany ( ang. pass by reference)
+```
