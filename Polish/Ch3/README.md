@@ -1082,17 +1082,12 @@ struct abc variable;
 Dostęp do poszczególnych pól uzyskuje się przy pomocy kropki.
 
 ```
-variable.pole1 = 60;   /* przypisanie liczb do pól */
-variable.pole2 = 2;
-variable.pole3 = 'a';  /* a teraz znaku */
+variable.f1 = 60;   /* przypisanie liczb do pól */
+variable.f2 = 2;
+variable.f3 = 'a';  /* przypisanie znaku do pola */
 ```
 
-Struktury jako argumenty funkcji mogą być użyte na 2 sposoby:
-
-```
-przekazywanie wartości bez możliwości ich zmiany ( ang. pass by value)
-przekazywanie wartości z możliwością ich zmiany ( ang. pass by reference)
-```
+Struktury jako argumenty funkcji mogą być użyte na 2 sposoby, przekazywanie wartości bez możliwości ich zmiany (pass by value) lub przekazywanie wartości z możliwością ich zmiany (pass by reference)
 
 Podobnie, jak na każdą inną zmienna, wskaźnik może wskazywać także na unię lub strukturę. Oto przykład:
 
