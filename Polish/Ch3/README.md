@@ -1093,3 +1093,32 @@ Struktury jako argumenty funkcji mogą być użyte na 2 sposoby:
 przekazywanie wartości bez możliwości ich zmiany ( ang. pass by value)
 przekazywanie wartości z możliwością ich zmiany ( ang. pass by reference)
 ```
+
+Podobnie, jak na każdą inną zmienna, wskaźnik może wskazywać także na unię lub strukturę. Oto przykład:
+
+```
+typedef struct {
+    int p1, p2;
+} structure;
+
+int main () {
+    structure s = { 0, 0 };
+    structure * ptr = &s;
+    ptr->p1 = 2;
+    ptr->p2 = 3;
+    return 0;
+}
+```
+
+`ptr->p1` jest z definicj równoważne `(*ptr).p1`, ale drugi sposób bardziej przejrzysty i powszechnie stosowany. Wyrażenie `ptr.p1` spowoduje błąd kompilacji (strukturą jest `*ptr`, a `ptr` jest na nią wskaźnikiem).
+
+Struktury mają pewne dodatkowe możliwości w porównaniu do zmiennych. W przeciwieństwie do zmiennej poszczególny element struktury może mieć nawet 1 bit. Aby móc zdefiniować taką zmienną, należy użyć pola bitowego. Przykład:
+
+```
+struct abc {
+    unsigned int p1:4, /* 4 bity */
+             p2:8, /* 8 bitów */
+             p3:1, /* 1 bit */
+             p4:3; /* 3 bity */
+};
+```
