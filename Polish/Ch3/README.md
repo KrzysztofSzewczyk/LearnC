@@ -1122,4 +1122,70 @@ Pola tej struktury mają w sumie rozmiar 16 bitów, jednak można odwoływać si
 
 Z pewnością każdy widział jakiś przykład listy (np zakupów). C też oferuje listy, jednak w programowaniu będą służyły do czegoś innego. Jeśli napiszesz wspaniały i mega zaawansowany program do np znajdowania liczb pierwszych, każdą kolejną liczbę pierwszą może wyświetlać po prostu na ekran ale wiesz też, że liczba jest pierwsza, jeśli nie dzieli się przez żadną liczbę pierwszą ją poprzedzającą, mniejszą od pierwiastka z sprawdzanej liczby. Możesz wykorzystać znalezione wcześniej liczby do przyspieszenia działania programu. Jednak, trzeba je mądrze przechować w pamięci. Tablice mają ograniczenie - niezbędne jest ustalenie ich rozmiaru z góry. Jeśli tablica zostałaby zapełniona, co chwilę trzeba byłoby przydzielać nowy obszar pamięci o rozmiarze poprzedniego rozmiaru + rozmiar zmiennej, przechowującej nowo znalezioną liczbę, potem kopiować zawartość starego obszaru do nowego, następnie zwalniać stary, nieużywany obszar pamięci, a na końcu w ostatnim elemencie nowej tablicy zapisać znalezioną liczbę.
 
-Jest dość dużo do zrobienia przy takim podejściu, a kopiowanie całej zawartości jednego obszaru do drugiego jest czasochłonne. W takim przypadku można użyć listy. Tworząc listę można w prosty sposób przechować nowo znalezione liczby. Przy użyciu listy postępowanie ograniczy się do przydzielenia obszaru pamięci, aby przechować wartość obliczeń i dodawania do listy nowego elementu.
+Jest dość dużo do zrobienia przy takim podejściu, a kopiowanie całej zawartości jednego obszaru do drugiego jest czasochłonne. W takim przypadku można użyć listy. Tworząc listę można w prosty sposób przechować nowo znalezione liczby. Przy użyciu listy postępowanie ograniczy się do przydzielenia obszaru pamięci, aby przechować wartość obliczeń i dodawania do listy nowego elementu. Dodatkowo, lista zajmuje tylko tyle pamięci, ile potrzeba na aktualną liczbę elementów. Pusta tablica zajmuje tyle samo miejsca co pełna tablica.
+
+W C aby stworzyć listę trzeba użyć struktur, ponieważ niezbędne jest przechowanie co najmniej dwóch wartości - pewną zmienną (np. liczbę pierwszą) i wskaźnik na kolejny element listy.
+
+Przyjmuję, że szukając liczb pierwszych nie zostaną przekroczone możliwości typu unsigned long:
+
+```
+typedef struct element {
+    struct element *next;
+    unsigned long val;
+} list;
+```
+
+Uwaga: Nazwy z `_t` na końcu (skrót od `_type`, najprawdopodobniej) są zarezerwowane i używanie ich jest niezalecane.
+
+Jeśli zechcemy napisać program do wyszukiwania tych liczb, pierwszym elementem naszej listy będzie struktura, która będzie przechowywała liczbę 2. Na co będzie wskazywało pole next? Ponieważ na początku działania programu istnieje tylko jeden element listy, pole next powinno wskazywać na NULL. Pole next ostatniego elementu listy będzie wskazywało NULL - po tym program pozna, że lista się skończyła.
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct element {
+    struct element * next;
+    unsigned long val;
+} list;
+
+list * first;
+
+int main () {
+    unsigned long i = 3;
+    const unsigned long END = 1000;
+    first = malloc (sizeof(list));
+    first->val = 2;
+    first->next = NULL;
+    for (; i<=END; ++i) {
+        /* Kod do wyszukiwania liczb tutaj */
+    }
+    print(first);
+    return 0;
+}
+```
+
+Aby wypisać listę, należy sprawdzić każdy jej element. Elementy listy są połączone polem next, aby przejrzeć listę używa się takiego algorytmu:
+
+```
+void wypisz_liste(list * s) {
+    list * ptr = s;
+    while (ptr != NULL) {
+        printf ("%lu\n", ptr->val);
+        ptr = ptr->next;
+    }
+}
+```
+Jak powinien wyglądać kod dodający element do listy?
+
+```
+void dodaj_do_listy (list * s, unsigned long num) {
+    list * ptr, *new;
+    ptr = s;
+    while (ptr->next != NULL) {
+        ptr = ptr->next;
+    }
+    new = malloc (sizeof(list));
+    new->val = num;
+    new->next = NULL;
+    ptr->next = new;
+}
+```
