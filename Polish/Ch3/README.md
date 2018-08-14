@@ -1117,3 +1117,9 @@ struct abc {
              p4:3; /* 3 bity */
 };
 ```
+
+Pola tej struktury mają w sumie rozmiar 16 bitów, jednak można odwoływać się do nich w taki sam sposób jak do innych elementów struktury. W ten sposób efektywniej wykorzystuje się pamięć, jednak istnieją pewne zjawiska, których trzeba być świadomym przy stosowaniu pól bitowych. Więcej na ten temat w rozdziale przenośność programów. Pola bitowe znalazły zastosowanie w implementacjach protokołów sieciowych.
+
+Z pewnością każdy widział jakiś przykład listy (np zakupów). C też oferuje listy, jednak w programowaniu będą służyły do czegoś innego. Jeśli napiszesz wspaniały i mega zaawansowany program do np znajdowania liczb pierwszych, każdą kolejną liczbę pierwszą może wyświetlać po prostu na ekran ale wiesz też, że liczba jest pierwsza, jeśli nie dzieli się przez żadną liczbę pierwszą ją poprzedzającą, mniejszą od pierwiastka z sprawdzanej liczby. Możesz wykorzystać znalezione wcześniej liczby do przyspieszenia działania programu. Jednak, trzeba je mądrze przechować w pamięci. Tablice mają ograniczenie - niezbędne jest ustalenie ich rozmiaru z góry. Jeśli tablica zostałaby zapełniona, co chwilę trzeba byłoby przydzielać nowy obszar pamięci o rozmiarze poprzedniego rozmiaru + rozmiar zmiennej, przechowującej nowo znalezioną liczbę, potem kopiować zawartość starego obszaru do nowego, następnie zwalniać stary, nieużywany obszar pamięci, a na końcu w ostatnim elemencie nowej tablicy zapisać znalezioną liczbę.
+
+Jest dość dużo do zrobienia przy takim podejściu, a kopiowanie całej zawartości jednego obszaru do drugiego jest czasochłonne. W takim przypadku można użyć listy. Tworząc listę można w prosty sposób przechować nowo znalezione liczby. Przy użyciu listy postępowanie ograniczy się do przydzielenia obszaru pamięci, aby przechować wartość obliczeń i dodawania do listy nowego elementu.
