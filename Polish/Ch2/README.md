@@ -638,7 +638,7 @@ Od instrukcji while czasami wygodniejsza jest instrukcja for. Umożliwia ona wpi
 for (expr1; expr2; expr3) {
     expr4;
 }
-expr5
+expr5;
 ```
 
 Zasada działania tej pętli jest podobna w językach takich jak Java lub C#, więc jeśli znasz już te języki, możesz pominąć mały opis poniżej.
@@ -721,7 +721,7 @@ for (a = 1; a != 9; ++a) {
 }
 ```
 
-I tutaj pojawia się problem. Jak wyjść z takiej konstrukcji:?
+I tutaj pojawia się problem. Jak wyjść z takiej konstrukcji?
 
 ```
 while(...) {
@@ -736,7 +736,7 @@ Jeśli jednak taka się zdarzy - sam nie wiem, co może się stać jeśli użyj�
 
 ```
 etykieta:
-/* blablabla */
+/* ... */
 goto etykieta; /* Skoczy do kodu w miejscu `etykieta`, i rozpocznie jego wykonywanie */
 ```
 
@@ -1262,22 +1262,22 @@ Możesz, oczywiście, zwracać więcej danych niż 1, aczkolwiek znacznie wybieg
 #include <stdio.h>
 
 typedef struct {
-	int r1;
-	float r2;
-	char r3;
-	char r4[100];
-	double r5;
+    int r1;
+    float r2;
+    char r3;
+    char r4[100];
+    double r5;
 } rtype;
 
 rtype f(void) {
-	rtype ret = {9, 8.7, 'O', "Hello World", 65.432};
-	return ret;
+    rtype ret = {9, 8.7, 'O', "Hello World", 65.432};
+    return ret;
 }
 
 int main(void) {
-	rtype data;
+    rtype data;
     data = f();
-	printf("{%d, %f, %c, %s, %f}\n", data.r1, data.r2, data.r3, data.r4, data.r5);
+    printf("{%d, %f, %c, %s, %f}\n", data.r1, data.r2, data.r3, data.r4, data.r5);
 }
 ```
 
