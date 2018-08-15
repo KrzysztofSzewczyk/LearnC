@@ -31,29 +31,15 @@ C posiada 13 typów podstawowych i 34 słów kluczowych (C89) - jest to bardzo p
 ## Jak używać kompilatora?
 
 Uwaga: Zakładam że masz średnio rozbudowaną wiedzę informatyczną (tj. taką, która pozwala np. na korzystanie z powłoki)
+Pierwszym krokiem będzie pobranie edytora - Notepad++, lub skorzystanie z już istniejących - Vim, Emacs.
+Jeśli jesteś użytkownikiem systemu unixopodobnego, zakładam że posiadasz zainstalowane GCC.
+Jako użytkownik Windowsa powinieneś pobrać MinGW a następnie dodać ścieżkę z plikami wykonywalnymi GCC do PATH.
 
-Przez długi czas nie będziesz potrzebował używać kompilatora bezpośrednio (tj. z wiersza polecenia używanego przez ciebie systemu operacyjnego). Zamiast tego, lepiej jest pobrać wyspecjalizowane środowisko, któro pomoże Ci w programowaniu. Zawsze będzie ci prościej kliknąć jeden przycisk zamiast wpisywać długie komendy w wierszu polecenia i ręcznie tworzyć pliki budujące twoją aplikację. **Uwaga: Dev-C++, CodeBlocks, MSVS to NIE KOMPILATORY, kompilatorem jest np. GCC, którego będziemy używać.** Środowisko, czyli np. Dev-C++, to program w którym piszemy nasze programy (coś jak dokumenty w Wordzie). Edytorem jest np. Notepad++, którego osobiście używam.
+W edytorze należy zapisać plik, skompilować i uruchomić go (\*nix):
 
-W tej książce będę opisywał środowisko znane również jako Dev-C++. Możesz je pobrać z [tego miejsca](https://downloads.sourceforge.net/project/orwelldevcpp/Setup%20Releases/Dev-Cpp%205.11%20TDM-GCC%204.9.2%20Setup.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Forwelldevcpp%2Ffiles%2FSetup%2520Releases%2FDev-Cpp%25205.11%2520TDM-GCC%25204.9.2%2520Setup.exe%2Fdownload%3Fuse_mirror%3Ddatapacket%26r%3Dhttp%253A%252F%252Forwelldevcpp.blogspot.com%252F%26use_mirror%3Ddatapacket&ts=1534000752).
-
-Uwaga: Jeśli jesteś doświadczonym programistą i nie lubisz Dev-C++ - to nie jest środowisko którym trzeba posługiwać się do końca życia. Orwell Dev-C++ jest znośne, aczkolwiek Bloodsheed Dev-C++ jest bardziej popularne - stąd bierze się zła sława Dev'a.
-
-Jeśli jesteś natomiast początkującym programistą, radzę Ci zmienić potem środowisko, na np. Microsoft Visual Studio lub po prostu posługiwać się konsolą i edytorem.
-
-Jeśli jesteś programistą który zna już inny język, możesz spokojnie zainstalować inne środowisko i się do niego dostosować (bo zakładam, że potrafisz).
-
-Uwaga: Nie sugeruj się nazwą! Dev-C++ można używać do programowania w C.
-
-Po uruchomieniu rozpocznie się konfiguracja.
-
-![Screenshot](Screenshot_1.bmp "Screenshot")
-
-Po kliknięciu "Next >" pojawi się dialog, w którym należy zaznaczyć 'Yes, I want to use this feature'. Na następnej stronie nie czynimy zmian i klikamy "Next >". Rozpocznie się cachowanie plików. Następnie zaznaczamy OK. Dev-C++ zostanie uruchomione.
-
-W okienku wskazówek możemy znaleźć ciekawe informacje.
-
-![Screenshot](Screenshot_2.bmp "Screenshot")
-
-Z menu Plik wybieramy opcję Nowy, a następnie Plik Źródłowy. Teraz, umiesz już obsłużyć w podstawowym stopniu IDE.
+```
+gcc main.c -o main.o
+./main
+```
 
 **[Powrót do spisu treści](..)**
