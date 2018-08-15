@@ -1293,3 +1293,6 @@ Funkcja usuwa z listy wszystkie wystąpienia danego elementu. Wskaźnik ptr jest
 Funkcja ta działa poprawnie tylko wtedy, gdy nie ma potrzeby usuwania pierwszego elementu. Można to poprawić - dodając instrukcję warunkową do funkcji lub dodając do listy "głowę" - pierwszy element nie przechowujący niczego, ale upraszczający operacje na liście. Zostawię to dla Ciebie w ramach ćwiczenia.
 
 Cały powyższy przykład omawiał tylko jeden przypadek listy - listę jednokierunkową. Jednak istnieją jeszcze inne typy list, np. lista jednokierunkowa cykliczna, lista dwukierunkowa oraz dwukierunkowa cykliczna. Różnią się one od siebie tylko tym, że w przypadku list dwukierunkowych - w strukturze list znajduje się jeszcze pole, które wskazuje na element poprzedni, a w przypadku list cyklicznych - ostatni element wskazuje na pierwszy (nie rozróżnia się elementu pierwszego ani ostatniego)
+
+
+## Zaawansowane operacje matematyczne
