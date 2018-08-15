@@ -1189,3 +1189,107 @@ void tolist (list * s, unsigned long num) {
     ptr->next = new;
 }
 ```
+
+Jak sprawdzić czy liczba jest pierwsza, i zapisać ją do listy? 
+
+```
+int isprime(list * s, int num) {
+    list * ptr;
+    wsk = s;
+    while (wsk != NULL) {
+        if ((num % ptr->val)==0) return 0;
+        wsk = wsk->next;
+    }
+    return 1;
+}
+/* Gdzieś w main() */
+for (; i<=END; ++i) {
+    if (jest_pierwsza(first, i))
+        dodaj_do_listy (first,i);
+}
+```
+
+Oto cały kod programu:
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct element {
+    struct element * next;
+    unsigned long val;
+} list;
+
+list * first;
+
+void add (list * s, unsigned long num) {
+    list * ptr, *new;
+    ptr = s;
+    while (ptr->next != NULL)
+        ptr = ptr->next;
+    new = (list *) malloc (sizeof(list));
+    new->val = num;
+    new->next = NULL;
+    ptr->next = new;
+}
+
+void print(list * s) {
+    list * ptr = s;
+    while (ptr != NULL) {
+        printf ("%lu\n", ptr->val);
+        ptr = ptr->next;
+    }
+}
+
+int isprime(list * s, int num) {
+    list * ptr;
+    ptr = s;
+    while (ptr != NULL) {
+        if ((num%ptr->val)==0) return 0;
+        ptr = ptr->next;
+    }
+    return 1;
+}
+
+int main () {
+    unsigned long START = 3;
+    const unsigned long END = 1000;
+    first = (list *) malloc (sizeof(list));
+    first->val = 2;
+    first->next = NULL;
+    for (; START!=END; ++START) {
+        if (isprime(first, START))
+            add(first, START);
+    }
+    print(first);
+}
+```
+
+Jak można by wykonać usuwanie elementu z listy? Najprościej można zrobić:
+
+```
+ptr->next = ptr->next->next;
+```
+
+Element, na który wskazywał wcześniej `ptr->next` przestaje być dostępny i zaśmieca pamięć więc trzeba go usunąć. Aby usunąć element potrzebujemy wskaźnika do elementu go poprzedzającego (po to, by nie rozerwać listy). Przykład:
+
+```
+void remove(list * s, int el) {
+    list * ptr = s;
+    while (ptr->next != NULL) {
+        if (ptr->next->val == element) {
+            list * removed = ptr->next;
+            ptr->next = removed->next;
+            free(removed);
+        } else {
+            ptr = ptr->next;
+        }
+    }
+}
+```
+
+Funkcja usuwa z listy wszystkie wystąpienia danego elementu. Wskaźnik ptr jest przesuwany tylko wtedy, gdy elementy nie były usuwane. Gdyby był przesuwany zawsze, program przegapiłby element gdyby występował kilka razy pod rząd.
+
+Funkcja ta działa poprawnie tylko wtedy, gdy nie ma potrzeby usuwania pierwszego elementu. Można to poprawić - dodając instrukcję warunkową do funkcji lub dodając do listy "głowę" - pierwszy element nie przechowujący niczego, ale upraszczający operacje na liście. Zostawię to dla Ciebie w ramach ćwiczenia.
+
+Cały powyższy przykład omawiał tylko jeden przypadek listy - listę jednokierunkową. Jednak istnieją jeszcze inne typy list, np. lista jednokierunkowa cykliczna, lista dwukierunkowa oraz dwukierunkowa cykliczna. Różnią się one od siebie tylko tym, że w przypadku list dwukierunkowych - w strukturze list znajduje się jeszcze pole, które wskazuje na element poprzedni, a w przypadku list cyklicznych - ostatni element wskazuje na pierwszy (nie rozróżnia się elementu pierwszego ani ostatniego)
