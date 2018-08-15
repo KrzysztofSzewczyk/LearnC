@@ -1166,7 +1166,7 @@ int main () {
 Aby wypisać listę, należy sprawdzić każdy jej element. Elementy listy są połączone polem next, aby przejrzeć listę używa się takiego algorytmu:
 
 ```
-void wypisz_liste(list * s) {
+void print(list * s) {
     list * ptr = s;
     while (ptr != NULL) {
         printf ("%lu\n", ptr->val);
@@ -1177,7 +1177,7 @@ void wypisz_liste(list * s) {
 Jak powinien wyglądać kod dodający element do listy?
 
 ```
-void dodaj_do_listy (list * s, unsigned long num) {
+void tolist (list * s, unsigned long num) {
     list * ptr, *new;
     ptr = s;
     while (ptr->next != NULL) {
