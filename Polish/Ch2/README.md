@@ -16,13 +16,12 @@ int main(void) {
 
 ```
 
-![Screenshot](Screenshot_3.bmp "Screenshot")
-Aby uruchomić nasz program, naciśnij F9. Najpierw jednak, zapisz plik gdziekolwiek jako `main.c`. Końcówka `.c` jest bardzo ważna!
-Jeśli ukazało ci się okno konsoli z napisem "Hello, World!", środowisko którego używasz działa poprawnie.
+Jeśli ukazało ci się po uruchomieniu "Hello, World!", wszystko działa poprawnie.
 
 Uwaga: W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że tak można robić i tak się czasami robi, ale użycie Y będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
 Uwaga2: Oczywiście jest szansa na to że gdziekolwiek może się pojawić drobny błąd, ponieważ sam podręcznik nie jest jeszcze ukończony. Bardzo miłe byłoby zgłaszanie ewentualnych błędów.
 Uwaga3: Upewnij się, że tryb twojego kompilatora jest przełączony na C89.
+Uwaga4: Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3, 4 - w których są już przedstawione standardy C99 i C11 (a nie C89).
 
 ## Podstawowe pojęcia
 
