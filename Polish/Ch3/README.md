@@ -1295,3 +1295,31 @@ Cały powyższy przykład omawiał tylko jeden przypadek listy - listę jednokie
 
 
 ## Zaawansowane operacje matematyczne
+
+Uwaga: W tym momencie, przerzucamy się na C11. 
+
+### Liczby
+
+W tym rozdziale przeprowadzę "rewizję" wiadomości, których miałeś okazję się nauczyć.
+Liczby mogą być całkowite (int, char), wymierne (z pomocą mpq_t z GMP lub z użyciem struktur), zmiennoprzecinkowe (float, double), zespolone (`<complex.h>`) i kwaterniony (za pomocą struktur). Rodzaj liczby definiują specyfikatory i system pozycyjny. W C nie możemy przeprowadzać operacji na liczbach niewymiernych (chyba, że korzysta się z obliczeń symbolicznych).
+
+Wartość binarna jest reprezentowana w następujący sposób:
+
+1. prefiks 0b/0B
+2. sekwencja ‘0’ i ‘1’
+3. sufiks ‘L’/‘UL’
+
+Następujące zapisy są do siebie równoważne:
+
+     42;       // dziesiętny
+     0x2a;     // heksadecymalny
+     052;      // oktalny
+     0b101010; // binarny
+
+### Prezentacja liczb rzeczywistych w pamięci komputera
+
+W wielu książkach ten temat praktycznie nie jest omawiany. Dzięki niemu zrozumiesz, jak komputer radzi sobie z przecinkiem oraz dlaczego niektóre obliczenia dają niezbyt dokładne wyniki co często intryguje młodszych programistów.
+
+Do przechowywania liczb rzeczywistych przeznaczone są 3 typy - `float`-32 bity, `double`-64 bity, `long double`-80 bitów. Komputer nie ma fizycznej możliwości zapisania przecinka. Jak zapisać np. 4.5? Rozpocznijmy od rozbicia tego na potęgi dwójki: `4 = 1*2^2 + 0*2^1 + 0*2^0`. Co z częścią dziesiętną? 0.5 = 2^-1. Zatem liczba zapisana w ten sposób to `100.1`.
+
+Istnieje prosty ale sprytny pomysł ustawienia przecinka jak najbliżej początku liczby i mnożenia jej przez odpowiednią potęgę dwójki. Taki sposób przechowywania liczb nazywa się zmiennoprzecinkowym, a proces przekształcania liczby z postaci czytelnej przez człowieka na format zmiennoprzecinkowy nazywa się normalizacją. Po normalizacji `101.1` będzie wyglądać tak - `1.0001*22`. W ten sposób w pamięci komputera znajdą się dwie informacje - liczba zakodowana w pamięci z "wirtualnym" przecinkiem oraz numer potęgi dwójki. Te dwie informacje wystarczają do przechowania wartości liczby. Jednak pojawia się inny problem - co się stanie, jeśli trzeba będzie przełożyć liczbę typu 1/3? Tutaj wychodzą na wierzch pewne niedociągnięcia komputera w dziedzinie matematyki. 1/3 daje w rozwinięciu dziesiętnym 0.(3). Nie można przechować całego jej rozwinięcia (wynika to z ograniczeń typu danych, który ma on skończoną ilość bitów), dlatego przechowuje się tylko pewne przybliżenie liczby, które tym bardziej dokładne im więcej bitów ma dany typ. Do obliczeń wymagających dokładnych danych można użyć `double` lub `long double`. W większości przeciętnych programów takie problemy nie występują. Początkujący programista nie odpowiada za tworzenie programów sterujących lotem statku kosmicznego (kalkulator, never forget), więc drobne przekłamania na pokaźnych odległościach po przecinku nie stanowią większego problemu. 
