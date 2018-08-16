@@ -1,7 +1,6 @@
 # Bardziej zaawansowane aspekty programowania w C
 
 W poprzednim rozdziale wspominałem wskaźniki, tablice i struktury. Nauczysz się posługiwać tym niedługo. Jeśli skończysz lekturę tego działu, możesz wrócić na koniec wcześniejszego - wtedy wiele rzeczy powinno Ci się rozjaśnić.
-Uwaga: Na koniec tego rozdziału postaram się zaznajomić Ciebie bardziej ze środowiskiem Dev-C++ oraz powszechnie używanymi narzędziami w świecie C.
 
 ## Tablice
 
