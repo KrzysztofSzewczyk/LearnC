@@ -1327,3 +1327,52 @@ Istnieje prosty ale sprytny pomysł ustawienia przecinka jak najbliżej początk
 W komputerze liczby rzeczywiste nie są tym samym, czym w matematyce. Komputery nie potrafią przechować każdej liczby, w związku z tym obliczenia prowadzone przy użyciu komputera mogą być niedokładne i odbiegać od prawidłowych wyników. Szczególnie ważne jest to przy programowaniu aplikacji inżynieryjnych oraz w medycynie. W takich sytuacjach będziesz zmuszony do zastosowania obliczeń symbolicznych.
 
 W obliczeniach numerycznych występują błędy etapu operacji (błędne dane wejściowe niezgodne z oczekiwanym typem, dane wejściowe powodują błąd rezultatu) oraz rodzaju operacji, głównie zmiennoprzecinkowych (porównywanie, odejmowanie podobnych liczb, błędy zaokrąglania, underflow i overflow).
+
+Porównywanie liczb zmiennoprzecinkowych może nie być dokładne. Jak **nie** porównywać?
+
+```
+if(abs(a-b) < epsilon)
+if(abs((a-b)/b) < epsilon)
+```
+
+Więc, jak właściwie porównywać liczby zmiennoprzecinkowe?
+
+```
+if(fpclassify(x) == FP_ZERO )
+```
+
+Sumowanie liczb zmiennoprzecinkowych może nie być takie proste, jak może się to wydawać!
+
+```
+#include <stdio.h>
+
+int main () {
+    float a = 0;
+    int i = 0;
+    for (; i<100; i++)
+        a += 1.0/3.0;
+    printf ("%f\n", a);
+}
+```
+
+100*(1/3) = 33.(3). Jednak zdaniem C może to wyglądać inaczej:
+
+```
+33.333351
+```
+
+Jeśli ilość iteracji zostanie zwiększona, błąd również się powiększy. I<100000:
+
+```
+33356.554688
+```
+
+Jak widać, błąd przesunął się na liczbę dziesiątek.
+
+Utrata precyzji wynika z sumowania dużej liczby z małą i odejmowania prawie równych liczb.
+
+Epsilon maszynowy jest wartością określającą precyzję obliczeń numerycznych wykonywanych na liczbach zmiennoprzecinkowych. Jest to najmniejsza liczba nieujemna, której dodanie do jedności daje wynik nierówny 1.
+
+Im mniejsza wartość epsilona maszynowego, tym większa jest względna precyzja obliczeń. Wartości tej nie należy mylić ze (zwykle dużo niższą) najmniejszą liczbą uznawaną przez maszynę za różną od zera.
+
+Epsilon dla typu double można znaleźć w pliku `<float.h>` pod nazwą `DBL_EPSILON`.
