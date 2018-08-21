@@ -1376,3 +1376,29 @@ Epsilon maszynowy jest wartością określającą precyzję obliczeń numeryczny
 Im mniejsza wartość epsilona maszynowego, tym większa jest względna precyzja obliczeń. Wartości tej nie należy mylić ze (zwykle dużo niższą) najmniejszą liczbą uznawaną przez maszynę za różną od zera.
 
 Epsilon dla typu double można znaleźć w pliku `<float.h>` pod nazwą `DBL_EPSILON`.
+
+W `<float.h>` są też zdefiniowane inne stałe; przede wszystkim DBL_MIN , czyli najmniejszą liczbę typu double większą od zera, uznawaną za różną od zera oraz DBL_MAX, czyli największą dodatnią liczbę typu double.
+
+W `<math.h>` natomiast znajduje się definicja `NaN`i `INFINITY`. Wyświetlanie wszystkich omówionych stałych:
+
+```
+#include <stdio.h>
+#include <math.h>
+#include <float.h>
+
+int main(void) {
+    printf("DBL_MIN=%E\n", DBL_MIN);
+    printf("DBL_MAX=%E\n", DBL_MAX);
+    printf("INFINITY=%E\n",  INFINITY);
+    printf("NAN=%E\n", NAN);
+}
+```
+
+=>
+
+```
+DBL_MIN=2.225074E-308
+DBL_MAX=1.797693E+308
+INFINITY=INF
+NAN=NAN
+```
