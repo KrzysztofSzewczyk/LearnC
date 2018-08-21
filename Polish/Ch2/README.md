@@ -19,9 +19,14 @@ int main(void) {
 Jeśli ukazało ci się po uruchomieniu "Hello, World!", wszystko działa poprawnie.
 
 Uwaga: W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że tak można robić i tak się czasami robi, ale użycie Y będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
+
 Uwaga2: Oczywiście jest szansa na to że gdziekolwiek może się pojawić drobny błąd, ponieważ sam podręcznik nie jest jeszcze ukończony. Bardzo miłe byłoby zgłaszanie ewentualnych błędów.
+
 Uwaga3: Upewnij się, że tryb twojego kompilatora jest przełączony na C89.
+
 Uwaga4: Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3, 4 - w których są już przedstawione standardy C99 i C11 (a nie C89).
+
+Uwaga5: Czasami będę ujawniał przed Tobą "wiedzę tajemną" - bardziej zaawansowane tajniki programowania, których możesz nie rozumieć. Nie ma w tym nic złego.
 
 ## Podstawowe pojęcia
 
