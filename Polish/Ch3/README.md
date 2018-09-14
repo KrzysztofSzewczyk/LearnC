@@ -1402,3 +1402,35 @@ DBL_MAX=1.797693E+308
 INFINITY=INF
 NAN=NAN
 ```
+
+Przekroczenie zakresu liczb całkowitych może dotyczyć liczb całkowitych bez znaku ("Unsigned integers are defined to wrap around.") lub ze znakiem (powoduje zachowanie niezdefiniowane lub abs(INT_MIN)).
+Jak zapobiec tego typu błędom? Trzeba sprawdzać dane przed wykonaniem działań lub po wykonaniu działań (może być niebezpieczne, ze względu na niezdefiniowane zachowanie w jednym z przypadków), możłiwością jest również zwiększenie limitów poprzez zmianę typu lub użycie biblioteki o dowolnej precyzji (GMP),
+
+Można wypisać precyzję liczby zmiennoprzecinkowej:
+
+```
+#include <stdio.h>
+#include <float.h> 
+
+int main(void) {
+    printf("float - %d\n", FLT_DIG);
+    printf("double - %d\n", DBL_DIG);
+    printf("long double - %d\n", LDBL_DIG);
+}
+```
+
+Korzystając z `isnormal()` zdefiniowanej w `math.h` można samodzielnie poszukać przybliżenia DBL_MIN i liczby subnormalnej.
+
+Generowanie liczb subnormalnych:
+
+```
+#include <stdio.h>
+int main(void) {
+    double d=1.0;
+    while (d>0) {printf("%e\n",d); d=d/2.0;}
+}
+```
+
+Wyjście może kończyć się na "4.940656e-324", ale przy kompilacji z `-ffast-math`, liczby subnormalne są zaokrąglane do zera. Liczby subnormalne wydłużają czas obliczeń.
+
+Część ułamkową można otrzymać w wyniku odjęcia od liczby float, jej wartości interpretowanej jako int - `float f = r - (int)r;`
