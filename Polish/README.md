@@ -48,7 +48,7 @@
    - Optymalizacja
    - Spis instrukcji
  8. [Assembler i DOS](Ch8) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
-   - Czemu Ms-DOS?
+   - Czemu MS-DOS?
    - Przerwania
    - Pamięć wideo
  9. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
