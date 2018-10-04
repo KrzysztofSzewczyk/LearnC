@@ -1431,6 +1431,61 @@ int main(void) {
 }
 ```
 
-Wyjście może kończyć się na "4.940656e-324", ale przy kompilacji z `-ffast-math`, liczby subnormalne są zaokrąglane do zera. Liczby subnormalne wydłużają czas obliczeń.
+Wyjście może kończyć się na "4.940656e-324", ale przy kompilacji z `-ffast-math`, liczby subnormalne są zaokrąglane do zera. Liczby subnormalne wydłużają czas obliczeń. Liczby subnormalne mają wpływ na zwiększenie czasu wymaganego na wykonanie obliczeń.
 
 Część ułamkową można otrzymać w wyniku odjęcia od liczby float, jej wartości interpretowanej jako int - `float f = r - (int)r;`
+
+Nagłówki zawierające funkcje matematyczne to `<float.h>`, `<math.h>` i `<complex.h>`. Dokładny opis tych funkcji można znaleźć w dalszym rozdziale.
+
+Aby dołączyć do programu funkcje matematyczne, do wiersza polecenia należy dodać przełącznik `-lm`.
+
+Stałe zdefiniowane w <math.h> to:
+
+```
+M_E - e
+M_LOG2E - log2 e
+M_LOG10E - log10 e
+M_LN2 - ln 2
+M_LN10 - ln 10
+M_PI - π
+M_PI_2 - π/2
+M_PI_4 - π/4
+M_1_PI - 1/π
+M_2_PI - 2/π
+```
+
+**Operacje na liczbach zespolonych są częścią C11, więc niezbędne będzie dołączenie przełącznika `-std=c11`!**
+
+Dotychczas omawiałem wyłącznie liczby rzeczywiste, lecz najnowszy standard C umożliwia korzystanie także z liczb zespolonych.
+
+Aby móc korzystać z liczb zespolonych należy w nagłówku programu umieścić następujące polecenie preprocesora:
+
+```
+#include <complex.h>
+```
+
+powodujące dołączenie biblioteki obsługującej liczny zespolenie.
+
+Liczba zespolona ma postać `z = a + b * i`, gdzie a, b są liczbami rzeczywistymi, a i jest jednostką urojoną: `i*i = (-1).`
+
+W pliku complex.h i zdefiniowane jest jako I. Przykład prostego programu operującego na liczbach zespolonych:
+
+```
+#include <math.h>
+#include <complex.h>
+#include <stdio.h>
+
+int main () {
+    float _Complex z = 4+2.5*I;
+    printf ("z: %f+%fi\n", creal(z), cimag (z));
+    return 0;
+}
+```
+
+=>
+
+```
+z: 4.00+2.50i
+```
+
+W programie zamieszczonym powyżej użyto dwóch funkcji - `creal` i `cimag`. `creal` zwraca część rzeczywistą liczby zespolonej, a `cimag` - zwraca część urojoną liczby zespolonej
