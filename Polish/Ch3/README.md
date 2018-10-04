@@ -1516,5 +1516,4 @@ Aby ustawić bit w liczbie, użyj takiego wyrażenia: `k |= 1 << n`, gdzie K jes
 
 Aby wyzerować bit, użyj `(k |= (1 << (n)))`, gdzie K jest liczbą a N to numer bitu.
 
-
-
+**[Powrót do spisu treści](..)**
