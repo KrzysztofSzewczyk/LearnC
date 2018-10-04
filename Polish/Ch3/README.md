@@ -1489,3 +1489,32 @@ z: 4.00+2.50i
 ```
 
 W programie zamieszczonym powyżej użyto dwóch funkcji - `creal` i `cimag`. `creal` zwraca część rzeczywistą liczby zespolonej, a `cimag` - zwraca część urojoną liczby zespolonej
+
+## Powszechne praktyki stosowane podczas programowania w C
+
+**Nie** będe uczyć, jak należy stawiać klamry **ani** który sposób nazewnictwa zmiennych jest najlepszy, prowadzone są o to spory z których rzadko cokolwiek wynika. Zaprezentowane tu rozwiązania mają konkretny i bezdyskusyjny wpływ na jakość tworzonych programów.
+
+W większości obiektowych języków programowania obiekty nie mogą być tworzone bezpośrednio, otrzymuje się je wywołując specjalną metodę danej klasy (konstruktor). Konstruktory są ważne, ponieważ pozwalają zapewnić obiektowi odpowiedni stan początkowy. Destruktory wywoływane na końcu czasu życia obiektu, gdy obiekt ma wyłączny dostęp do pewnych zasobów, dbają o uwolnienie zaalokowanych zasobów.
+
+C nie jest językiem zorientowanym obiektowo (ale może być; patrz [tu](https://gist.github.com/kspalaiologos/8f7915abd2011d795baba83a42d207c7), *ang.*), nie ma wbudowanego wsparcia dla konstruktorów i destruktorów. Często programiści bezpośrednio modyfikują tworzone obiekty i struktury. Prowadzi to do potencjalnych błędów, ponieważ operacje na obiekcie mogą się nie powieść lub zachować się nieprzewidywalnie, jeśli obiekt nie został prawidłowo zainicjalizowany. Lepszym podejściem jest stworzenie funkcji, która tworzy instancję obiektu, ewentualnie przyjmując pewne parametry.
+
+Bezpośrednie usuwanie obiektów może nie do końca się udać, prowadząc do wycieku zasobów. Lepiej jest użyć destruktora.
+
+### Makra
+
+Umieszczaj nawiasy dookoła argumentów makra oraz całości kiedy to tylko możliwe. Zapewnia to, że gdy są wyrażeniami kolejność działań nie zostanie zmieniona. Przykład: `#define square(x)`, dobrze: `((x)*(x))`, źle: `x*x`.
+
+Jeśli makro składa się z wielu instrukcji lub deklaruje zmienne, powinno być umieszczone w pętli `do{ /*...*/ }while(0)`, bez kończącego średnika. Pozwala to na użycie makra jak pojedynczej instrukcji w każdym miejscu, jak ciało innego wyrażenia, pozwalając jednocześnie na umieszczenie średnika po makrze bez tworzenia zerowego wyrażenia. Należy uważać, by zmienne w makrze potencjalnie nie kolidowały z argumentami makra. Przykład: `#define swap(x,y) do { x = x + y; y = x - y; x = x - y; } while(0)`
+
+Unikaj używania argumentów makra więcej niż raz wewnątrz makra, jeśli argument jest wyrażeniem które może się zmieniać z każdym wykonaniem. `square(++x)` może przynieść rezultat inny od oczekiwanego.
+
+### Bity
+
+Aby sprawdzić, czy ustawiony jest wybrany bit liczby, możesz użyć następującego wyrażenia: `k & 1 << n`, gdzie K jest liczbą, a N to numer bitu.
+
+Aby ustawić bit w liczbie, użyj takiego wyrażenia: `k |= 1 << n`, gdzie K jest liczbą a N to numer bitu.
+
+Aby wyzerować bit, użyj `(k |= (1 << (n)))`, gdzie K jest liczbą a N to numer bitu.
+
+
+
