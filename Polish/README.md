@@ -21,6 +21,7 @@
    - Zaawansowane operacje matematyczne
    - Powszechne praktyki
  4. [Struktura programu w C](Ch4) Poziom trudności: ![][star] ![][star] ![][star]
+   - Słowa kluczowe C11
    - Biblioteki
    - Biblioteka standardowa
    - Własne biblioteki
