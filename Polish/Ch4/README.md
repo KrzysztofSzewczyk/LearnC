@@ -36,5 +36,24 @@ I finalnie, według rozszerzenia (dla Uniksopodobnych):
  * `.ko`  - moduły jądra
  * `.o`   - pliki obiektowe
  * `.so`  - dynamicznie linkowane biblioteki dzielone
+ 
+GCC najczęściej szuka bibliotek na komputerach pod kontrolą systemu unikspodobnego w:
+ * /usr/local i target/include
+ * /usr/include
+
+## Budowa pliku nagłówkowego biblioteki
+
+Najczęściej pliki nagłówkowe mają następującą postać:
+
+```
+#ifndef _FILE_H
+#define _FILE_H
+
+/* ... */
+
+#endif
+```
+
+Takie rozwiązanie zapobiega dołączaniu pliku wielokrotnie w jednej jednostce. Jeśli teoretycznie nagłówki dołączałyby się rekursywnie, to zapobiega niezliczonym błędom. W plikach nagłówkowych często umieszcza się definicje typów, z których korzysta biblioteka, makra i deklaracje funkcji. 
 
 **[Powrót do spisu treści](..)**
