@@ -54,6 +54,56 @@ Najczęściej pliki nagłówkowe mają następującą postać:
 #endif
 ```
 
-Takie rozwiązanie zapobiega dołączaniu pliku wielokrotnie w jednej jednostce. Jeśli teoretycznie nagłówki dołączałyby się rekursywnie, to zapobiega niezliczonym błędom. W plikach nagłówkowych często umieszcza się definicje typów, z których korzysta biblioteka, makra i deklaracje funkcji. 
+Takie rozwiązanie zapobiega dołączaniu pliku wielokrotnie w jednej jednostce. Jeśli teoretycznie nagłówki dołączałyby się rekursywnie, to zapobiega niezliczonym błędom. W plikach nagłówkowych często umieszcza się definicje typów, z których korzysta biblioteka, makra i deklaracje funkcji.
+
+## Tworzenie prostej biblioteki
+
+Zakładając że biblioteka będzie posiadać wyłącznie jedną funkcję, możemy stworzyć ją w następujący sposób:
+
+```
+#ifndef _NAZWA_AUTOR_H
+#define _NAZWA_AUTOR_H
+
+#include <stdio.h>
+
+void hello(void) {
+    puts("Hello World!");
+}
+
+#endif
+
+```
+
+Należy pamiętać, o podaniu void w liście argumentów funkcji nie przyjmujących argumentów. W prototypie nie ma informacji na temat tego jakie argumenty funkcja przyjmuje, jeśli nawiasy są puste.
+
+Plik ten należy zapisać jako "hello.h".
+
+UWAGA: Jeśli spróbujesz dołączyć ten plik w dwóch oddzielnych plikach i połączyć, otrzymasz błąd kompilacji. Dzieje się tak, ponieważ wewnątrz jednej aplikacji znajduje się kilka funkcji nazwanych tak samo (`hello` i `hello`). 
+
+Praktyczne użycie:
+
+```
+#include "wiki.h"
+ 
+int main(void) {
+   hello();
+}
+```
+
+Zakładając że nazwa powyższego pliku to `main.c`, komenda kompilacji wygląda "normalnie":
+
+```
+gcc main.c -o main
+```
+
+```
+./main
+```
+
+=>
+
+```
+Hello World!
+```
 
 **[Powrót do spisu treści](..)**
