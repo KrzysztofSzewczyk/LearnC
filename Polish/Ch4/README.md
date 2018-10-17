@@ -106,4 +106,20 @@ gcc main.c -o main
 Hello World!
 ```
 
+Zalecam Ci, aby implementacje funkcji w plikach nagłówkowych w dużych projektach (czego osobiście nie zalecam) były statyczne. Pomoże zapobiec to konfliktom w czasie linkowania. Poprawiona wersja biblioteki:
+
+```
+#ifndef _NAZWA_AUTOR_H
+#define _NAZWA_AUTOR_H
+
+#include <stdio.h>
+
+static void hello(void) {
+    puts("Hello World!");
+}
+
+#endif
+
+```
+
 **[Powrót do spisu treści](..)**
