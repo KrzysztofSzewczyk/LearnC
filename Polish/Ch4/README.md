@@ -141,4 +141,88 @@ Dyrektywy preprocesora to wyrażenia rozpoczynające się "#". Dyrektywa kończy
   a+b
 ```
 
+### `#include`
+
+To jedna z częściej wykorzystywanych dyrektyw, którą już znasz. Sprawia, że plik podany między nawiasami kwadratowymi (jeśłi jest nagłówkiem z include path) lub cudzysłowiem (jeśli znajduje się w lokalizacji relatywnej do pliku .c/.h) zostaje dopisany z całą swoją zawartością w miejsce dyrektywy.
+
+### `#define`
+
+Ta dyrektywa pozwala na zdefiniowanie stałej, makra, słowa kluczowego i funkcji. Przykład:
+
+```
+#define LICZBA 42
+#include <stdio.h>
+
+int main(void) {
+    return LICZBA;
+}
+```
+
+Zwróci 42. Można również definiować stałą jako "nic":
+
+```
+#define LICZBA
+#include <stdio.h>
+
+int main(void) {
+    return LICZBA-1;
+}
+```
+
+Zwróci -1. Przykładem makra może być:
+
+```
+#define SUMA(x,y) ((x)+(y))
+```
+
+Należy pamiętać, że parametry najbezpieczniej jest podawać w nawiasie, a całe makro również wrzucić w nawias. Zapobiegnie to powstaniu różnych dziwnych sytuacji. Przykładem takiej "niespodzianki" jest klasyk:
+
+```
+#include <stdio.h>
+
+#define SIX 1+5
+#define NINE 8+1
+
+int main(void) {
+    printf("%d * %d = %d\n", SIX, NINE, SIX * NINE);
+    return 0;
+
+}
+```
+
+... który na STDOUT wypisze '6 * 9 = 42' zamiast `6 * 9 = 54`. Przyjrzyjmy się programowi dokładniej. Jeśli odetniemy z wyjścia nagłówek stdio i wszystkie jego zależności, jak i makra wstawiane przez preprocesor, kod będzie wyglądał tak:
+
+```
+int main(void) {
+    printf("%d * %d = %d", 1+5, 8+1, 1+5*8+1);
+    return 0;
+}
+```
+
+Uprośćmy to lekko:
+
+```
+int main(void) {
+    printf("%d * %d = %d", 6, 9, 1+5*8+1);
+    return 0;
+}
+```
+
+Widać że pierwsze dwie liczby się zgadzają, ale potem mamy zaskoczenie: `1+5*8+1`. Znając kolejność wykonywania działań, jest to `1+40+1`, czyli `42`. Jak temu zapobiec? Bardzo prosto. Spójrzmy jeszcze raz na stary program:
+
+```
+#include <stdio.h>
+
+#define SIX (1+5)
+#define NINE (8+1)
+
+int main(void) {
+    printf("%d * %d = %d\n", SIX, NINE, SIX * NINE);
+    return 0;
+
+}
+```
+
+Teraz na STDOUT zostanie wypisany prawidłowy wynik. Przykład ten pochodzi z książki K&R i ma demonstrować niewłaściwe użycie preprocesora
+
 **[Powrót do spisu treści](..)**
