@@ -83,7 +83,7 @@ UWAGA: Jeśli spróbujesz dołączyć ten plik w dwóch oddzielnych plikach i po
 Praktyczne użycie:
 
 ```
-#include "wiki.h"
+#include "hello.h"
  
 int main(void) {
    hello();
@@ -129,7 +129,7 @@ W języku C wszystkie linie zaczynające się od symbolu "#" są dyrektywami pre
 Preprocesory są najczęściej wbudowane w kompilator. Istnieją również samodzielne preprocesory (GNU M4, Cog, czy chociażby mój PCP). Aby zobaczyć kod wytworzony przez preprocesor użyj przełącznika `-E`.
 
 ```
-gcc test.c -E -o test.e
+gcc test.c -E -o test.i
 ```
 
 Ten plik może być dość duży, więc nie będę wstawiał tutaj mojego wyniku wykonywania tego polecenia.
