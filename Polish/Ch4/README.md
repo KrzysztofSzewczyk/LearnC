@@ -244,11 +244,11 @@ Powyższe dyrektywy procesora uzależniają przebieg późniejszej kompilacji od
 #define OS 0 /* 0-Windows, 1-Linux, 2-MacOS */
 
 #if OS == WINDOWS
-  printf ("You are using Windows");
+    printf ("You are using Windows");
 #elif OS == LINUX
-  printf ("You are using Linux");
+    printf ("You are using Linux");
 #else
-  printf ("Are you using MacOS?");
+    printf ("Are you using MacOS?");
 #endif
 ```
 
