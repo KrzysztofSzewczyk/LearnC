@@ -238,15 +238,12 @@ const int sth2 = SOMETHING; /* error */
 
 ### `#if #else #elif #endif` - kompilacja warunkowa
 
-Powyższe dyrektywy procesora uzależniają przebieg późniejszej kompilacji od stałych znanych w czasie procesu wstępnego przetwarzania kodu źródłowego. 
+Powyższe dyrektywy procesora uzależniają przebieg późniejszej kompilacji od stałych znanych w czasie procesu wstępnego przetwarzania kodu źródłowego:
 
-`#if` sprawia że blok aż do `#endif`/`#else`/`#elif`, jeśli nie jest prawdziwy, zostaje wycięty z wynikowego kodu źródłowego, co sprawia że nie jest uwzględniony w pliku binarnym.
-
-`#else` spowoduje skompilowanie kodu jeżeli warunek odpowiadający `#if` jest fałszywy, aż do napotkania `#elif`, `#endif` lub `#if`.
-
-`#elif` to połączenie `#if` i `#else`.
-
-`#endif` zamyka blok otworzony przez `#if`, `#else` lub `#elif`.
+ * `#if` sprawia że blok aż do `#endif`/`#else`/`#elif`, jeśli nie jest prawdziwy, zostaje wycięty z wynikowego kodu źródłowego, co sprawia że nie jest uwzględniony w pliku binarnym.
+ * `#else` spowoduje skompilowanie kodu jeżeli warunek odpowiadający `#if` jest fałszywy, aż do napotkania `#elif`, `#endif` lub `#if`.
+ * `#elif` to połączenie `#if` i `#else`.
+ * `#endif` zamyka blok otworzony przez `#if`, `#else` lub `#elif`.
 
 Przykład:
 
