@@ -223,6 +223,17 @@ int main(void) {
 }
 ```
 
-Teraz na STDOUT zostanie wypisany prawidłowy wynik. Przykład ten pochodzi z książki K&R i ma demonstrować niewłaściwe użycie preprocesora
+Teraz na STDOUT zostanie wypisany prawidłowy wynik. Przykład ten pochodzi z książki K&R i ma demonstrować niewłaściwe użycie preprocesora.
+
+### `#undef`
+
+Ta dyrektywa odwraca działanie `#define`. Przykład:
+
+```
+#define SOMETHING 3
+const int sth = SOMETHING; /* sth = 3 */
+#undef SOMETHING
+const int sth2 = SOMETHING; /* error */
+```
 
 **[Powrót do spisu treści](..)**
