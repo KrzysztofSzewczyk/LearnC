@@ -259,5 +259,21 @@ Przykład:
 #endif
 ```
 
+### `#ifdef #ifndef`
+
+Dyrektywy preprocesora `#ifdef #ifndef` działają podobnie, ale tylko sprawdzają czy dany symbol został wcześniej zdefiniowany lub nie, z jakąkolwiek wartością. Przejdźmy od razu do przykładu, przytaczając sobie plik nagłówkowy twojej pierwszej biblioteki:
+
+```
+#ifndef _NAZWA_AUTOR_H
+#define _NAZWA_AUTOR_H
+
+/* ... */
+
+#endif
+```
+
+Widać tutaj dyrektywę `#ifndef` - kod między tą dyrektywą a `#endif` będzie kompilowany wyłącznie jeśli `_NAZWA_AUTOR_H` nie zostało wcześniej zdefiniowane. Następnie definiujemy `#define _NAZWA_AUTOR_H`. Czemu?
+
+Taki zabieg pozwala ominąć różne nieprzyjemne komplikacje wynikające z podwójnego dołączenia pliku. Możemy np dwukrotnie zadeklarować funkcję (wtedy nastąpi konflikt dwóch wcześniejszych zadeklarowań).
 
 **[Powrót do spisu treści](..)**
