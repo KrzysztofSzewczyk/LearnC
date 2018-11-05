@@ -329,4 +329,21 @@ tostring(x);
 x = 23
 ```
 
+"Operator" `##` jest lekko mniej użyteczny w bardziej casualowych programach. `##` łączy dwa identyfikatory w jeden. Przykład:
+
+```
+
+#include <stdio.h>
+
+#define decl(x) int x##_variable
+#define echo(y) printf("%s=%i", #y, y)
+
+int main() {
+    decl(abc) = 2;
+    echo(abc_variable);
+    return 0;
+}
+
+```
+
 **[Powrót do spisu treści](..)**
