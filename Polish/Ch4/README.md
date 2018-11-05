@@ -346,4 +346,41 @@ int main() {
 
 ```
 
+### Makra
+
+Preprocesor C umożliwia tworzenie makr, czyli "funkcji", które są wstawiane do kodu.
+Makra deklaruje się za pomocą dyrektywy `#define`, jak na poniższym schemacie:
+
+```
+#define macro(arg1, arg2, ...) (expr)
+```
+
+W momencie wystąpienia `macro` w kodzie źródłowym, preprocesor automatycznie zamieni makro na wyrażenie lub instrukcje. Ponieważ makro sprowadza się do prostego zastąpienia przez preprocesor wywołania makra przez jego tekst, jest bardzo podatne na trudne do zlokalizowania błędy. Makra są szybsze (nie następuje wywołanie funkcji, które zawsze zajmuje trochę czasu głównie na x86), ale też mniej elastyczne i miejscowo wydajne niż funkcje. 
+
+A w praktyce? Przykład:
+
+```
+#define square(x) ((x)*(x))
+```
+
+Preprocesor w miejsce wyrażenia `square(2)` wstawi `((2)*(2))` => `4`. A co jakby napisać `square("2")`? Preprocesor po prostu wstawi napis do kodu, co da wyrażenie `(("2")*("2"))`, które jest nieprawidłowe (chyba że mówimy o języku JavaScript, gdzie wszystko można). Kompilator zgłosi błąd, ale jego szukanie może sprawić drobną trudność. Widać, że bezpieczniejsze jest użycie funkcji, które dają możliwość specyfikowania sztywnej i niezmienialnej typów argumentów. 
+
+Mówiąc o makrach często mówimy o tzw. "Side effects". "Side effects" to rzeczy które mogą się wydarzyć nieoczekiwane podczas ewaluacji makra. Bierzemy na tapetę przykład:
+
+```
+int x = 2;
+int y = square(++x);
+```
+
+Czy `y == 4`? Nie. Jeśli wiesz czemu, możesz spokojnie pominąć poniższe wyjaśnienie. Otóż preprocesor zamienia `square(++x)` na `((++x)*(++x))`, czyli po wyrzuceniu nawiasów `++x * ++x`. Jak widać, mamy do czynienia z podwójną inkrementacją, zamiast pojedynczej. Jak temu zaradzić? Użyć funkcji.
+
+Poniższe makra również są błędne:
+
+```
+#define add(a, b) a + b
+#define mul(a, b) a * b
+```
+
+Odnalezienie "słabych punktów" poniższych makr możesz potraktować jako ćwiczenie, w momencie pisania widzę tu conajmniej dwa możliwe sposoby wykorzystania braku nawiasów i inkrementacji.
+
 **[Powrót do spisu treści](..)**
