@@ -276,4 +276,22 @@ Widać tutaj dyrektywę `#ifndef` - kod między tą dyrektywą a `#endif` będzi
 
 Taki zabieg pozwala ominąć różne nieprzyjemne komplikacje wynikające z podwójnego dołączenia pliku. Możemy np dwukrotnie zadeklarować funkcję (wtedy nastąpi konflikt dwóch wcześniejszych zadeklarowań).
 
+### `#error`
+
+Dyrektywa `#error` wywołuje błąd kompilacji, jeśli tylko preprocesor ją napotka. Dziwne, nielogiczne? Spójrz na prosty przykład. Piszesz bibliotekę która może być kompilowana tylko pod systemami UNIX-like (bo np. korzysta z pliku nagłówkowego <unistd.h> zawierającego część funkcji z POSIXa, którego na próżno szukać na Windows-like). Teraz użytkownik chce to skompilować używając systemu Windows. Co się dzieje? Tona błędów które prawdopodobnie nic nie znaczą dla kompilującego. I co teraz? Kompilujący może ticketować issue z projektem (buuuu, nie buduje się). Aby tego uniknąć użyj `#error`.
+
+```
+#if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+    /* Ok */
+    #include <unistd.h>
+    /* ... */
+#else
+    #error "This library can't be built and ran under non-POSIX operating system."
+#endif
+```
+
+### `#warning`
+
+Dyrektywa `#warning` ma podobne zastosowanie do `#error`, ale wywołuje ostrzeżenie a nie błąd krytyczny.
+
 **[Powrót do spisu treści](..)**
