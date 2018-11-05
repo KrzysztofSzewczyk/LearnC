@@ -427,14 +427,15 @@ Każdy system operacyjny ma za zadanie udostępniać pewne funkcje na rzecz prog
 
 Oprócz podstawowych funkcji wejścia-wyjścia, biblioteka standardowa udostępnia też możliwość między innymi komunikację przez sieć, wykonywanie funkcji matematycznych, itd.
 
-
-<assert.h>: Od C89, zawiera makro assert
-<complex.h>: Od C99, zawiera funkcje do zarządzania liczbami zespolonymi
-<ctype.h>: Od C89, definiuje funkcje służące do zarządzania głównie znakami (`isspace`, `tolower`, ...)
-<errno.h>: Od C89, zawiera listę błędów jakie teoretycznie mogą wystąpić podczas wykonywania funkcji z biblioteki standardowej
-<fenv.h>: Od	C99, zawiera funkcje służące do zarządzania środowiskiem liczb zmiennoprzecinkowych
-<float.h>: Od C89, zawiera implementation-specific code dotyczące biblioteki liczb zmiennoprzecinkowych
-<inttypes.h>: Od	C99, definiuje rozmiar typów pochodnych od `int` (np. `double`)
-<iso646.h>: Od C99, definiuje m.in. aliasy dla operatorów.
+| Nazwa nagłówka | Standard | Co zawiera |
+|----------------|----------|------------|
+| <assert.h>     | C89   | zawiera makro assert |
+| <complex.h> | C99 | zawiera funkcje do zarządzania liczbami zespolonymi |
+| <ctype.h> | C89 | definiuje funkcje służące do zarządzania głównie znakami (`isspace`, `tolower`, ...) |
+| <errno.h> | C89 | zawiera listę błędów jakie teoretycznie mogą wystąpić podczas wykonywania funkcji z biblioteki standardowej |
+| <fenv.h> | C99 | zawiera funkcje służące do zarządzania środowiskiem liczb zmiennoprzecinkowych |
+| <float.h> | C89 | zawiera implementation-specific code dotyczące biblioteki liczb zmiennoprzecinkowych |
+| <inttypes.h> | C99 | definiuje rozmiar typów pochodnych od `int` (np. `double`) |
+| <iso646.h> | C99 | definiuje m.in. aliasy dla operatorów. |
 
 **[Powrót do spisu treści](..)**
