@@ -310,4 +310,23 @@ Dyrektywa ta powoduje wyzerowanie licznika linii. Osobiście nie widzę sensu w 
 
 Dyrektywa `#pragma` służy m.in. do tworzenia wątków w OpenMP. Z język aangielskiego "Pragmatic Information". Jest też wykorzystywana w kompilatorach Microsoftu m.in., dla zastępstwa dla include guards (konstrukcji wspomnianej przy `#ifndef`; `#pragma once`, jednak nie zalecam używania tej dyrektywy) 
 
+### `## #`
+
+Dość ciekawe możliwości ma w makrach "operator" #. Zamienia on stojący za nim identyfikator na napis. Przykład jest bardzo prosty:
+
+```
+#define tostring(identifier) printf("%s = %i\n", #x, x)
+
+/* ... */
+
+int x = 23;
+tostring(x);
+```
+
+... i wyjście:
+
+```
+x = 23
+```
+
 **[Powrót do spisu treści](..)**
