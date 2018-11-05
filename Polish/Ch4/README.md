@@ -294,4 +294,20 @@ Dyrektywa `#error` wywołuje błąd kompilacji, jeśli tylko preprocesor ją nap
 
 Dyrektywa `#warning` ma podobne zastosowanie do `#error`, ale wywołuje ostrzeżenie a nie błąd krytyczny.
 
+### `#line`
+
+Dyrektywa ta powoduje wyzerowanie licznika linii. Osobiście nie widzę sensu w używaniu tej dyrektywy manualnie, w kodzie który nie był przetwarzany wstępnie przez inne programy.
+
+```
+/* aaa */
+#line
+/* bbb */
+#line 1453
+/* ccc */
+```
+
+### `#pragma`
+
+Dyrektywa `#pragma` służy m.in. do tworzenia wątków w OpenMP. Z język aangielskiego "Pragmatic Information". Jest też wykorzystywana w kompilatorach Microsoftu m.in., dla zastępstwa dla include guards (konstrukcji wspomnianej przy `#ifndef`; `#pragma once`, jednak nie zalecam używania tej dyrektywy) 
+
 **[Powrót do spisu treści](..)**
