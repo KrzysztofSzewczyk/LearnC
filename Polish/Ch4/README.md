@@ -383,4 +383,18 @@ Poniższe makra również są błędne:
 
 Odnalezienie "słabych punktów" poniższych makr możesz potraktować jako ćwiczenie, w momencie pisania widzę tu conajmniej dwa możliwe sposoby wykorzystania braku nawiasów i inkrementacji.
 
+### Predefiniowane makra
+
+W języku wprowadzono pokaźną liczbe predefiniowanych makr, które mają ułatwić życie programiście. Oto lista najważniejszych:
+
+ * `__FILE__` - nazwa aktualnie przetwarzanego pliku
+ * `__LINE__` - numer linii
+ * `__DATE__` - data kompilacji
+ * `__TIME__` - godzina kompilacji
+ * `__STDC__` - w kompilatorach zgodnych z ANSI przyjmuje wartość 1
+ * `__STDC_VERSION__` - zależnie od poziomu zgodności kompilatora ze standardami, makro przyjmuje głównie następujące wartości:
+   * standard z 1989: makro nie jest zdefiniowane,
+   * standard z 1994: makro ma wartość 199409L,
+   * standard z 1999: makro ma wartość 199901L.
+
 **[Powrót do spisu treści](..)**
