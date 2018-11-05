@@ -397,4 +397,44 @@ W języku wprowadzono pokaźną liczbe predefiniowanych makr, które mają ułat
    * standard z 1994: makro ma wartość 199409L,
    * standard z 1999: makro ma wartość 199901L.
 
+## Biblioteka standardowa
+
+W jakimś z początkowych rozdziałów tej książki napisane jest, że czysty rasowo język C bez biblioteki standardowej nie może zbyt wiele. Tak naprawdę, to język C sam w sobie praktycznie nie ma mechanizmów do obsługi np. i/o (co powinieneś już pamiętać, drogi Czytelniku). Dlatego też większość systemów operacyjnych posiada tzw. bibliotekę standardową zwaną też biblioteką języka C (libc). To właśnie w niej zawarte są podstawowe funkcjonalności, dzięki którym program może, na przykład, wypisać coś na ekran.
+
+Jak biblioteka standardowa implementuje te funkcje, skoro sam język C tego nie potrafi? Odpowiedź jest prosta - biblioteka standardowa nie jest napisana wyłącznie w C. Ponieważ C jest kompilowany do kodu maszynowego, nie ma przeszkód, żeby połączyć go z językiem niskiego poziomu, jakim jest Assembly, ale o nim później. Dlatego biblioteka C udostępnia gotowe funkcje w języku C, a z drugiej za pomocą niskopoziomowych mechanizmów komunikuje się z systemem operacyjnym, który wykonuje odpowiednie czynności.
+
+Najpopularniejsze wersje libc to m.in. `glibc` - GNU libc, `uClibc` - implementacja dla systemów embedded, `Diet libc` - odchudzona wersja biblioteki standardowej (która i tak nie potrzebuje odchudzania, tylko dopasania)
+
+Jak sprawdzić której wersji używa twój system (zakładając że jest unixopodobny)?
+
+```
+ldd --version
+# albo
+getconf GNU_LIBC_VERSION
+```
+
+Gdzie są funkcje z biblioteki standardowej?
+
+Pisząc program w języku C używa się różnego rodzaju funkcji, takich jak na przykład `printf`. Twój pierwszy program zaczynał się od takiej linijki:
+
+```
+#include <stdio.h>
+```
+
+Dyrektywa ta mówi preprocesorowi: "tu wstaw zawartość stdio.h". Nawiasy "<" i ">" oznaczają, że plik stdio.h znajduje się w standardowym katalogu z plikami nagłówkowymi. Wszystkie pliki z rozszerzeniem `.h` są właśnie plikami nagłówkowymi. Wracając teraz do tematu biblioteki standardowej...
+
+Każdy system operacyjny ma za zadanie udostępniać pewne funkcje na rzecz programów. Wszystkie te funkcje zawarte są właśnie w bibliotece standardowej. W systemach z rodziny UNIX nazywa się ją, jak wcześniej wspominałem, `libc`. Tam właśnie są zaimplementowane funkcje typu `puts()` albo `scanf()`.
+
+Oprócz podstawowych funkcji wejścia-wyjścia, biblioteka standardowa udostępnia też możliwość między innymi komunikację przez sieć, wykonywanie funkcji matematycznych, itd.
+
+
+<assert.h>: Od C89, zawiera makro assert
+<complex.h>: Od C99, zawiera funkcje do zarządzania liczbami zespolonymi
+<ctype.h>: Od C89, definiuje funkcje służące do zarządzania głównie znakami (`isspace`, `tolower`, ...)
+<errno.h>: Od C89, zawiera listę błędów jakie teoretycznie mogą wystąpić podczas wykonywania funkcji z biblioteki standardowej
+<fenv.h>: Od	C99, zawiera funkcje służące do zarządzania środowiskiem liczb zmiennoprzecinkowych
+<float.h>: Od C89, zawiera implementation-specific code dotyczące biblioteki liczb zmiennoprzecinkowych
+<inttypes.h>: Od	C99, definiuje rozmiar typów pochodnych od `int` (np. `double`)
+<iso646.h>: Od C99, definiuje m.in. aliasy dla operatorów.
+
 **[Powrót do spisu treści](..)**
