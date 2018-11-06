@@ -26,8 +26,7 @@
    - Własne biblioteki
    - Preprocesor
    - Biblioteka standardowa
-   - Jak działa kompilator?
-   - Makefile
+   - Jak działa kompilator, Makefile.
    - Przenośność programów
    - Współpraca C i innych języków
    - Ćwiczenia
