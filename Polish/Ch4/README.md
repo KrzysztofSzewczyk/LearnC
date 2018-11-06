@@ -484,7 +484,7 @@ Jeśli pliki startowe również są niepożądane, można użyć:
 W systemach uniksowych możesz uzyskać pomoc dzięki narzędziu man, np.:
 
 ```
-man printf
+man puts
 man gets  # Nie używaj gets()!
 man libc
 ```
