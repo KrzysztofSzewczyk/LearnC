@@ -620,7 +620,16 @@ main: $(OBJ)
 
 ```
 
-
 To jest bardzo podstawowe wprowadzenie do używania programu make, jednak jest ono wystarczające aby początkujący użytkownik tego udogodnienia zaczął z niego korzystać. Wyczerpujące omówienie całego programu niestety przekracza zakres materiału tej książki.
+
+### Optymalizacje
+
+Kompilator GCC umożliwia generację kodu zoptymalizowanego dla konkretnej architektury. Służą do tego opcje -march= i -mtune=. Stopień optymalizacji ustalamy za pomocą opcji -Ox, gdzie x jest numerem stopnia optymalizacji (od 1 do 3). Możliwe jest też użycie opcji -Os, która powoduje generowanie kodu o jak najmniejszym rozmiarze. Aby skompilować dany plik z najwyższym poziomem optymalizacji, trzeba użyć takiego polecenia:
+
+```
+gcc program.c -o program -march=natve -O3
+```
+
+
 
 **[Powrót do spisu treści](..)**
