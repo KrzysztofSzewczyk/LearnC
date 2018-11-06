@@ -491,6 +491,8 @@ man libc
 
 ## Jak działa kompilator, Makefile
 
+### Preprocesor
+
 W pierwszej części pozwolę sobie zahaczyć głównie o preprocesor. Aby zobaczyć jak wygląda kod po tym procesie, spójrz na przykład poniżej:
 
 ```
@@ -510,5 +512,115 @@ gcc -E example.c -o example.i
 ```
 
 Naszym oczom w example.i okaże się coś takiego ([link](https://pastebin.com/yznK5DjV), ponieważ wyjście jest bardzo długie)
+
+### GNU Make
+
+Program prawie zawsze składa się z kilku plików źródłowych. Jeśli jest ich dużo, trzeba musimy stworzyć szybki i ładny sposób kompilacji naszego programu. Właśnie po to, aby zautomatyzować proces kompilacji powstał program make. Program make analizuje pliki Makefile i na ich podstawie wykonuje określone czynności. Najważniejszym elementem pliku Makefile są zależności oraz reguły przetwarzania. Zależności polegają na tym, że np., jeśli program ma być zbudowany z 4 plików, to na początku należy skompilować każdy z tych 4 plików, a dopiero później połączyć je w jeden cały program. Zatem zależności określają kolejność wykonywanych czynności. Natomiast reguły określają jak skompilować dany plik. Zależności tworzy się tak:
+
+```
+target: deps
+    rules
+```
+
+Dzięki temu `make` zna już kolejność wykonywanych działań oraz czynności, jakie ma wykonać. Aby zbudować `target` należy wykonać polecenie `make target`. Pierwsza reguła w pliku Makefile jest regułą domyślną. Uruchamiając make bez parametrów, zbudujesz regułę domyślną. Tak więc dobrze jest jako pierwszą regułę wstawić regułę budującą końcowy plik wykonywalny, zwyczajowo taki target nazywa się all. Należy pamiętać, by sekcji `target` nie wcinać, natomiast `rules` wcinać tabulatorem. Część `deps` może być pusta.
+
+Plik Makefile umożliwia też definiowanie pewnych zmiennych. Nie trzeba tutaj się już troszczyć o typ zmiennej, wystarczy napisać:
+
+```
+variable=value
+```
+
+W ten sposób można zadeklarować dowolnie dużo zmiennych. Zmienne mogą być różne - nazwa kompilatora, jego parametry, itd. Zmiennej używa się w następujący sposób `$(variable)`. Komentarze w pliku Makefile tworzymy zaczynając linię od znaku hash (#). Przykład:
+
+Program nazywa się test oraz składa się z czterech plików:
+
+    lexer.c
+    parser.c
+    codegen.c
+    main.c
+
+oraz plików nagłówkowych
+
+    lexer.h
+    parser.h
+    codegen.h
+
+Odpowiedni plik Makefile powinien wyglądać mniej więcej tak:
+
+```
+CC=gcc  
+CFLAGS=-std=c89 -O3
+
+all: lexer.o parser.o codegen.o main.o
+    $(CC) $(CFLAGS) lexer.o parser.o codegen.o main.o -o app
+
+lexer.o: lexer.c lexer.h
+    $(CC) $(CFLAGS) lexer.c -c -o lexer.o
+
+parser.o: lexer.c lexer.h parser.c parser.h
+    $(CC) $(CFLAGS) parser.c -c -o parser.o
+
+codegen.o: codegen.c codegen.h
+    $(CC) $(CFLAGS) codegen.c -c -o codegen.o
+
+main.o: main.c
+    $(CC) main.c -c -o main.o
+```
+
+Program zależy od 4 plików z rozszerzeniem .o, potem każdy z tych plików zależy od plików .c, które program make skompiluje w pierwszej kolejności, a następnie połączy w jeden program. Nazwę kompilatora zapisano jako zmienną, ponieważ powtarza się i zmienna jest sposobem, by zmienić ją wszędzie za jednym zamachem, podobnie jak CFLAGS - flagi kompilatora. dodanie jako zależności plików z rozszerzeniem .h zapewnia rekompilację plików w których są używane zdefiniowane w nich wartości. Brak tych wpisów jest najczęstszą przyczyną braku zmian działania programu po zmianie ustawień w plikach nagłówkowych.
+
+Używanie make jest bardzo proste. Warto na koniec naszego przykładu dodać regułę, która wyczyści katalog z plików .o:
+
+```
+clean:
+    rm -f *.o app
+```
+
+Ta reguła spowoduje usunięcie wszystkich plików .o oraz programu w wersji binarnej po wykonaniu `make clean`. Można też ukryć wykonywane komendy albo dopisać własny opis czynności:
+
+```
+clean:
+    @echo Cleaning up ...
+    @rm -f *.o test
+```
+
+Uwaga: Jeśli target nie jest plikiem, dodaj przed nim polecenie .PHONY:
+
+```
+.PHONY: clean
+clean:
+    @echo Cleaning up ...
+    @rm -f *.o test
+```
+
+Ten sam Makefile mógłby wyglądać prościej:
+
+
+```
+CFLAGS=-std=c89 -O3
+LIBS=-lm
+OBJ=lexer.o   \
+    parser.o  \
+    codegen.o \
+    main.o
+
+.PHONY: all
+all: main
+
+.PHONY: clean
+clean:
+    rm -f *.o test
+
+.c.o:
+    $(CC) -c $(INCLUDES) $(CFLAGS) $<
+
+.PHONY: main
+main: $(OBJ)
+    $(CC) $(OBJ) $(LIBS) -o test
+
+```
+
+
+To jest bardzo podstawowe wprowadzenie do używania programu make, jednak jest ono wystarczające aby początkujący użytkownik tego udogodnienia zaczął z niego korzystać. Wyczerpujące omówienie całego programu niestety przekracza zakres materiału tej książki.
 
 **[Powrót do spisu treści](..)**
