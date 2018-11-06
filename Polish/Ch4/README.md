@@ -489,4 +489,26 @@ man gets  # Nie używaj gets()!
 man libc
 ```
 
+## Jak działa kompilator, Makefile
+
+W pierwszej części pozwolę sobie zahaczyć głównie o preprocesor. Aby zobaczyć jak wygląda kod po tym procesie, spójrz na przykład poniżej:
+
+```
+
+#include <stdio.h>
+
+int main(void) {
+    printf("Hi, hello!");
+}
+
+```
+
+Po kompilacji za pomocą polecenia
+
+```
+gcc -E example.c -o example.i
+```
+
+Naszym oczom w example.i okaże się coś takiego ([link](https://pastebin.com/yznK5DjV), ponieważ wyjście jest bardzo długie)
+
 **[Powrót do spisu treści](..)**
