@@ -459,6 +459,8 @@ Oprócz podstawowych funkcji wejścia-wyjścia, biblioteka standardowa udostępn
 | <wchar.h> |	C99 | funkcje do zarządzania `wide` ciągami znaków |
 | <wctype.h> |	C99 | funkcje do klasyfikowania `wide-characters` zależnie od ich typów oraz konwertowania ich na wielkie lub małe litery |
 
+Pełny opis biblioteki standardowej C znajdziesz w rozdziale 6.
+
 Czasami korzystanie z funkcji bibliotecznych oraz standardowych plików nagłówkowych jest niepożądane. Aby wyłączyć używanie biblioteki C w opcjach kompilatora GCC należy dodać następujące argumenty:
 
 ```
@@ -469,6 +471,14 @@ Jeśli pliki startowe również są niepożądane, można użyć:
 
 ```
 -nostartfiles
+```
+
+W systemach uniksowych możesz uzyskać pomoc dzięki narzędziu man, np.:
+
+```
+man printf
+man gets  # Nie używaj gets()!
+man libc
 ```
 
 **[Powrót do spisu treści](..)**
