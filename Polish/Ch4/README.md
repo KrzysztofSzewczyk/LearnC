@@ -429,13 +429,34 @@ Oprócz podstawowych funkcji wejścia-wyjścia, biblioteka standardowa udostępn
 
 | Nazwa nagłówka | Standard | Co zawiera |
 |----------------|----------|------------|
-| <assert.h>     | C89   | zawiera makro assert |
-| <complex.h> | C99 | zawiera funkcje do zarządzania liczbami zespolonymi |
-| <ctype.h> | C89 | definiuje funkcje służące do zarządzania głównie znakami (`isspace`, `tolower`, ...) |
-| <errno.h> | C89 | zawiera listę błędów jakie teoretycznie mogą wystąpić podczas wykonywania funkcji z biblioteki standardowej |
-| <fenv.h> | C99 | zawiera funkcje służące do zarządzania środowiskiem liczb zmiennoprzecinkowych |
-| <float.h> | C89 | zawiera implementation-specific code dotyczące biblioteki liczb zmiennoprzecinkowych |
-| <inttypes.h> | C99 | definiuje rozmiar typów pochodnych od `int` (np. `double`) |
-| <iso646.h> | C99 | definiuje m.in. aliasy dla operatorów. |
+| <assert.h>     | C89   | makro assert |
+| <complex.h> | C99 | funkcje do zarządzania liczbami zespolonymi |
+| <ctype.h> | C89 | funkcje służące do zarządzania głównie znakami (`isspace`, `tolower`, ...) |
+| <errno.h> | C89 | lista błędów jakie teoretycznie mogą wystąpić podczas wykonywania funkcji z biblioteki standardowej |
+| <fenv.h> | C99 | funkcje służące do zarządzania środowiskiem liczb zmiennoprzecinkowych |
+| <float.h> | C89 | implementation-specific code dotyczące biblioteki liczb zmiennoprzecinkowych |
+| <inttypes.h> | C99 | rozmiar typów pochodnych od `int` (np. `double`) |
+| <iso646.h> | C99 | m.in. aliasy dla operatorów |
+| <limits.h> |	C89 | stałe dotyczące zmiennych platform-specific typu int |
+| <locale.h> |	C89 | funkcje dotyczące internacjonalizacji |
+| <math.h> | C89 | funkcje matematyczne |
+| <setjmp.h> | C89 | setjmp i longjmp, używane do nielokalnych skoków |
+| <signal.h> | C89 | obsługa sygnałów |
+| <stdalign.h> | C11 | ustawianie i sprawdzanie wyrównania obiektów |
+| <stdarg.h> | C89 | obsługa zmiennej liczby argumentów do funkcji |
+| <stdatomic.h> | C11 | obsługa operacji atomowych między wątkami |
+| <stdbool.h> |	C99	| typ danych boolean |
+| <stddef.h> |	C89 | użyteczne typy i makra |
+| <stdint.h> |	C99 | standaryzuje rozmiary liczb całkowitych (np. `int8_t` => `char`) |
+| <stdio.h> | C89 | standardowe funkcje wejścia i wyjścia |
+| <stdlib.h> |	C89 | funkcje zezwalające np. na konwersję typów danych, generację liczb pseudolosowych, alokację pamięci, zarządzanie procesem |
+| <stdnoreturn.h> | C11 | konstrukcje zezwalające na tworzenie funkcji które nie zwracają kontroli wywoływaczowi |
+| <string.h> | C89 | funkcje do manipulacji ciągami |
+| <tgmath.h> | C99 | type-generic funkcje matematyczne |
+| <threads.h> |	C11	| zestaw narzędzi do pracy z wielowątkowością |
+| <time.h> 	|	C89 | zestaw narzędzi do pracy z czasem |
+| <uchar.h> | 	C11 | funkcje do zarządzania tzw. `wide-characters` |
+| <wchar.h> |	C99 | funkcje do zarządzania `wide` ciągami znaków |
+| <wctype.h> |	C99 | funkcje do klasyfikowania `wide-characters` zależnie od ich typów oraz konwertowania ich na wielkie lub małe litery |
 
 **[Powrót do spisu treści](..)**
