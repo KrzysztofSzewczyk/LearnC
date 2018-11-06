@@ -35,11 +35,19 @@ I finalnie, według rozszerzenia (dla Uniksopodobnych):
  * `.fw`  - pliki skompilowanego firmware
  * `.ko`  - moduły jądra
  * `.o`   - pliki obiektowe
- * `.so`  - dynamicznie linkowane biblioteki dzielone
+ * `.so`  - dynamicznie linkowane biblioteki współdzielone
  
 GCC najczęściej szuka bibliotek na komputerach pod kontrolą systemu unikspodobnego w:
  * /usr/local i target/include
  * /usr/include
+ 
+Linkowanie statyczne polega w skrócie, dołączeniu kodu funkcji do programu na etapie kompilacji.
+
+Linkowanie dynamiczne polega na dołączaniu do programu jedynie odpowiednich odwołań do funkcji bibliotecznych. Kod funkcji **nie** jest dołączany do programu na etapie kompilacji. Przy uruchomieniu programu, biblioteka jest natomiast ładowana do pamięci i udostępnia odpowiednie funkcje pracującemu programowi. Uwaga: Jeśli używasz bibliotek linkowanych dynamicznie, spodziewaj się możliwości, w której natrafisz na tzw. ***DLL Hell*** (komplikacje, które pojawiają się przy korzystaniu z różnych wersji bibliotek dynamicznych)
+
+Podstawową zaletą linkowania dynamicznego jest to, że jest wymagany jeden egzemplarz biblioteki w pamięci dla wszystkich programów które z niej korzystają. Wadą jest to, że program linkowany dynamicznie jest zależny od dostępności zewnętrznym plików (bibliotek) i nie będzie działał poprawnie jeżeli ich nie znajdzie.
+
+Aby możliwe było linkowanie dynamiczne biblioteka musi być specjalnie skonstruowana. Biblioteki dynamiczne pozwalają na linkowanie dynamiczne i statyczne. Zdecydowana większość używanych bibliotek to biblioteki dynamiczne, niezwykle rzadko zdarzają się przypadki bibliotek nadających się jedynie do linkowania statycznego. 
 
 ## Budowa pliku nagłówkowego biblioteki
 
