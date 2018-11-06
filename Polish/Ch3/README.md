@@ -1466,7 +1466,7 @@ Aby móc korzystać z liczb zespolonych należy w nagłówku programu umieścić
 
 powodujące dołączenie biblioteki obsługującej liczny zespolenie.
 
-Liczba zespolona ma postać `z = a + b * i`, gdzie a, b są liczbami rzeczywistymi, a i jest jednostką urojoną: `i*i = (-1).`
+Liczba zespolona ma postać `z = a + b * i`, gdzie a, b są liczbami rzeczywistymi, a i jest jednostką urojoną: `i^2 = -1`
 
 W pliku complex.h i zdefiniowane jest jako I. Przykład prostego programu operującego na liczbach zespolonych:
 
