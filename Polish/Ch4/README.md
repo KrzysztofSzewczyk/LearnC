@@ -405,7 +405,7 @@ Jak biblioteka standardowa implementuje te funkcje, skoro sam język C tego nie 
 
 Najpopularniejsze wersje libc to m.in. `glibc` - GNU libc, `uClibc` - implementacja dla systemów embedded, `Diet libc` - odchudzona wersja biblioteki standardowej (która i tak nie potrzebuje odchudzania, tylko dopasania)
 
-Jak sprawdzić której wersji używa twój system (zakładając że jest unixopodobny)?
+Jak sprawdzić której wersji używa twój system (zakładając że jest uniksopodobny)?
 
 ```
 ldd --version
