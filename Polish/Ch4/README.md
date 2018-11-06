@@ -399,7 +399,7 @@ W języku wprowadzono pokaźną liczbe predefiniowanych makr, które mają ułat
 
 ## Biblioteka standardowa
 
-W jakimś z początkowych rozdziałów tej książki napisane jest, że czysty rasowo język C bez biblioteki standardowej nie może zbyt wiele. Tak naprawdę, to język C sam w sobie praktycznie nie ma mechanizmów do obsługi np. i/o (co powinieneś już pamiętać, drogi Czytelniku). Dlatego też większość systemów operacyjnych posiada tzw. bibliotekę standardową zwaną też biblioteką języka C (libc). To właśnie w niej zawarte są podstawowe funkcjonalności, dzięki którym program może, na przykład, wypisać coś na ekran.
+W którymś z początkowych rozdziałów tej książki napisane jest, że czysty rasowo język C bez biblioteki standardowej nie może zbyt wiele. Tak naprawdę, to język C sam w sobie praktycznie nie ma mechanizmów do obsługi np. i/o (co powinieneś już pamiętać, drogi Czytelniku). Dlatego też większość systemów operacyjnych posiada tzw. bibliotekę standardową zwaną też biblioteką języka C (libc). To właśnie w niej zawarte są podstawowe funkcjonalności, dzięki którym program może, na przykład, wypisać coś na ekran.
 
 Jak biblioteka standardowa implementuje te funkcje, skoro sam język C tego nie potrafi? Odpowiedź jest prosta - biblioteka standardowa nie jest napisana wyłącznie w C. Ponieważ C jest kompilowany do kodu maszynowego, nie ma przeszkód, żeby połączyć go z językiem niskiego poziomu, jakim jest Assembly, ale o nim później. Dlatego biblioteka C udostępnia gotowe funkcje w języku C, a z drugiej za pomocą niskopoziomowych mechanizmów komunikuje się z systemem operacyjnym, który wykonuje odpowiednie czynności.
 
