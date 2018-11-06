@@ -624,12 +624,60 @@ To jest bardzo podstawowe wprowadzenie do używania programu make, jednak jest o
 
 ### Optymalizacje
 
-Kompilator GCC umożliwia generację kodu zoptymalizowanego dla konkretnej architektury. Służą do tego opcje -march= i -mtune=. Stopień optymalizacji ustalamy za pomocą opcji -Ox, gdzie x jest numerem stopnia optymalizacji (od 1 do 3). Możliwe jest też użycie opcji -Os, która powoduje generowanie kodu o jak najmniejszym rozmiarze. Aby skompilować dany plik z najwyższym poziomem optymalizacji, trzeba użyć takiego polecenia:
+Kompilator GCC umożliwia generację kodu zoptymalizowanego dla konkretnej architektury. Służą do tego opcje `-march=` i `-mtune=`. Stopień optymalizacji ustalamy za pomocą opcji `-On`, gdzie `n` jest numerem stopnia optymalizacji (od 1 do 3). Możliwe jest też użycie opcji `-Os`, która powoduje generowanie kodu o jak najmniejszym rozmiarze. Aby skompilować dany plik z najwyższym poziomem optymalizacji, trzeba użyć takiego polecenia:
 
 ```
 gcc program.c -o program -march=natve -O3
 ```
 
+#### Alignment
 
+Alignment (pol. wyrównanie) jest pewnym zjawiskiem, które opisuje mała część źródeł dotyczących C. Ten podrozdział ma za zadanie wyjaśnienie Ci tego zjawiska oraz uprzedzenie o pewnych faktach, które w późniejszym programowaniu mogą zminimalizować czas stracony na szukaniu informacji o błędnie działającej aplikacji.
+
+Kompilator w ramach optymalizacji wyrównuje elementy struktury tak, aby procesor mógł łatwiej używać zapisanych w niej danych.  Przykładowa struktura:
+
+```
+typedef struct {
+    unsigned char age; /* 8 bit */
+    unsigned char gender; /* 8 bit */
+    unsigned int ssn; /* 32 bit */
+    unsigned char something_other; /* 8 bit */
+} person_t;
+```
+
+Aby procesor mógł łatwiej przetworzyć dane kompilator może dodać do tej struktury jedno ośmiobitowe pole. Wtedy struktura będzie wyglądać tak:
+
+```
+typedef struct {
+    unsigned char fill[1]; /* 8 bit */
+    unsigned int ssn; /* 32 bit */
+    unsigned char gender; /* 8 bit */
+    unsigned char age; /* 8 bit */
+    unsigned char something_other; /* 8 bit */
+} person_t;
+```
+
+Wtedy rozmiar zmiennych przechowujących dane będzie wynosił 64 bity - będzie zatem potęgą liczby dwa i procesorowi dużo łatwiej będzie tak ułożoną strukturę przechowywać w pamięci cache. Jednak taka sytuacja nie zawsze jest pożądana. Może się okazać, że nasza struktura musi odzwierciedlać np. pojedynczy pakiet danych, przesyłanych przez sieć. Nie może być w niej zatem żadnych innych pól, poza tymi, które są istotne do transmisji. Dodając takie coś, można ochronić strukturę:
+
+```
+__attribute__ ((packed))
+```
+
+Można jeszcze pakować struktury ręcznie, ale nie będę tego przedstawiał w tej książce.
+
+Mając w domu dwa komputery, o odmiennych architekturach (x86 i Sparc / powerpc / mips) może zajść potrzeba stworzenia programu dla jednej maszyny, mając do dyspozycji tylko drugą. Możemy skorzystać z tzw. kompilacji krzyżowej. Polega ona na tym, że program nie jest kompilowany pod procesor, na którym działa kompilator, lecz na inną, zdefiniowaną wcześniej maszynę. Efekt będzie taki sam, a skompilowany program możemy bez problemu uruchomić na drugim komputerze.
+
+Wśród przydatnych narzędzi, których można używać razem z kompilatorem warto wymienić:
+ * `objdump`
+ * `readelf`
+ * GNU autoconf
+ * GNU automake
+
+`objdump` służy do analizy skompilowanych programów, a `readelf` służy do analizy pliku wykonywalnego w formacie ELF. Więcej informacji o tych programach możesz uzyskać, używając `man`:
+
+```
+man 1 objdump
+man 1 readelf
+```
 
 **[Powrót do spisu treści](..)**
