@@ -102,9 +102,6 @@ Zakładając że nazwa powyższego pliku to `main.c`, komenda kompilacji wygląd
 
 ```
 gcc main.c -o main
-```
-
-```
 ./main
 ```
 
