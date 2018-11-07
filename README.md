@@ -5,6 +5,8 @@
 Motivation is simple enough, I just wanted to share my knowledge about C programming.
 Main language is Polish, but I'm going to translate it to English, when this book will reach some serious state.
 
-Writing progress: 26% [XXXXXXXXXX----------------------------------------]; 19/72
+Writing progress: 37% [XXXXXXXXXXXXXXXXXX--------------------------------]; 27/72
+
+Review progress: 0% [--------------------------------------------------]; 0/72
 
 Translation progress: 0% [--------------------------------------------------] 0/72
