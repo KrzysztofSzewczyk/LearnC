@@ -765,4 +765,6 @@ int main(void) {
 }
 ```
 
+Powyższe przykłady opisują część problemów jakie mogą wynikać z próby przenoszenia danych pomiędzy wieloma platformami. Wszystkie zakładają, że bajt ma 8 bitów, co wcale nie musi być prawdą dla konkretnej docelowej architektury. Co więcej liczby mogą posiadać w swojej reprezentacji padding bits, które nie biorą udziały w przechowywaniu wartości liczby. Te wszystkie różnice mogą dodatkowo skomplikować kod, więc należy być świadomym, iż przenosząc dane musimy uważać na różne reprezentacje liczb.
+
 **[Powrót do spisu treści](..)**
