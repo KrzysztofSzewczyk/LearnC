@@ -832,4 +832,156 @@ Plik źródłowy:
 
 Istnieją różne narzędzia, które pozwalają na automatyczne tworzenie plików pokroju `config.h`, dzięki czemu użytkownik przed skompilowaniem programu nie musi ręcznie edytować pliku konfiguracji, a jedynie uruchomić odpowiednie polecenie. Przykładem jest zestaw autoconf i automake. 
 
+## Łączenie C i innych języków
+
+W przypadku większości języków pokroju Pythona albo Lua, informacje o łączeniu z C możesz znaleźć w dokumentacji. W tym rozdziale opiszę możliwości łączenia C i Assemblera oraz C i C++. Jeśli nie znasz ani C++, ani podstaw Assemblera, możesz spokojnie pominąć ten rozdział i wrócić do niego, jak już go poznasz.
+
+Język C może być z łatwością łączony z innymi językami programowania, które podlegają kompilacji bezpośrednio do kodu maszynowego (Asembler, Fortran, C++). Ponadto dzięki specjalnym bibliotekom można go łączyć z językami bardzo wysokiego poziomu (Python, Ruby).
+
+Łączenie języka C i języka asemblera jest częsty zjawiskiem. Dzięki możliwości połączenia obu tych języków programowania można było utworzyć bibliotekę dla języka C, która niskopoziomowo komunikuje się z jądrem systemu operacyjnego komputera. Ponieważ zarówno asembler jak i C są językami tłumaczonymi do poziomu kodu maszynowego, za ich łączenie odpowiada program zwany linkerem. 
+
+W przykładzie założę, że w pliku test.S zawarty będzie kod, napisany w asemblerze, a test.c to kod z programem w języku C. Program w języku C będzie wykorzystywał jedną funkcję, napisaną w języku asemblera, która wyświetli na ekran klasyczny już napis "Hello, world!". Z powodu ograniczeń technicznych zakładm, że program będzie uruchamiany na systemie operacyjnym bazowanym na Linuksie i platformie i386, skompilowany kompilatorem gcc. Używana składnia asemblera to AT&T. Przykład:
+
+```
+    .text
+    .globl f1
+hello:
+    pushl %ebp /* setting up registers */
+    movl %esp, %ebp
+    movl $4, %eax /* 4 - syscall write */
+    movl $1, %ebx /* 1 - stdout */
+    movl $msg, %ecx /* address of variable */
+    movl $len, %edx /* string length */
+    int $0x80 /* make a syscall */
+    popl %ebp
+    ret
+
+    .data
+msg:
+    .string "Hello, world!\n"
+    len = . - msg
+```
+
+I plik .c:
+
+```
+extern void hello(void);
+int main() {
+    hello();
+}
+```
+
+Kompilacja:
+
+```
+as test.S -o testasm.o
+gcc test.c -c -o testc.o
+gcc testasm.o testc.o -o test
+./test
+```
+
+=>
+
+```
+Hello world
+```
+
+Na razie istnieje tylko bardzo prosta funkcja, która w zasadzie nie komunikuje się z C. Nie zwraca żadnej wartości ani nie pobiera argumentów. Jednak, aby zacząć pisać obsługę funkcji, która będzie pobierała argumenty i zwracała wyniki trzeba poznać działanie C od jeszcze niższego poziomu.
+
+C korzysta ze stosu do przekazywania argumentów do funkcji. Argumenty odkładane są w kolejności od ostatniego do pierwszego. Ponadto na końcu odkładany jest tzw. adres powrotu, dzięki któremu po wykonaniu funkcji procesor wie do którego miejsca ma powrócić. Prolog funkcji wygląda tak:
+
+```
+pushl %ebp
+movl %esp, %ebp
+```
+
+Na stosie znajduje się zawartość rejestru EBP, adres powrotu i argumenty od pierwszego do ostatniego.
+
+Na architekturze x86 do zwracania wyników pracy programu używa się rejestru EAX, lub jego cząstek, AX i AH/AL. Zatem aby funkcja napisana w asemblerze zwróciła 0 przed rozkazem ret należy przenieść do rejestru EAX 0:
+
+```
+movl $0, %eax
+```
+
+Czas na połączenie twojej wiedzy w całość. Poniższy kod zadziała praktycznie pod każdym systemem operacyjnym na x86. Przykład:
+
+```
+ .text
+ .globl _myadd
+ _myadd:
+   pushl %ebp
+   movl %esp, %ebp
+   movl 8(%esp), %eax /* eax = arg0 */
+   addl 12(%esp), %eax /* eax += arg1 */
+   popl %ebp
+   ret /* ret eax */
+```
+
+```
+#include <stdio.h>
+extern int myadd(int a, int b);
+int main(void) {
+    printf ("977 + 476 = %d\n", myadd(997, 476));
+}
+```
+
+Po skompilowaniu i uruchomieniu programu na ekranie powinno pojawić się działanie `977 + 476 = 1453`.
+
+Oprócz możliwości wstępnie skompilowanych modułów możesz posłużyć się także tzw. wstawkami asemblerowymi. Ich użycie powoduje wstawienie w miejsce wystąpienia wstawki odpowiedniego kodu maszynowego, który powstanie po przetłumaczeniu kodu asemblerowego. Ponieważ wstawki asemblerowe nie są standardowym elementem języka C, każdy kompilator ma całkowicie odmienną filozofię ich stosowania. Ponieważ w tym podręczniku skupiam się kompilatorach GNU, omówię filozofię stosowania wstawek asemblera według programistów GNU. Przykład:
+
+```
+int main (void) {
+    asm ("nop\n");
+}
+```
+
+W tym wypadku wstawiona zostanie instrukcja "nop" (no operation).
+
+Język C++ z racji swojego podobieństwa do C będzie łatwy do łączenia. Pewnym utrudnieniem może być obiektowość języka C++, przestrzenie nazw oraz możliwość przeciążania funkcji. Oczywiście nadal zakładam, że główny program jest napisany w C. C nie wspiera wszystkich możliwości C++, więc trzeba zmusić go do wyłączenia swoich "zalet" nad C, aby można było połączyć ze sobą elementy programu napisane w C i C++. Używa się takiej konstrukcji:
+
+```
+extern "C" {
+    /* ... */
+}
+```
+
+Plik .C:
+
+```
+#include <stdio.h>
+
+extern void echo(int a);
+ 
+int main(void) {
+    echo(2);
+}
+```
+
+Plik .CPP:
+
+```
+#include <iostream>
+
+extern "C" {
+    void echo(int a) {
+        std::cout << a << std::endl;
+    }
+}
+```
+
+Kompilacja:
+
+```
+gcc test.c -c -o ctest.o
+g++ test.cpp -c -o cpptest.o
+```
+
+Linkowanie:
+
+```
+gcc ctest.o cpptest.o -o test -lstdc++ # Uwaga na libstdc++!
+```
+
+Bardzo istotne jest to, żeby nie zapomnieć o `extern "C"`.
+
 **[Powrót do spisu treści](..)**
