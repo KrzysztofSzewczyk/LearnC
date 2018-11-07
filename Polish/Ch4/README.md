@@ -769,4 +769,10 @@ Powyższe przykłady opisują część problemów jakie mogą wynikać z próby 
 
 Pisząc programy nieraz potrzebna będzie pomoc różnych bibliotek. Problem polega na tym, że nie zawsze będą one dostępne na tej platformie, na którym inny użytkownik będzie próbował go kompilować. Dlatego ważne jest, aby korzystać z przenośnych i łatwo dostępnych bibliotek, które dostępne są na wiele różnych systemów i platform sprzętowych.
 
+Windows: funkcje atan2, floor i fabs są w tej samej bibliotece, co standardowe funkcje C.
+
+Unix: osobna biblioteka matematyczna `libm` w wersji statycznej (`/usr/lib/libm.a`) i pliku nagłówkowym math.h, oraz dynamicznej (`/usr/lib/libm.so`).
+Aby korzystać z tych funkcji należy należy załączyć plik <math.h>, a przy kompilacji dołączyć bibliotekę libm przełącznikiem `-lm`
+Opcja -lm używa libm.so albo libm.a w zależności od tego, która wersja została znaleziona, i w zależności od obecności przełącznika `-static`
+
 **[Powrót do spisu treści](..)**
