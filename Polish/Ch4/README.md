@@ -841,7 +841,7 @@ W przykładzie założę, że w pliku test.S zawarty będzie kod, napisany w ase
 
 ```
     .text
-    .globl f1
+    .globl hello
 hello:
     pushl %ebp /* setting up registers */
     movl %esp, %ebp
@@ -900,7 +900,7 @@ Na architekturze x86 do zwracania wyników pracy programu używa się rejestru E
 movl $0, %eax
 ```
 
-Czas na połączenie twojej wiedzy w całość. Poniższy kod zadziała praktycznie pod każdym systemem operacyjnym na x86. Przykład:
+Czas na połączenie twojej wiedzy w całość. Poniższy kod zadziała praktycznie pod każdym systemem operacyjnym na x86. Uwaga! Systemy uniksopodobne nie potrzebują underscore! Przykład:
 
 ```
  .text
