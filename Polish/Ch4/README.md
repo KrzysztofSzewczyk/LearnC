@@ -701,6 +701,68 @@ Z tego powodu, nigdy nie zakłada się, że dany typ będzie miał określony ro
 
 `<stdint.h>` definiuje typy `int8_t`, `int16_t`, `int32_t`, `int64_t`, `uint8_t`, `uint16_t`, `uint32_t` i `uint64_t` (oo ile dana architektura wspiera dane typy).
 
+Podstawową jednostką danych jest bit, który może mieć wartość 0 lub 1. Kilka kolejnych bitów stanowi bajt. Często typ short ma wielkość dwóch bajtów. W jaki sposób te dwa bajty sa zapisane w pamięci, czy na początku jest ten bardziej znaczący (big endian), czy mniej znaczący (little endian)? Skąd takie śmieszne nazwy? Pochodzą one z książki "Podróże Guliwera", w której liliputy kłóciły się o stronę, od której należy rozbijać jajko na twardo. Jedni uważali, że trzeba je rozbijać od grubszego końca (big endian) a drudzy, że od cieńszego (little endian). Sprawa się jeszcze bardziej komplikuje w przypadku typów, które składają się np. z 4 bajtów. Wówczas są aż 24 (4 silnia) sposoby zapisania kolejnych fragmentów takiego typu. W praktyce zapewne spotkasz się jedynie z kolejnościami big endian lub little endian, co nie zmienia faktu, że inne możliwości także istnieją i przy pisaniu programów, które mają być przenośne należy to brać pod uwagę.
 
+Poniższy przykład dobrze obrazuje oba sposoby przechowywania zawartości zmiennych w pamięci komputera (przyjmując `CHAR_BIT == 8` oraz `sizeof(long) == 4`, bez padding bits)
+
+```
+unsigned long zmienna = 0x01040503;
+
+Byte #        | 0  | 1  | 2  | 3  |
+big    endian |0x01|0x04|0x05|0x03|
+little endian |0x03|0x05|0x04|0x01|
+```
+
+Czasami program A musi się komunikować z programem B, który działa na komputerze o innym porządku bajtów. Często najprościej jest przesyłać liczby jako tekst, gdyż jest on niezależny od innych czynników, jednak taki format zajmuje więcej miejsca, a nie zawsze możena pozwolić sobie na taką rozrzutność.
+
+Przykładem może być komunikacja sieciowa, w której przyjęło się, że dane przesyłane są w porządku big-endian. Aby móc łatwo operować na takich danych, w standardzie POSIX zdefiniowano następujące funkcje (zazwyczaj są to makra):
+
+```
+// W <arpa/inet.h>
+
+uint32_t htonl(uint32_t);
+uint16_t htons(uint16_t);
+uint32_t ntohl(uint32_t);
+uint16_t ntohs(uint16_t);
+```
+
+Pierwsze dwie funkcje konwertują liczbę z reprezentacji lokalnej na reprezentację big endian (host -> network), natomiast kolejne dwie odwracają konwersję (network -> host). Można skorzystać z `<endian.h>`, gdzie definiowane są makra pozwalające określić porządek bajtów. Przykład:
+
+
+```
+#include <endian.h>
+#include <stdio.h>
+ 
+int main(void) {
+    #if __BYTE_ORDER == __BIG_ENDIAN
+        puts("Big endian");
+    #elif __BYTE_ORDER == __LITTLE_ENDIAN
+        puts("Little-endian");
+    #elif defined __PDP_ENDIAN && __BYTE_ORDER == __PDP_ENDIAN
+        puts("PDP");
+    #endif
+}
+```
+
+Ciągle jednak program polega na niestandardowym pliku nagłówkowym <endian.h>. Można go wyeliminować sprawdzając porządek bajtów w runtime (czasie wykonywania programu):
+
+```
+#include <stdio.h>
+#include <stdint.h>
+
+int main(void) {
+    uint32_t val = 0x03050401;
+    unsigned char * v = (unsigned char *)&val;
+    int order = *v * 1000 + *(v + 1) * 100 + *(v + 2) * 10 + *(v + 3);
+    if (order == 4321)
+        printf("Big Endian");
+    else if (order == 1234)
+        printf("Little Endian");
+    else if (order == 3412)
+        printf("PDP");
+    printf("Other, result: %d (from 1453)\n", order);
+    return 0;
+}
+```
 
 **[Powrót do spisu treści](..)**
