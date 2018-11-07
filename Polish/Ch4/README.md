@@ -775,4 +775,61 @@ Unix: osobna biblioteka matematyczna `libm` w wersji statycznej (`/usr/lib/libm.
 Aby korzystać z tych funkcji należy należy załączyć plik <math.h>, a przy kompilacji dołączyć bibliotekę libm przełącznikiem `-lm`
 Opcja -lm używa libm.so albo libm.a w zależności od tego, która wersja została znaleziona, i w zależności od obecności przełącznika `-static`
 
+### Kompilacja Warunkowa
+
+Przy zwiększaniu przenośności kodu może pomóc preprocessor. Jeśli program korzysta ze słowa kluczowego wprowadzonego w standardzie C99, ale równocześnie powinien się kompilować przez kompilatory C89, można skorzystać z takiego kodu:
+
+```
+#ifndef restrict
+    #if __STDC_VERSION__ >= 199901L
+        #define __restrict__ restrict
+    #else
+        #define __restrict
+    #endif
+#endif
+```
+
+a w kodzie programu zamiast `restrict` stosować `__restrict__`. GCC rozumie słowa kluczowe tak tworzone i w jego przypadku warto nie redefiniować wartości:
+
+```
+#ifndef __GNUC__
+    #ifndef __inline__
+        #if __STDC_VERSION__ >= 199901L
+            #define __inline__ inline
+        #else
+            #define __inline__
+        #endif
+    #endif
+#endif
+```
+
+Korzystając z kompilacji warunkowej można także korzystać z różnego kodu zależnie od m.in. systemu operacyjnego. Przykładowo, przed kompilacją na konkretnej platformie tworzy się odpowiedni plik `config.h`, który następnie dołącza się do wszystkich plików źródłowych, w których podejmuje się decyzje na podstawie zdefiniowanych makr. Przykład:
+
+```
+#ifndef CONFIG_H
+#define CONFIG_H
+
+/* #define USE_WINDOWS */
+/* #define USE_LINUX */
+
+#error Please edit config.h file and remove error lines.
+#error Uncomment macros depending on platform used.
+
+#endif
+```
+
+Plik źródłowy:
+
+```
+#include "config.h"
+
+#ifdef USE_WINDOWS
+    /* ... */
+#else
+    /* ... */
+#endif
+```
+
+Istnieją różne narzędzia, które pozwalają na automatyczne tworzenie plików pokroju `config.h`, dzięki czemu użytkownik przed skompilowaniem programu nie musi ręcznie edytować pliku konfiguracji, a jedynie uruchomić odpowiednie polecenie. Przykładem jest zestaw autoconf i automake. 
+
 **[Powrót do spisu treści](..)**
