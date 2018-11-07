@@ -683,4 +683,10 @@ man 1 objdump
 man 1 readelf
 ```
 
+## Przenośność programów
+
+C umożliwia tworzenie programów, które mogą być uruchamiane na różnych platformach sprzętowych pod warunkiem ich powtórnej kompilacji. C należy formalnie do grupy języków wysokiego poziomu (tak na prawdę, to można go określić mianem języka middle-level), które tłumaczone są do asemblera. Z jednej strony jest to korzystne posunięcie, gdyż programy są szybsze i mniejsze niż programy napisane w językach interpretowanych (takich, w których kod źródłowy nie jest kompilowany do kodu maszynowego, tylko na bieżąco uruchamiany przez interpreter). Istnieje niestety druga strona medalu - pewne rzeczy specyficzne dla konkretnego sprzętu, które ograniczają przenośność programów. W tym podrozdziale wyjaśnię ci, jak bez problemu tworzyć poprawne i przenośne programy.
+
+
+
 **[Powrót do spisu treści](..)**
