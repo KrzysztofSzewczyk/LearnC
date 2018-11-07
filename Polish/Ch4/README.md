@@ -699,4 +699,8 @@ Rozmiar poszczególnych typów danych (np. `int`, `short`, `long`, `char`), ró�
 
 Z tego powodu, nigdy nie zakłada się, że dany typ będzie miał określony rozmiar. Jeżeli potrzebny jest typ o pewnym konkretnym rozmiarze (konkretnej liczbie bitów) można skorzystać z pliku nagłówkowego `<stdint.h>` lub `<inttypes.h>`.
 
+`<stdint.h>` definiuje typy `int8_t`, `int16_t`, `int32_t`, `int64_t`, `uint8_t`, `uint16_t`, `uint32_t` i `uint64_t` (oo ile dana architektura wspiera dane typy).
+
+
+
 **[Powrót do spisu treści](..)**
