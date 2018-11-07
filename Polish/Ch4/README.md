@@ -981,4 +981,22 @@ gcc ctest.o cpptest.o -o test -lstdc++ # Uwaga na libstdc++!
 
 Bardzo istotne jest to, żeby nie zapomnieć o `extern "C"`.
 
+## Ćwiczenia
+
+1. Napisz program, obliczający cosinus kąta `π/2` i `4π` (wartości w radianach)
+2. Napisz program wczytujący z stdin trzy liczby rzeczywiste, liczący ich średnią i pierwiastek kwadratowy, wypisując najmniejszą z tych liczb.
+3. Wczytaj od użytkownika ciąg znaków o **dowolnej** długości i wypisze jego długość.
+4. Napisz prosty kalkulator konsolowy.
+5. Przygotuj funkcje dodawania, odejmowania, mnożenia i dzielenia w Asemblerze i połącz je z C.
+6. Napisz program, który przyjmuje dwa ciągi. Pierwszy to losowy ciąg, a drugi to losowy ciąg z dodanym ciągiem trzech liter w dowolnym miejscu. Program powinien wypisać: dodany znak i indeks w ciągu jego wystąpienia. Przykład:
+
+```
+test("hello", "aaahello");
+/* stdout:
+ * Dodano znak: a
+ * Indeks: 0 */
+```
+
+7. Napisz program, który przyjmie wyrażenie matematyczne w postaci `2+3*4/5`, mając dany brak spacji między operatorami i wyłącznie jednocyfrowe liczby, oraz podstawowe operatory: `+-*/`, oraz wykona wyrażenie matematyczne i wypisze jego wynik. Kilka test cases: `2+2*2`, `1*2+3-4/5*6+7-8/9`, `2/0` - to powinno wypisać błąd.
+
 **[Powrót do spisu treści](..)**
