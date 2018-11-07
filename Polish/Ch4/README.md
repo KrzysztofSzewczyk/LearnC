@@ -565,6 +565,9 @@ codegen.o: codegen.c codegen.h
 
 main.o: main.c
     $(CC) main.c -c -o main.o
+
+love:
+    @echo "not war"
 ```
 
 Program zależy od 4 plików z rozszerzeniem .o, potem każdy z tych plików zależy od plików .c, które program make skompiluje w pierwszej kolejności, a następnie połączy w jeden program. Nazwę kompilatora zapisano jako zmienną, ponieważ powtarza się i zmienna jest sposobem, by zmienić ją wszędzie za jednym zamachem, podobnie jak CFLAGS - flagi kompilatora. dodanie jako zależności plików z rozszerzeniem .h zapewnia rekompilację plików w których są używane zdefiniowane w nich wartości. Brak tych wpisów jest najczęstszą przyczyną braku zmian działania programu po zmianie ustawień w plikach nagłówkowych.
