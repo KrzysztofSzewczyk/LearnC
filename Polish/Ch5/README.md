@@ -46,8 +46,6 @@ Do poznania wielkości tablicy, można użyć operatora sizeof. Przykład:
 #include <stdio.h>
 int main(void) {
     int tab[3] = {3,6,8}, i;
-    printf ("Druk tablicy tab:\n");
- 
     for (i = 0; i < (sizeof tab / sizeof *tab); ++i) {
         printf("%d = %d\n", i, tab[i]);
     }
