@@ -34,8 +34,6 @@
    - Tablice, cz. II
    - Wskaźniki, cz. II
  6. [Biblioteka standardowa C](Ch6) Poziom trudności: ![][star]
-   - Indeks alfabetyczny
-   - Indeks tematyczny
  7. [Wstęp do Assemblera x86](Ch7) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
    - Co to Assembler?
    - Program "Hello, World!"
