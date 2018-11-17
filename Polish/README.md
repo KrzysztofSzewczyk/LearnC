@@ -33,7 +33,6 @@
  5. [Rozszerzenie](Ch5) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
    - Tablice, cz. II
    - Wskaźniki, cz. II
-   - Bezpieczne programowanie, błędy, wyjątki.
  6. [Biblioteka standardowa C](Ch6) Poziom trudności: ![][star]
    - Indeks alfabetyczny
    - Indeks tematyczny
