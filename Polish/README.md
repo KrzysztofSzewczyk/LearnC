@@ -34,21 +34,9 @@
    - Tablice, cz. II
    - Wskaźniki, cz. II
  6. [Biblioteka standardowa C](Ch6) Poziom trudności: ![][star]
- 7. [Wstęp do Assemblera x86](Ch7) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
-   - Co to Assembler?
-   - Program "Hello, World!"
-   - Zmienne
-   - Łączenie Assemblera z C
-   - Operacje matematyczne
-   - Skoki, instrukcje warunkowe
-   - Konwencje wywoływania, ramki stosu
-   - Optymalizacja
-   - Spis instrukcji
- 8. [Assembler i DOS](Ch8) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
-   - Czemu MS-DOS?
-   - Przerwania
-   - Pamięć wideo
- 9. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
+ 7. [Assembler x86](Ch7) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
+   - Spis w konstrukcji.
+ 8. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
    - Bootloadery
      - Przedmowa
      - Wprowadzenie
