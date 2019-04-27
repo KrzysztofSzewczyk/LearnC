@@ -38,7 +38,7 @@ Jako użytkownik Windowsa powinieneś pobrać MinGW a następnie dodać ścieżk
 
 Aby skompilować plik .c do postaci pliku wykonywalnego, należy uruchomić kompilator:
 
-```
+```sh
 gcc main.c -o main
 ```
 
