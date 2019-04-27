@@ -3,7 +3,7 @@
 
 ## Pierwszy program
 
-Twój pierwszy program w C wyświetli na ekranie tekst "Hello, World!". W polu na kod źródłowy wpisz następującą treść:
+Twój pierwszy program w C wyświetli na ekranie tekst "Hello, World!". W polu na kod źródłowy (zależnie od edytora) wpisz następującą treść:
 
 ```c
 
@@ -16,45 +16,60 @@ int main(void) {
 
 ```
 
-Jeśli ukazało ci się po uruchomieniu "Hello, World!", wszystko działa poprawnie.
+Upewnij się, że tryb twojego kompilatora jest przełączony na C89. Można tego dokonać
+poprzez podanie parametru `-std=c89`.
 
-Uwaga: W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że tak można robić i tak się czasami robi, ale użycie Y będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
+Po zapisaniu i nawigacji za pomocą powłoki do ścieżki zapisu uruchom kompilator:
 
-Uwaga2: Oczywiście jest szansa na to że gdziekolwiek może się pojawić drobny błąd, ponieważ sam podręcznik nie jest jeszcze ukończony. Bardzo miłe byłoby zgłaszanie ewentualnych błędów.
+```sh
+gcc plik.c -o plik -std=c89
+```
 
-Uwaga3: Upewnij się, że tryb twojego kompilatora jest przełączony na C89.
+A następnie go uruchom:
 
-Uwaga4: Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3, 4 - w których są już przedstawione standardy C99 i C11 (a nie C89).
+```sh
+plik
+```
 
-Uwaga5: Czasami będę ujawniał przed Tobą "wiedzę tajemną" - bardziej zaawansowane tajniki programowania, których możesz nie rozumieć. Nie ma w tym nic złego.
+Jeśli program wypisał na terminal napis `Hello, World!`, wszystko działa poprawnie.
+
+### Uwagi
+
+W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" - to znaczy, że można zrobić Y i tak się czasami robi, ale użycie X będzie w większości przypadków lepsze. Masz pełną swobodę w wyborze techniki, aczkolwiek używając tych rzadziej spotykanych możesz pogorszyć jakość swojego kodu.
+
+Czasami będę ujawniał przed Tobą "wiedzę tajemną" - bardziej zaawansowane tajniki programowania, których możesz nie rozumieć. Nie ma w tym nic złego.
+
+Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3 i 4 - w których są już przedstawione standardy C99 i C11 (a nie C89), starszy standard został wprowadzony dla maksymalnego uproszczenia.
 
 ## Podstawowe pojęcia
 
-Dla właściwego zrozumienia języka C niezbędne jest przyswojenie pewnych ogólnych informacji.
+Dla właściwego zrozumienia języka C niezbędne jest przyswojenie ogólników.
 
-#### Generalne stwierdzenia
+### Generalne stwierdzenia
 
-Jak każdy język programowania, C sam w sobie jest niezrozumiały dla procesora. Został on stworzony w celu umożliwienia ludziom łatwego pisania kodu, który może zostać przetworzony na kod maszynowy.
+Jak każdy język programowania, C sam w sobie jest niezrozumiały dla procesora. Został on stworzony w celu umożliwienia pisania kodu szybciej niż w Assemblerze.
 
-Program, który zamienia kod C na wykonywalny kod binarny, to kompilator. Jeśli pracujesz nad projektem, który wymaga kilku plików kodu źródłowego (np. pliki nagłówkowe), wtedy jest uruchamiany kolejny program - linker. Linker służy do połączenia różnych plików i stworzenia jednej aplikacji lub biblioteki. Biblioteka jest zestawem procedur, który sam w sobie nie jest wykonywalny, ale może być używana przez inne programy. Kompilacja i łączenie plików są ze sobą bardzo ściśle powiązane, stąd są przez wielu traktowane jako jeden proces. 
+<!-- TODO: Trzeba jakoś zapowiedzieć linker, aktualna definicja jest niezbyt poprawna merytorycznie -->
 
-Jedną rzecz warto sobie uświadomić - kompilacja jest jednokierunkowa: przekształcenie kodu źródłowego C w kod maszynowy jest bardzo proste, natomiast odwrotnie - nie. Dekompilatory co prawda istnieją, ale rzadko tworzą użyteczny kod C.
+Program, który zamienia kod C na wykonywalny program to kompilator. Jeśli pracujesz nad projektem, który wymaga kilku plików kodu źródłowego (np. pliki nagłówkowe), wtedy jest uruchamiany kolejny program - linker. Linker służy do połączenia różnych plików i stworzenia jednej aplikacji lub biblioteki. Linker jest uruchamiany nawet wtedy, gdy aplikacja posiada jeden plik źródłowy. Biblioteka jest zestawem procedur, który sam w sobie nie jest wykonywalny ale może być używany przez inne programy. Kompilacja i łączenie plików są ze sobą bardzo ściśle powiązane, stąd są przez wielu traktowane jako jeden proces.
 
-Najpopularniejszym wolnym (w uproszczeniu, darmowym) kompilatorem jest prawdopodobnie GNU Compiler Collection.
+Jedną rzecz warto sobie uświadomić - kompilacja jest praktycznie jednokierunkowa: przekształcenie kodu źródłowego C w kod maszynowy jest bardzo proste, natomiast odwrotnie - nie. Dekompilatory istnieją, ale rzadko tworzą użyteczny kod C.
 
-Pewnie zaskoczy Cię to, że tak naprawdę język C bez bibliotek standardowych nie może zbyt wiele (wyjątkiem jest inline assembly, którego można użyć w połączeniu z przerwaniami, ale przeważnie nie robi się tego). Język C w grupie języków programowania wysokiego poziomu jest stosunkowo nisko.
+Najpopularniejszym wolnym (w uproszczeniu darmowym) kompilatorem jest GNU Compiler Collection.
 
-Dzięki temu kod napisany w języku C można dość łatwo przetłumaczyć na kod asemblera. Bardzo łatwo jest też łączyć ze sobą kod napisany w języku asemblera z kodem napisanym w C. Dla bardzo wielu ludzi przeszkodą jest także dość duża liczba i częsta dwuznaczność operatorów.
+Pewnie zaskoczy Cię to, że C bez bibliotek standardowych nie może zbyt wiele (wyjątkiem jest inline assembly, którego można użyć w połączeniu z przerwaniami, ale przeważnie nie robi się tego; większość funkcji jak np. `printf`, znajduje się w tzw. `libc`, czyli bibliotece standardowej C). Język C w grupie języków programowania wysokiego poziomu jest stosunkowo nisko, dlatego mówi się o nim jako o języku **średniego poziomu**.
 
-Początkujący programista, czytający kod programu w C może odnieść bardzo nieprzyjemne wrażenie, które można opisać cytatem "ja nigdy tego nie ogarnę". Wszystkie te elementy języka C, które wydają Ci się dziwne i nielogiczne w miarę, jak będziesz nabierał doświadczenia nagle okażą się całkiem przemyślanie dobrane i takie, a nie inne konstrukcje przypadną Ci do gustu. Dalsza lektura tego podręcznika oraz zaznajamianie się z funkcjami z różnych bibliotek ukażą Ci całą gamę możliwości, które daje język C doświadczonemu programiście. 
+Dzięki temu kod napisany w C można dość łatwo przetłumaczyć na kod asemblera. Bardzo łatwo jest też łączyć ze sobą kod napisany w języku asemblera z kodem napisanym w C.
 
-#### Paradygmaty programowania
+Początkujący programista, czytający kod programu w C może odnieść bardzo nieprzyjemne wrażenie, które można opisać cytatem "ja nigdy tego nie ogarnę". Wszystkie te elementy języka C, które wydają Ci się dziwne i nielogiczne w miarę, jak będziesz nabierał doświadczenia nagle okażą się całkiem przemyślanie dobrane i takie, a nie inne konstrukcje przypadną Ci do gustu. Dalsza lektura tego podręcznika oraz zaznajamianie się z funkcjami z różnych bibliotek ukażą Ci całą gamę możliwości, które daje C doświadczonemu programiście. 
 
-Jeśli miałeś styczność z językiem Pascal, to pewnie słyszałeś o nim, że jest to język programowania strukturalny. W C nie ma tak ścisłej struktury blokowej, mimo to jest bardzo ważne zrozumienie, co oznacza struktura blokowa. Blok jest grupą instrukcji, połączonych w ten sposób, że są traktowane jak jedna całość. W C, blok zawiera się pomiędzy nawiasami klamrowymi { }. Blok może także zawierać kolejne bloki.
+### Paradygmaty programowania
 
-#### Bloki instrukcji
+Jeśli miałeś styczność z Pascalem, to pewnie słyszałeś o nim, że jest strukturalnym językiem programowania. W C nie ma tak ścisłej struktury blokowej, mimo to bardzo ważne jest zrozumienie, co oznacza struktura blokowa. Blok jest grupą instrukcji, połączonych w ten sposób, że są traktowane jak jedna całość. W C, blok zawiera się pomiędzy klamrami `{}`. Blok może także zawierać kolejne, zagnieżdżone bloki.
 
-Generalnie, blok zawiera ciąg kolejno wykonywanych poleceń. Polecenia zawsze (z nielicznymi wyjątkami) kończą się średnikiem (;). W jednej linii może znajdować się wiele poleceń, choć dla zwiększenia czytelności kodu najczęściej pisze się pojedynczą instrukcję w każdej linii. Jest kilka rodzajów poleceń, np. instrukcje przypisania, warunkowe czy pętli. W dużej części tej książki będziemy zajmować się właśnie instrukcjami. 
+### Bloki instrukcji
+
+Generalnie, blok zawiera ciąg kolejno wykonywanych poleceń. Polecenia zawsze (z nielicznymi wyjątkami) kończą się średnikiem (;). W jednej linii może znajdować się wiele poleceń, choć dla zwiększenia czytelności kodu najczęściej pisze się pojedynczą instrukcję w każdej linii. Jest kilka rodzajów poleceń, np. instrukcje przypisania, warunkowe czy pętli.
 
 Pomiędzy poleceniami są również odstępy - spacje, tabulacje oraz przejścia do następnej linii, przy czym dla kompilatora te trzy rodzaje odstępów mają takie samo znaczenie. Ale uwaga, nie możemy łamać ciągów na kilka linii, tak po prostu!
 
@@ -66,9 +81,19 @@ return 0;
 
 Powyższy kod jest błędny. W C ważne jest samo istnienie odstępu, a nie typ / rozmiar.
 
-Zasięg to pojęcie dotyczące zmiennych (które przechowują dane przetwarzane przez program). W większości programów są zarówno zmienne wykorzystywane przez cały czas działania programu oraz takie, które są używane przez pojedynczy blok programu (np. funkcję). Na przykład, w pewnym programie w pewnym momencie jest wykonywane skomplikowane obliczenie, które wymaga zadeklarowania wielu zmiennych do przechowywania pośrednich wyników. Ale przez większą część tego działania te zmienne są niepotrzebne i zajmują tylko miejsce w pamięci - najlepiej gdyby to miejsce zostało zarezerwowane tuż przed wykonaniem wspomnianych obliczeń, a zaraz po ich wykonaniu zwolnione. Dlatego w C istnieją zmienne globalne oraz lokalne. Zmienne globalne mogą być używane w każdym miejscu programu, natomiast lokalne - tylko w określonym bloku czy funkcji (oraz blokach w nim zawartych). Generalnie - zmienna zadeklarowana w danym bloku jest dostępna tylko wewnątrz niego.
+Jako ciekawostka która zostanie omówiona później, ciągi można łamać, ale trzeba na końcu linii umieścić znak `\`:
 
-#### Programowanie sturkturalne
+```c
+printf("Hello \
+world!");
+return 0;
+```
+
+Zasięg to pojęcie dotyczące zmiennych, które przechowują dane przetwarzane przez program. W większości programów są zarówno zmienne wykorzystywane przez cały czas działania programu oraz takie, które są używane przez pojedynczy blok programu (np. funkcję). Na przykład, w pewnym programie w pewnym momencie jest wykonywane skomplikowane obliczenie, które wymaga zadeklarowania wielu zmiennych do przechowywania pośrednich wyników. Ale przez większą część tego działania te zmienne są niepotrzebne i zajmują tylko miejsce w pamięci - najlepiej gdyby to miejsce zostało zarezerwowane tuż przed wykonaniem wspomnianych obliczeń, a zaraz po ich wykonaniu zwolnione. Dlatego w C istnieją zmienne globalne oraz lokalne. Zmienne globalne mogą być używane w każdym miejscu programu, natomiast lokalne - tylko w określonym bloku czy funkcji (oraz blokach w nim zawartych). Generalnie - zmienna zadeklarowana w danym bloku jest dostępna tylko wewnątrz niego i bloków potomnych.
+
+<!-- TODO: Aktualny review skończył się tutaj. Będzie potrzebne kilka takich na ogarnięcie tej książki ;) -->
+
+### Programowanie sturkturalne
 
 Funkcje są ściśle związane ze strukturą blokową, funkcja to po prostu blok instrukcji, który jest potem wywoływany w programie za pomocą pojedynczego polecenia. Zazwyczaj funkcja wykonuje pewne określone zadanie, np. we wspomnianym programie wykonującym pewne skomplikowane obliczenie.
 
