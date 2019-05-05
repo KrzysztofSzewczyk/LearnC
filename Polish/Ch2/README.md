@@ -105,15 +105,32 @@ Język C, w przeciwieństwie do innych języków programowania (np. Fortrana czy
 
 W 1983 roku, kiedy zapoczątkowano prace nad standaryzacją C, zdecydowano, że powinien istnieć zestaw procedur, stałych i zmiennych globalnych identycznych w każdej implementacji C. Zbiór ten nazwano **biblioteką standardową** (czasem nazywaną `libc`). Zawiera ona podstawowe funkcje, które umożliwiają wykonywanie takich zadań jak wczytywanie i zwracanie danych, modyfikowanie zmiennych łańcuchowych, działania matematyczne, operacje na plikach i wiele innych, jednak nie zawiera funkcji, które mogą być zbyt zależne od systemu operacyjnego czy sprzętu, jak grafika, dźwięk czy obsługa sieci (ale interfejs powłoki jest w niej uwzględniony). W programie "Hello World" użyto funkcji z biblioteki standardowej - `printf`, która wyświetla na ekranie sformatowany tekst.
 
-<!-- TODO: Aktualny review skończył się tutaj. Będzie potrzebne kilka takich na ogarnięcie tej książki ;) -->
-
 ### Komentarze
 
-Komentarze to tekst włączony do kodu źródłowego, który jest pomijany przez kompilator i służy jedynie dokumentacji. W języku C, komentarze zaczynają się od `/*` a kończą `*/`. Uwaga: Takich komentarzy nie można zagnieżdzać.
+Komentarze to tekst włączony do kodu źródłowego, który jest pomijany przez kompilator i służy jedynie dokumentacji działania kodu. W języku C, komentarze zaczynają się `/*`, a kończą `*/`. Komentarzy nie można zagnieżdżać, tzn. umieszczać ich wewnątrz siebie. Taki kod nie zadziała:
 
-Komentarze mają duże znaczenie dla rozwijania oprogramowania, nie tylko dlatego że inni będą kiedyś potrzebowali przeczytać napisany przez ciebie kod źródłowy ale także możesz chcieć po dłuższym czasie powrócić do swojego programu i możesz zapomnieć, do czego służy dany blok kodu, albo dlaczego akurat użyłeś tego polecenia a nie innego. W chwili pisania programu, to może być dla ciebie oczywiste, ale po dłuższym czasie możesz mieć problemy ze zrozumieniem kodu. Jednak nie należy też wstawiać zbyt dużo komentarzy ponieważ wtedy kod może stać się jeszcze mniej czytelny - najlepiej komentować fragmenty, które nie są oczywiste dla programisty oraz te o szczególnym znaczeniu. Ale tego nauczysz się już w praktyce.
+```c
+/* Komentarz 1, a tu jest /**/ coś w środku */
+```
 
-Styl pisania kodu jest o tyle ważny, że powinien on być czytelny i zrozumiały; po to w końcu wymyślono języki programowania wysokiego poziomu (w tym C), aby kod było łatwo zrozumieć. Należy stosować wcięcia dla odróżnienia bloków kolejnego poziomu (zawartych w innym bloku; podrzędnych), nawiasy klamrowe otwierające i zamykające blok powinny mieć takie same wcięcia, staraj się, aby nazwy funkcji i zmiennych kojarzyły się z zadaniem, jakie dana funkcja czy zmienna pełni w programie. W dalszej części książki możesz napotkać więcej porad dotyczących stylu pisania kodu. Staraj się stosować do nich, dzięki temu pisany przez ciebie kod będzie łatwiejszy do czytania i zrozumienia. 
+Pierwsze wystąpienie `*/` zamknie komentarz, a dalsza część, tj. ` coś w środku */` zostanie potraktowana jako ordynarny kod źródłowy. Niektóre kompilatory wspierają zagnieżdżanie komentarzy domyślnie lub poprzez rozszerzenie, ale poleganie na tym może nie być dobrym pomysłem, ponieważ może nadeść potrzeba skompilowania kodu kompilatorem, który takiego rozszerzenia do standardu nie wspiera.
+
+Komentarze mają duże znaczenie dla rozwijania oprogramowania, nie tylko dlatego że inni prawdopodobnie będą kiedyś potrzebowali przeczytać napisany przez ciebie kod źródłowy, ale także możesz chcieć po dłuższym czasie powrócić do swojego programu i możesz zapomnieć, do czego służy dany blok kodu, albo dlaczego akurat użyłeś tej a nie innej funkcji bibliotecznej.
+
+W chwili pisania programu, to może być dla ciebie oczywiste, ale po dłuższym czasie możesz mieć problemy ze zrozumieniem kodu. Jednak nie należy też wstawiać zbyt dużo komentarzy ponieważ wtedy kod może stać się jeszcze mniej czytelny - najlepiej komentować fragmenty, które nie są oczywiste dla programisty oraz te o szczególnym znaczeniu. Ale tego nauczysz się już w praktyce. Jako początkujący programista możesz komentować, chociażby do czego służy dany nagłówek lub funkcja, jednak w dalszym etapie nauki komentuj wyłącznie swój kod i jego działanie:
+
+```asm
+    push bx                                 ; Save target buffer in stack
+    push dx                                 ; Save drive number in stack
+    xor dx, dx                              ; XOR DX for division
+    mov bx, 18                              ; Divide LBA / Sectors per track (18 on 1.44 floppy)
+    div bx                                  ; LBA to CHS
+    inc dl                                  ; Adjust for sector 0
+```
+
+Styl pisania kodu jest o tyle ważny, że powinien on być czytelny i zrozumiały; po to w końcu wymyślono języki programowania wyższego poziomu (np. C), aby kod było łatwo zrozumieć. Należy stosować wcięcia dla odróżnienia bloków kolejnego poziomu, nawiasy klamrowe otwierające i zamykające blok powinny mieć takie same wcięcia. Nazwy funkcji i zmiennych powinny kojarzyć się z zadaniem, jakie dany symbol pełni w programie. W dalszej części książki możesz napotkać więcej porad dotyczących stylu pisania kodu. Jeśli będziesz się do nich stosować, twój kod będzie łatwiejszy do czytania i zrozumienia. 
+
+<!-- TODO: Aktualny review skończył się tutaj. -->
 
 #### Nazewnictwo
 
