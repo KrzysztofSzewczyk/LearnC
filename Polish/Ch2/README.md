@@ -130,19 +130,19 @@ W chwili pisania programu, to może być dla ciebie oczywiste, ale po dłuższym
 
 Styl pisania kodu jest o tyle ważny, że powinien on być czytelny i zrozumiały; po to w końcu wymyślono języki programowania wyższego poziomu (np. C), aby kod było łatwo zrozumieć. Należy stosować wcięcia dla odróżnienia bloków kolejnego poziomu, nawiasy klamrowe otwierające i zamykające blok powinny mieć takie same wcięcia. Nazwy funkcji i zmiennych powinny kojarzyć się z zadaniem, jakie dany symbol pełni w programie. W dalszej części książki możesz napotkać więcej porad dotyczących stylu pisania kodu. Jeśli będziesz się do nich stosować, twój kod będzie łatwiejszy do czytania i zrozumienia. 
 
-<!-- TODO: Aktualny review skończył się tutaj. -->
-
 #### Nazewnictwo
 
-Jak już wcześniej było wspomniane, zmiennym i funkcjom powinno się nadawać nazwy, które odpowiadają ich znaczeniu. Zdecydowanie łatwiej jest czytać kod, gdy średnią liczb przechowuje zmienna srednia niż a, a znajdowaniem maksimum w ciągu liczb zajmuje się funkcja max albo znajdz_max niż nazwana f. Często nazwy funkcji to właśnie czasowniki.
+Jak już wcześniej wspomniałem, zmiennym i funkcjom należy nadawać nazwy, które odpowiadają ich znaczeniu. Zdecydowanie łatwiej jest czytać kod, gdy sumę dwóch liczb przechowuje zmienna `sum` niż `a`, a znajdowaniem największej wartości w ciągu liczb zajmuje się funkcja `max` niż `f`. Nazwy powinny być krótkie i treściwe (przykłady z POSIXa: `creat`, `read`, `write`, `max`, `longjmp`).
 
-W jakim języku należy pisać nazwy? Jeśli chcemy, by nasz kod mogły czytać osoby nieznające polskiego - warto użyć języka angielskiego. Bardzo istotne jest jednak, by nie mieszać języków. Przeplatanie ze sobą dwóch języków robi złe wrażenie.
+W jakim języku należy pisać nazwy? Jeśli kod źródłowy będą przeglądać osoby które nie znają języka polskiego - warto używać języka angielskiego. Bardzo istotne jest jednak, by nie mieszać języków i stosować konsekwentnie albo język polski, albo język angielski. Przeplatanie ze sobą dwóch języków robi złe wrażenie na czytających kod i utrudnia wprowadzanie zmian.
 
-Warto również zdecydować się na sposób zapisywania nazw składających się z więcej niż jednego słowa. Istnieje kilka możliwości, najważniejsze z nich to oddzielanie podkreśleniem: `int_to_str`,  "konwencja pascalowska", każde słowo dużą literą: `IntToStr`, "konwencja wielbłądzia", pierwsze słowo małą, kolejne dużą literą: `intToStr` lub łączenie słów i stosowanie skrótów: `itos`
+Warto również zdecydować się na sposób zapisywania nazw składających się z więcej niż jednego słowa. Istnieje kilka możliwości, najważniejsze z nich to oddzielanie podkreśleniem - `int_to_str`, "konwencja pascalowska", każde słowo wielką literą - `IntToStr`, "konwencja wielbłądzia", pierwsze słowo małą, a wszystkie kolejne wielką literą - `intToStr` lub "konwencja C", łączenie słów i stosowanie skrótów - `itos`.
 
-Ponownie, najlepiej stosować konsekwentnie jedną z konwencji i nie mieszać ze sobą kilku.
+Ponownie, najlepiej stosować konsekwentnie jedną z konwencji i nie mieszać ze sobą kilku. Czasami stosuje się rózne notacje aby ładnie usegmentować całość kodu, ponieważ wszystkie symbole globalne zanieczyszczają w pewnym stopniu globalny zasięg. Jeśli symbole są statyczne i dotyczą jednego pliku który prawdopodobnie nie będzie modyfikowany w przyszłości, można nie przywiązywać do tego aż tak wielkiej wagi.
 
-Możesz też napotkać na swojej drodze notację węgierską, którą Ci odradzam - aktualnie, środowiska programistyczne podpowiedzą Ci, jakiego typu jest zmienna.
+Możesz też napotkać na swojej drodze notację węgierską, którą Ci odradzam - aktualnie, środowiska programistyczne podpowiedzą Ci, jakiego typu jest zmienna. Programiści często nie mają problemu z zapamiętaniem, jakiego typu jest dana zmienna, a notacja węgierska dodaje tylko znacznego stopnia konfuzji; załóżmy pracę w edytorze pokroju Vima - ten edytor nie podpowie nam symbolu (nazwy funkcji lub zmiennej) bez doinstalowania innego oprogramowania, tam nie przyda się notacja węgierska, ponieważ nie dość że musimy zapamiętać nazwę zmiennej, ale jeszcze i jej typ, czego nie musimy zapamiętywać w przypadku innych konwencji.
+
+<!-- TODO: Aktualny review skończył się tutaj. -->
 
 #### Preprocesor
 
