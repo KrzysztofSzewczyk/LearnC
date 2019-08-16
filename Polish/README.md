@@ -34,9 +34,11 @@
    - Tablice, cz. II
    - Wskaźniki, cz. II
  6. [Biblioteka standardowa C](Ch6) Poziom trudności: ![][star]
- 7. [Assembler x86](Ch7) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
+ 7. [Teoria Automatów](Ch7) Poziom trudności: ![][star] ![][star] ![][star]
+ 8. [Teoria Obliczeń i Obliczalności](Ch8) Poziom trudności: ![][star] ![][star] ![][star]
+ 9. [Assembler x86](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star]
    - Spis w konstrukcji.
- 8. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch9) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
+ 10. [Programowanie systemów operacyjnych z użyciem Assemblera i C](Ch10) Poziom trudności: ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star] ![][star]
    - Bootloadery
      - Przedmowa
      - Wprowadzenie
