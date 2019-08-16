@@ -39,11 +39,11 @@ W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" -
 
 Czasami będę ujawniał przed Tobą "wiedzę tajemną" - bardziej zaawansowane tajniki programowania, których możesz nie rozumieć. Nie ma w tym nic złego.
 
-Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3 i 4 - w których są już przedstawione standardy C99 i C11 (a nie C89), starszy standard został wprowadzony dla maksymalnego uproszczenia.
+Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3 i 4 - w których są już przedstawione standardy C99 i C11 (a nie C89), starszy standard został wprowadzony dla maksymalnego uproszczenia i kompletnego przedstawienia C w całej okazałości tego języka.
 
 ## Podstawowe pojęcia
 
-Dla właściwego zrozumienia języka C niezbędne jest przyswojenie ogólników.
+Dla właściwego zrozumienia języka C niezbędne jest przyswojenie kilku ogólników.
 
 ### Generalne stwierdzenia
 
@@ -55,23 +55,23 @@ Program, który zamienia kod C na wykonywalny program to kompilator. Jeśli prac
 
 Jedną rzecz warto sobie uświadomić - kompilacja jest praktycznie jednokierunkowa: przekształcenie kodu źródłowego C w kod maszynowy jest bardzo proste, natomiast odwrotnie - nie. Dekompilatory istnieją, ale rzadko tworzą użyteczny kod C.
 
-Najpopularniejszym wolnym (w uproszczeniu darmowym) kompilatorem jest GNU Compiler Collection.
+Najpopularniejszym wolnym (w uproszczeniu darmowym) kompilatorem jest GNU Compiler Collection. Z GCC konkuruje Clang na bardzo podobnych zasadach (kompilatory różnią się wewnętrzną konstrukcją - Clang bazowany jest na LLVM, które zajmuje się generowaniem kodu maszynowego).
 
-Pewnie zaskoczy Cię to, że C bez bibliotek standardowych nie może zbyt wiele (wyjątkiem jest inline assembly, którego można użyć w połączeniu z przerwaniami, ale przeważnie nie robi się tego; większość funkcji jak np. `printf`, znajduje się w tzw. `libc`, czyli bibliotece standardowej C). Język C w grupie języków programowania wysokiego poziomu jest stosunkowo nisko, dlatego mówi się o nim jako o języku **średniego poziomu**.
+Pewnie zaskoczy Cię to, że C bez bibliotek standardowych nie może zbyt wiele (wyjątkiem jest inline assembly, którego można użyć w połączeniu z przerwaniami, ale przeważnie się tego nie robi; większość funkcji jak np. `printf`, znajduje się w tzw. `libc` (czyli bibliotece standardowej C). Język C w grupie języków programowania wysokiego poziomu jest stosunkowo nisko, dlatego mówi się o nim jako o języku **średniego poziomu**. W związku z tym, że C nie jest bogate w funkcje biblioteczne, można bardzo łatwo przenosić bibliotekę standardową na inne systemy lub maszyny, a jeśli nie wymagamy jej podczas budowania swojego oprogramowania, kod staje się w całości wolny od jakiegokolwiek nagłówkowego kodu (oczywiście w tym wypadku musimy włączyć do biblioteki standardowej tzw. pliki startowe, które w dużym uproszczeniu zajmują się wywołaniem funkcji `main`, ustawieniu jednostki zmiennoprzecinkowej, przekazaniu parametrów, itd..., czasami jednak nie jest to wymagane i nie ma potrzeby dołączać plików startowych). To sprawia, że C jest często nazywany **przenośnym assemblerem**.
 
-Dzięki temu kod napisany w C można dość łatwo przetłumaczyć na kod asemblera. Bardzo łatwo jest też łączyć ze sobą kod napisany w języku asemblera z kodem napisanym w C.
+Dzięki temu, że C jest językiem położonym względnie nisko w hierarchii względem poziomu abstrakcji, kod napisany w C można dość łatwo przetłumaczyć na kod asemblera. Bardzo łatwo jest też łączyć ze sobą kod napisany w języku asemblera z kodem napisanym w C (chociażby poprzez możliwość używania rozszerzonych wstawek assemblerowych). Trzeba pamiętać jednak, że kompilator C narzuca konwencję wykonywania (najczęściej `stdcall` lub `cdecl`), co z kolei wymaga przystosowania kodu assemblera, aby umożliwić jego współpracę z C (aczkolwiek nie działa to w drugą stronę).
 
-Początkujący programista, czytający kod programu w C może odnieść bardzo nieprzyjemne wrażenie, które można opisać cytatem "ja nigdy tego nie ogarnę". Wszystkie te elementy języka C, które wydają Ci się dziwne i nielogiczne w miarę, jak będziesz nabierał doświadczenia nagle okażą się całkiem przemyślanie dobrane i takie, a nie inne konstrukcje przypadną Ci do gustu. Dalsza lektura tego podręcznika oraz zaznajamianie się z funkcjami z różnych bibliotek ukażą Ci całą gamę możliwości, które daje C doświadczonemu programiście. 
+Początkujący programista, czytający kod programu w C może odnieść bardzo nieprzyjemne wrażenie, które można opisać cytatem "ja nigdy tego nie ogarnę". Wszystkie te elementy języka C, które wydają się dziwne i niezbyt logiczne w miarę stałego nabierania doświadczenia nagle okażą się całkiem przemyślanie dobrane i takie, a nie inne konstrukcje prędzej czy później przypadną Ci do gustu. Dalsza lektura tej książki oraz zaznajamianie się z różnymi procedurami bibliotecznymi ukażą Ci chociaż część gamy możliwości, które daje C programiście. W przypadku wysokopoziomowych języków, krzywa trudności względem czasu często wygląda liniowo (patrząc chociażby na Pythona). C jednak, jako bardzo prosty język, wymaga od programisty wykorzystania znacznej części jego potencjału syntatycznego i semantycznego do wykonania określonej czynności.
 
 ### Paradygmaty programowania
 
-Jeśli miałeś styczność z Pascalem, to pewnie słyszałeś o nim, że jest strukturalnym językiem programowania. W C nie ma tak ścisłej struktury blokowej, mimo to bardzo ważne jest zrozumienie, co oznacza struktura blokowa. Blok jest grupą instrukcji, połączonych w ten sposób, że są traktowane jak jedna całość. W C, blok zawiera się pomiędzy klamrami `{}`. Blok może także zawierać kolejne, zagnieżdżone bloki.
+Jeśli miałeś styczność z Pascalem, to pewnie słyszałeś, że jest strukturalnym językiem programowania. W C nie obowiązuje aż tak ścisła struktura blokowa, mimo to bardzo ważne jest zrozumienie, co ona oznacza. Blok jest grupą instrukcji, połączonych w ten sposób, że są traktowane jak jedna całość. W C, blok zawiera się pomiędzy klamrami `{}`. Blok może także zawierać kolejne, zagnieżdżone bloki.
 
 ### Bloki instrukcji
 
-Generalnie, blok zawiera ciąg kolejno wykonywanych poleceń. Polecenia zawsze (z nielicznymi wyjątkami) kończą się średnikiem (;). W jednej linii może znajdować się wiele poleceń, choć dla zwiększenia czytelności kodu najczęściej pisze się pojedynczą instrukcję w każdej linii. Jest kilka rodzajów poleceń, np. instrukcje przypisania, warunkowe czy pętli.
+Generalnie, blok zawiera ciąg kolejno wykonywanych poleceń (co wynika z imperatywnego charakteru C). Polecenia zawsze (z nielicznymi wyjątkami) kończą się średnikiem (`;`). W jednej linii może znajdować się wiele poleceń, choć dla zwiększenia czytelności kodu najczęściej pisze się pojedynczą instrukcję w każdej linii (od tego również istnieją dobrze uargumentowane odstępstwa, właśnie często w imię czytelności kodu). Jest kilka rodzajów poleceń - np. instrukcje przypisania lub instrukcje warunkowe.
 
-Pomiędzy poleceniami są również odstępy - spacje, tabulacje oraz przejścia do następnej linii, przy czym dla kompilatora te trzy rodzaje odstępów mają takie samo znaczenie. Ale uwaga, nie możemy łamać ciągów na kilka linii, tak po prostu!
+Pomiędzy poleceniami są również odstępy - spacje, tabulacje oraz przejścia do następnej linii, przy czym dla kompilatora te trzy rodzaje odstępów mają takie samo znaczenie. Kompilator C zazwyczaj nie zważa na odstępy, jednak czasami, w nielicznych, lecz logicznych do przewidzenia sytuacjach, są one bardzo ważne (na przykład podczas deklaracji makra). Przykładowo, nie możemy łamać napisów na kilka linii bez użycia odpowiedniej konstrukcji syntatycznej:
 
 ```c
 printf("Hello
@@ -79,9 +79,9 @@ world");
 return 0;
 ```
 
-Powyższy kod jest błędny. W C ważne jest samo istnienie odstępu, a nie typ / rozmiar.
+Powyższy kod jest błędny. W C ważne jest samo istnienie odstępu, a nie typ / rozmiar, co trochę upraszcza sprawę.
 
-Jako ciekawostka która zostanie omówiona później, ciągi można łamać, ale trzeba na końcu linii umieścić znak `\`:
+W ramach ciekawostki, która zostanie omówiona później, ciągi można łamać, z zastrzeżeniem, że na końcu linii znajdzie się znak  `\`:
 
 ```c
 printf("Hello \
@@ -89,7 +89,15 @@ world!");
 return 0;
 ```
 
-Zasięg to pojęcie dotyczące zmiennych, które przechowują dane przetwarzane przez program. W większości programów są zarówno zmienne wykorzystywane przez cały czas działania programu oraz takie, które są używane przez pojedynczy blok programu (np. funkcję). Na przykład, w pewnym programie w pewnym momencie jest wykonywane skomplikowane obliczenie, które wymaga zadeklarowania wielu zmiennych do przechowywania pośrednich wyników. Ale przez większą część tego działania te zmienne są niepotrzebne i zajmują tylko miejsce w pamięci - najlepiej gdyby to miejsce zostało zarezerwowane tuż przed wykonaniem wspomnianych obliczeń, a zaraz po ich wykonaniu zwolnione. Dlatego w C istnieją zmienne globalne oraz lokalne. Zmienne globalne mogą być używane w każdym miejscu programu, natomiast lokalne - tylko w określonym bloku czy funkcji (oraz blokach w nim zawartych). Generalnie - zmienna zadeklarowana w danym bloku jest dostępna tylko wewnątrz niego i bloków potomnych.
+### Zasięg zmiennej
+
+Zasięg to pojęcie dotyczące zmiennych, które przechowują dane przetwarzane przez program. W większości programów istnieją zarówno zmienne wykorzystywane przez cały czas działania programu oraz takie, które są używane przez pojedynczy blok programu. Jeśli nadejdzie potrzeba wykonania skomplikowanego obliczenia,  które wymaga zadeklarowania wielu zmiennych do przechowywania pośrednich wyników, jeśli będą one miały zbyt duży zasięg, będą tylko zajmować miejsce w pamięci, ponieważ po wykonaniu obliczenia, nie będą już potrzebne.
+
+Najlepiej, gdyby miejsce w którym przechowywane są zmienne zostało zarezerwowane tuż przed wykonaniem wspomnianych obliczeń, a zaraz po ich wykonaniu zwolnione. Dlatego w C istnieją zmienne globalne oraz lokalne. Zmienne globalne mogą być używane w każdym miejscu programu, natomiast lokalne - tylko w określonym bloku czy funkcji (oraz blokach w nim zawartych). Generalnie - zmienna zadeklarowana w danym bloku jest dostępna tylko wewnątrz niego i bloków potomnych.
+
+Niektóre zmienne globalne nie mogą zostać odczytane poprzez nazwę z innych jednostek kompilacyjnych (co jest konsekwencją istnienia symboli statycznych, ale do tego dojdziemy później).
+
+<!-- TODO: Przejrzeć resztę, z tego miejsca w dół  -->
 
 ### Programowanie strukturalne
 
