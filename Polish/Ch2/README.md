@@ -28,7 +28,7 @@ gcc plik.c -o plik -std=c89
 A następnie go uruchom:
 
 ```sh
-plik
+./plik
 ```
 
 Jeśli program wypisał na terminal napis `Hello, World!`, wszystko działa poprawnie.
