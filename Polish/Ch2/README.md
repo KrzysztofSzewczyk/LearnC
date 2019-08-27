@@ -157,22 +157,21 @@ W C dyrektywy kompilacyjne zaczynają się od hasha (`#`). Przykładem częście
 
 <!-- TODO: Aktualny review skończył się tutaj. -->
 
-Nazwy zmiennych, stałych i funkcji mogą składać się z liter (bez polskich znaków), cyfr i znaku podkreślenia z tym, że nazwa taka nie może zaczynać się od cyfry. Nie można używać nazw zarezerwowanych przez język.
+Nazwy zmiennych, stałych i funkcji mogą składać się z liter alfabetu angielskiego, cyfr i znaku podkreślenia (z zastrzeżeniem, że nazwa nie może zaczynać się od cyfry). Nie można używać nazw słów kluczowych zarezerwowanych przez język (np. `int` lub `return`).
 
-Konwencje nazewnictwa w C są dość proste.
-Nazwy zmiennych piszemy małymi literami: `idx`, `file`.
-Nazwy stałych (zadeklarowanych przy pomocy `#define`, lub zmiennych z modyfikatorem `const`) piszemy wielkimi literami: `SIZE`, `VERSION`.
-Nazwy funkcji piszemy małymi literami: `print`, `sum`, `max`.
+Konwencja nazewnictwa C (tzw. C-case) jest dość prosta. Nazwy zmiennych pisze się małymi literami: `index`, `file`. Nazwy stałych (zadeklarowanych przy pomocy `#define` lub zmiennych z modyfikatorem `const`) pisze się wielkimi literami: `SIZE`, `VERSION`. Nazwy funkcji pisze się małymi literami: `print`, `sum`, `max`.
+
+Żeby zapobiec polucji globalnej przestrzeni nazw, stosuje się prefiksy z podkreślnikiem (np. `bignum_sqrt`). Ta zasada z ogółu nie dotyczy funkcji statycznych (ponieważ ich nazwy nie zostaną wyeksportowane poza plik obiektowy), chociaż niektórzy programiści wolą utrzymywać spójne konwencje i bez wahania stosuja konsekwentnie metodę prefiksu.
 
 ## Zmienne
 
-### Definicja
+Zmienna z definicji to fragment pamięci o określonym rozmiarze, który posiada identyfikator oraz przechowuje pewne dane, których sposób interpretacji przez kompilator i procesor zależy od typu zmiennej. Pamięć komputera nie przechowuje typów, więc są one swego rodzaju abstrakcją wprowadzaną przez C i języki położone wyżej na liście języków posortowanej według ich poziomu abstrakcji. Do wygodnego żonglowania typami, aby interpretować jedną zmienną na kilka możliwych sposobów, wykorzystuje się unie, które omówię później.
 
-Zmienna z definicji to pewien fragment pamięci o ustalonym rozmiarze, który posiada identyfikator oraz przechowuje pewną wartość, zależną od typu zmiennej.
+<!-- . -->
 
 ### Deklarowanie zmiennych
 
-Aby móc skorzystać ze zmiennej należy ją przed użyciem zadeklarować, to znaczy poinformować kompilator, jak zmienna będzie się nazywać i jaki typ ma mieć. Przykład:
+Aby móc skorzystać ze zmiennej należy ją przed użyciem zadeklarować (poinformować kompilator, jak zmienna będzie się nazywać i jaki typ ma mieć). Przykład:
 
 ```c
 int a;
