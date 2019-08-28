@@ -16,7 +16,7 @@ int main(void) {
 
 ```
 
-Upewnij się, że tryb twojego kompilatora jest przełączony na C89. Można tego dokonać
+Upewnij się, że standard kompilacji twojego kompilatora jest przełączony na C89. Można tego dokonać
 poprzez podanie parametru `-std=c89`.
 
 Po zapisaniu i nawigacji za pomocą powłoki do ścieżki zapisu uruchom kompilator:
@@ -40,6 +40,10 @@ W tym podręczniku będę stwierdzał "zalecam robić X, nie zalecam robić Y" -
 Czasami będę ujawniał przed Tobą "wiedzę tajemną" - bardziej zaawansowane tajniki programowania, których możesz nie rozumieć. Nie ma w tym nic złego.
 
 Na początku, będę pokazywał ci techniki które mogą nie być już w użyciu - jeśli chcesz przygotowywać najlepszy kod - stosuj się do zaleceń w dalszych rozdziałach - 3 i 4 - w których są już przedstawione standardy C99 i C11 (a nie C89), starszy standard został wprowadzony dla maksymalnego uproszczenia i kompletnego przedstawienia C w całej okazałości tego języka.
+
+Rozszerzenia będą zaznaczone w następujący sposób:
+
+ > Treść rozszerzenia.
 
 ## Podstawowe pojęcia
 
@@ -154,9 +158,6 @@ Kompilator nie jest jedynym narzędziem, które bierze udział w procesie kompil
 
 W C dyrektywy kompilacyjne zaczynają się od hasha (`#`). Przykładem częściej używanej dyrektywy, jest `#include`, która znajdzie swoje zastosowanie nawet w tak prostym programie jak "Hello, World!". `#include` nakazuje preprocesorowi włączyć w określonym miejscu zawartość podanego pliku.
 
-
-<!-- TODO: Aktualny review skończył się tutaj. -->
-
 Nazwy zmiennych, stałych i funkcji mogą składać się z liter alfabetu angielskiego, cyfr i znaku podkreślenia (z zastrzeżeniem, że nazwa nie może zaczynać się od cyfry). Nie można używać nazw słów kluczowych zarezerwowanych przez język (np. `int` lub `return`).
 
 Konwencja nazewnictwa C (tzw. C-case) jest dość prosta. Nazwy zmiennych pisze się małymi literami: `index`, `file`. Nazwy stałych (zadeklarowanych przy pomocy `#define` lub zmiennych z modyfikatorem `const`) pisze się wielkimi literami: `SIZE`, `VERSION`. Nazwy funkcji pisze się małymi literami: `print`, `sum`, `max`.
@@ -171,104 +172,140 @@ Zmienna z definicji to fragment pamięci o określonym rozmiarze, który posiada
 
 ### Deklarowanie zmiennych
 
-Aby móc skorzystać ze zmiennej należy ją przed użyciem zadeklarować (poinformować kompilator, jak zmienna będzie się nazywać i jaki typ ma mieć). Przykład:
+Aby móc skorzystać ze zmiennej należy ją przed użyciem zadeklarować (poinformować kompilator o nazwie zmiennej oraz jej typie). Przykład:
 
 ```c
 int a;
 ```
 
-**Uwaga: Jeśli typ zmiennej to `int`, i jest to zmienna globalna, możemy pominąć `int`.**
+**Uwaga: Jeśli typ zmiennej to `int`, i jest to zmienna globalna, możemy pominąć słowo kluczowe `int`.** Zasada która na to pozwala to tzw. implicit int, używany w większości razem z kodem w *standardzie* K&R. W C89 zasada implicit int jest już przestarzała, ale mimo wszystko warto nauczyć jej działania, ponieważ istnieje spora szansa na to, że natrafisz na antyczny kod podczas swojej podróży przez świat programowania.
 
-Podczas deklaracji możemy też przypisać zmiennej wartość:
+Podczas deklaracji można też przypisać zmiennej wartość:
 
 ```c
 int a = 42;
 ```
 
-**W języku C zmienne deklaruje się na samym początku bloku (czyli przed pierwszą instrukcją).**
+**W C zmienne deklaruje się na samym początku bloku (czyli przed pierwszą instrukcją).** Ta zasada dotyczy wyłącznie C89, ponieważ jest to limitacja starszych kompilatorów, która ostała się w języku. Kod w C89 który posiada deklarację w środku bloku skompiluje się z użyciem gcc (jeśli nie użyto flagi `-pedantic`, ponieważ GCC wprowadza rozszerzenia do standardu zwane "GNU Excensions", które m.in. pozwalają na deklarację zmiennej w środku bloku), lecz nie skompiluje się z użyciem MSVC w trybie C (`/TC`). 
 
-Niepoprawnie:
-
-```c
-{
-   int a = 17;
-   printf("%d", a);
-   int b; /*Deklaracja po instrukcji, błąd!*/
-   b = a;
-}
-```
-
-Poprawnie:
+Niepoprawna wg. standardu deklaracja zmiennej:
 
 ```c
-{
-   int a = 17, b;
-   printf("%d", a);
-   b = a;
-}
+int a = 43;
+printf("%d", a);
+int b;            /* !!! */
+b = a;
 ```
 
-Zmienne tego samego typu można deklarować po przecinku. `int x, y;` == `int x; int y;`
-**W C, nie są inicjalizowane zmienne lokalne. Oznacza to, że w nowo zadeklarowanej zmiennej znajdują się śmieci - to, co wcześniej zawierał przydzielony zmiennej fragment pamięci. Aby uniknąć błędów, dobrze jest inicjalizować wszystkie zmienne w momencie zadeklarowania.**
+Poprawiona wersja programu:
+
+```c
+int a = 43, b;
+printf("%d", a);
+b = a;
+```
+
+Zmienne tego samego typu można deklarować po przecinku. `int x, y;` == `int x; int y;`.
+
+ > Rozszerzenie: Zmienne wskaźnikowe które mają ten sam typ bazowy również mogą być deklarowane w jednej linijce, jednak wymaga się wtedy powtarzania znaku `*` przed każdą nazwą.
+
+```c
+int * a, b, * c;
+```
+
+W tym wypadku, zmienne `a` i `c` będą wskaźnikami. Zmienna `b` będzie zwykłą zmienną stosową o typie int.
+
+**W C zmienne lokalne nie są inicjalizowane. Oznacza to, że w nowo zadeklarowanej zmiennej znajdują się śmieci pozostawione po innych programach, czyli to, co wcześniej zawierał dany fragment pamięci. Aby uniknąć błędów, dobrze jest inicjalizować wszystkie zmienne w momencie zadeklarowania.** Odstępstwem od tej zasady są zmienne globalne, inicjalizowane domyślnie na zero.
+
+ > Rozszerzenie: Jest to spowodowane innym sposobem deklaracji zmiennych globalnych. Zmienne globalne z reguły nie znajdują się na stosie. Pamięć na nie przeznaczona jest rezerwowana (dane zainicjalizowane trafiają do `.data`, a dane niezainicjalizowane trafiają do `.bss`):
+ 
+```asm
+.data
+test db 88
+ 
+.bss
+buf resb 256
+```
 
 ### Konwencje nazewnictwa zmiennych
 
 Zasady nazywania zmiennych:
- * Pierwszy znak : litera lub _
- * Zakaz używania słów kluczowych (już są użyte). Po zmianie wielkości liter jednak będą dopuszczalne
- * Wielkość liter odróżnia nazwy, `odleglosc` i `Odleglosc` to dwie różne zmienne
- * Długość nazwy - niektóre kompilatory pozwalają na użycie do 247 znaków.
+ * Pierwszy znak musi być literą lub _
+ * Zakaz używania słów kluczowych (już są użyte). Po zmianie wielkości liter słowa kluczowe będą dopuszczalne.
+ * Wielkość liter odróżnia nazwy - `test` i `TEST` to dwie różne zmienne.
+ * Długość nazwy czasami nie może przekraczać ośmiu znaków (starsze kompilatory), a czasami może mieć aż 247 znaków (nowsze kompilatory).
  
 Przykłady niedopuszczalnych nazw:
 ```c
-1x  //zaczyna się od cyfry
-x+y //znak specjalny
-char //słowo kluczowe
-dodaj dwie liczby //spacje
+1a      /* cyfra */
+a+b     /* znak specjalny */
+float   /* keyword (słowo kluczowe) */
+abc def /* odstęp */
 ```
 
-Zmienne mogą być dostępne dla wszystkich funkcji programu - nazywamy je wtedy zmiennymi globalnymi. **Jeśli funkcja zwraca wartość int, możemy ominąć 'int'!**
+Zmienne, które są dostępne dla wszystkich funkcji programu nazywa się zmiennymi globalnymi.
 
 ```c
-a,b;
+a, b;
 
 void f(void) {
-    a=3;
+    a = 3;
 }
- 
+
+/* Jeśli funkcja zwraca int, można pominąć typ wedle zasady implicit int. */
 main(void) {
-    b=3;
-    a=2;
-    return 0;
+    b = 3;
+    a = 2;
+    /* Opcjonalne return 0; */
 }
 ```
 
-Uwaga: Zmienne globalne są domyślnie inicjalizowane zerem.
+Zmienne, które funkcja deklaruje w bloku instrukcji nazywa się zmiennymi lokalnymi.
 
-Zmienne, które funkcja deklaruje w swoim bloku nazywamy zmiennymi lokalnymi. Czy będzie błędem nazwanie tą samą nazwą zmiennej globalnej i lokalnej?. Nie. W danej funkcji da się używać tylko jej zmiennej lokalnej. Tej konstrukcji należy z wiadomych względów unikać.
+W bloku można stworzyć zmienną o takiej samej nazwie jak zmienna globalna lub zmienna w wyższym bloku, jednak zostanie ona wtedy przysłonięta nową definicją do momentu, gdy nie skończy się czas życia nowej, przysłaniającej zmiennej. Tej konstrukcji należy z unikać, jednak jest ona czasem uzasadniona. Przykład:
 
 ```c
 a = 1; 
 
 main(void) {
-    int a=2;
+    int a = 2;
     printf("%d", a); /* =2 */
 }
 ```
 
-Czas życia zmiennych ilustruje poniższy przykład:
+Przysłanianie zmiennych lokalnych zmiennymi lokalnymi można zaprezentować przykładem:
 
 ```c
 main() {
  int a = 10;
+ 
+ {
+   int a = 20;
+   printf("%d", a);
+ }
+
+ printf("%d", a);
+}
+```
+
+Ten program, po uruchomieniu, wypisze na standardowe wyjście 20 i 10.
+
+Czas życia zmiennych ilustruje poniższy kod:
+
+```c
+main() {
+ int a = 10;
+ 
  {
    int b = 10;
    printf("%d %d", a, b);
  }
 
- printf("%d %d", a, b);       /* Błąd, b już nie istnieje! */
+ printf("%d %d", a, b);       /* Błąd, b już nie istnieje w tym kontekście! */
 }
 ```
+
+Ten przykład się nie skompiluje, ponieważ zawiera błąd opisany w komentarzu.
 
 Stała różni się od zmiennej tylko tym, że nie można jej przypisać innej wartości w trakcie działania programu. Wartość stałej ustala się w kodzie programu i nigdy ona nie ulega zmianie. Stałą deklaruje się z użyciem słowa kluczowego const w sposób następujący:
 
@@ -285,9 +322,20 @@ START=4;  /* Błąd. */
 int j=START;
 ```
 
-Dla komputera każdy obszar w pamięci jest taki sam - to zlepek bajtów, w takiej postaci zupełnie nieprzydatny dla programisty i użytkownika. Podczas pisania programu musimy wskazać, w jaki sposób ten ciąg ma być interpretowany.
+Są dwa możliwe sposoby deklaracji stałych - użycie preprocesora, oraz wspomniane wyżej słowo kluczowe `const`. Przykład zastosowania preprocesora do zadeklarowania stałej:
 
-Typ zmiennej wskazuje właśnie sposób, w jaki pamięć, w której znajduje się zmienna będzie wykorzystywana. Określając go przekazuje się kompilatorowi informację, ile pamięci trzeba zarezerwować dla zmiennej, a także w jaki sposób wykonywać na niej operacje.
+```
+#define TEST 2
+int i = TEST;
+```
+
+W tym przypadku, po kompilacji, i będzie równe 2.
+
+Dla komputera każdy obszar w pamięci jest taki sam (sekwencja bajtów i nic więcej). W takiej postaci, pamięć jest zupełnie nieprzydatna dla programisty. Można to ilustrować na przykładzie szyfru - coś jest na tej kartce zapisane, ale co? O ile szyfr może być prosty (pamięć może być buforem składającym się z bajtów), to czasami zdarzają się ciężkie przypadki (liczba zmiennoprzecinkowa).
+
+Podczas pisania programu należy wskazać, w jaki sposób ten ciąg ma być interpretowany. Typ zmiennej określa sposób, w jaki pamięć będzie wykorzystywana. Określając go przekazuje się kompilatorowi informację, ile pamięci trzeba zarezerwować dla zmiennej, a także w jaki sposób wykonywać na niej operacje.
+
+/* ... */
 
 Każda zmienna musi mieć określony swój typ w miejscu deklaracji i tego typu nie może już zmienić. Lecz co jeśli mamy zmienną jednego typu, ale potrzebujemy w pewnym miejscu programu innego typu danych? W takim wypadku stosujemy konwersję (rzutowanie) jednej zmiennej na inną zmienną. Rzutowanie zostanie opisane później, w następnym podrozdziale.
 
