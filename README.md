@@ -7,6 +7,4 @@ Main language is Polish, but I'm going to translate it to English, when this boo
 
 Writing progress: 37% [XXXXXXXXXXXXXXXXXX--------------------------------]; 27/72
 
-Review progress: 0% [--------------------------------------------------]; 0/72
-
 Translation progress: 0% [--------------------------------------------------] 0/72
