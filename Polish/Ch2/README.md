@@ -309,13 +309,13 @@ Ten przykład się nie skompiluje, ponieważ zawiera błąd opisany w komentarzu
 
 Stała to zmienna, której nie można przypisać innej wartości w trakcie działania programu. Wartość stałej ustala się w kodzie programu (najczęściej z góry) i nigdy ona nie ulega zmianie. Stałą deklaruje się z użyciem słowa kluczowego const w sposób następujący:
 
-```
-const typ nazwa_stałej=wartość;
+```c
+const type name = value;
 ```
 
 Dobrze jest używać stałych w programie, ponieważ pozwalają uniknąć różnych pomyłek (np. błąd off-by-one), są efektywnie optymalizowane przez większość kompilatorów, ułatwią zmianę różnych punktów kodu - kiedy trzeba zmienić liczbę która powtarza się kilka razy w kodzie, szybciej uda się to zrobić z użyciem stałej, niż z użyciem narzędzia (pokroju `grep`a, który do tego może uszkodzić kod), nie wspominając o poprawianiu kodu ręcznie (co jest ewidentną stratą czasu, jeśli zadanie ma być potencjalnie wykonane do kilku razy).
 
-```
+```c
 const int C=5;
 int i=C;
 C=4;  /* Błąd. */
@@ -323,7 +323,7 @@ C=4;  /* Błąd. */
 
 Są dwa możliwe sposoby deklaracji stałych - użycie preprocesora, oraz wspomniane wyżej słowo kluczowe `const`. Przykład zastosowania preprocesora do zadeklarowania stałej:
 
-```
+```c
 #define TEST 2
 int i = TEST;
 ```
@@ -334,21 +334,40 @@ Dla komputera każdy obszar w pamięci jest taki sam (sekwencja bajtów i nic wi
 
 Podczas pisania programu należy wskazać, w jaki sposób ten ciąg ma być interpretowany. Typ zmiennej określa sposób, w jaki pamięć będzie wykorzystywana. Określając go przekazuje się kompilatorowi informację, ile pamięci trzeba zarezerwować dla zmiennej, a także w jaki sposób wykonywać na niej operacje.
 
+Każda zmienna musi mieć typ którego nie można zmienić w trakcie działania programu. Jeśli potrzebna jest konwersja z jednego typu danych na inny (np. ze wskaźnika `long *` na `intptr_t`), stosuje się rzutowanie (ang. *cast*) jednej wartości na inną wartość. Rzutowanie zostanie dokładniej opisane później.
+
 <!-- ... -->
 
-Każda zmienna musi mieć określony swój typ w miejscu deklaracji i tego typu nie może już zmienić. Lecz co jeśli mamy zmienną jednego typu, ale potrzebujemy w pewnym miejscu programu innego typu danych? W takim wypadku stosujemy konwersję (rzutowanie) jednej zmiennej na inną zmienną. Rzutowanie zostanie opisane później, w następnym podrozdziale.
+W języku C wyróżniamy następujące typy zmiennych podstawowych:
 
-W języku C wyróżniamy następujące typy zmiennych (wg rozmiaru):
+Typy wbudowane, istnieją nawet jeśli kompilator i programista nie mają dostępu do plików nagłówkowych biblioteki standardowej C, we wszystkich przypadkach słowa kluczowe języka:
 
- * podstawowe:
-   * char - jednobajtowe liczby całkowite;
-   * int - typ całkowity o długości domyślnej dla danej architektury komputera (przeważnie 4 bajty);
-   * float - typ zmiennoprzecinkowy, reprezentujący liczby rzeczywiste (4 bajty); Są dokładnie opisane w IEEE 754.
-   * double - typ zmiennopozycyjny podwójnej precyzji (8 bajtów);
- * inne: typy złożone
+ * `char` - jednobajtowe liczby całkowite;
+ * `int` - typ całkowity o wielkości przeważnie 4 bajtów;
+ * `float` - typ zmiennoprzecinkowy, reprezentujący liczbę rzeczywistą, ma rozmiar `int`a; Dokładniej opisany w IEEE 754.
+ * `double` - typ zmiennopozycyjny podwójnej precyzji (8 bajtów);
+ * `_Bool` - typ wprowadzony przez C99, przechowuje wartość logiczną.
 
+Typy zdefiniowane przez bibliotekę standardową C (definiowane implementacyjnie):
 
-Wg lokalizacji definicji typy dzielimy na wbudowane, które zna kompilator; oraz zdefiniowane przez użytkownika typy danych, które należy kompilatorowi opisać.
+ * `fenv_t`
+ * `fexcept_t`
+ * `imaxdiv_t`
+ * `struct lconv`
+ * `double_t`
+ * `float_t`
+ * `jmp_buf`
+ * `sig_atomic_t`
+ * `va_list`
+ * `ptrdiff_t`
+ * `size_t`
+ * `int*_t`
+ * `FILE`
+ * `fpos_t`
+ * `*div_t`
+ * 
+
+Istnieją również typy złożone (np. struktury, unie, typy wyliczeniowe), oraz typy zdefiniowane przez użytkownika (za pomocą `typedef`).
 
 * int - typ przeznaczony jest do liczb całkowitych. Liczby te możemy zapisać na kilka sposobów, dziesiętnie: `12,42,15`, oktalnie: `044, 031` i heksadecymalnie: `0xFF, 0x1A, 0x80`.
 
