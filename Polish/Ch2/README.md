@@ -262,7 +262,7 @@ main(void) {
 
 Zmienne, które funkcja deklaruje w bloku instrukcji nazywa się zmiennymi lokalnymi.
 
-W bloku można stworzyć zmienną o takiej samej nazwie jak zmienna globalna lub zmienna w wyższym bloku, jednak zostanie ona wtedy przysłonięta nową definicją do momentu, gdy nie skończy się czas życia nowej, przysłaniającej zmiennej. Tej konstrukcji należy z unikać, jednak jest ona czasem uzasadniona. Przykład:
+W bloku można stworzyć zmienną o takiej samej nazwie jak zmienna globalna lub zmienna w wyższym bloku, jednak zostanie ona wtedy przysłonięta nową definicją do momentu, gdy nie skończy się czas życia nowej, przysłaniającej zmiennej. Tej konstrukcji należy unikać, jednak jest ona czasem uzasadniona. Przykład:
 
 ```c
 a = 1; 
@@ -307,19 +307,18 @@ main() {
 
 Ten przykład się nie skompiluje, ponieważ zawiera błąd opisany w komentarzu.
 
-Stała różni się od zmiennej tylko tym, że nie można jej przypisać innej wartości w trakcie działania programu. Wartość stałej ustala się w kodzie programu i nigdy ona nie ulega zmianie. Stałą deklaruje się z użyciem słowa kluczowego const w sposób następujący:
+Stała to zmienna, której nie można przypisać innej wartości w trakcie działania programu. Wartość stałej ustala się w kodzie programu (najczęściej z góry) i nigdy ona nie ulega zmianie. Stałą deklaruje się z użyciem słowa kluczowego const w sposób następujący:
 
 ```
 const typ nazwa_stałej=wartość;
 ```
 
-Dobrze jest używać stałych w programie, ponieważ unikniemy wtedy pomyłek a kompilator może często zoptymalizować ich użycie (np. od razu podstawiając ich wartość do kodu).
+Dobrze jest używać stałych w programie, ponieważ pozwalają uniknąć różnych pomyłek (np. błąd off-by-one), są efektywnie optymalizowane przez większość kompilatorów, ułatwią zmianę różnych punktów kodu - kiedy trzeba zmienić liczbę która powtarza się kilka razy w kodzie, szybciej uda się to zrobić z użyciem stałej, niż z użyciem narzędzia (pokroju `grep`a, który do tego może uszkodzić kod), nie wspominając o poprawianiu kodu ręcznie (co jest ewidentną stratą czasu, jeśli zadanie ma być potencjalnie wykonane do kilku razy).
 
 ```
-const int START=5;
-int i=START;
-START=4;  /* Błąd. */
-int j=START;
+const int C=5;
+int i=C;
+C=4;  /* Błąd. */
 ```
 
 Są dwa możliwe sposoby deklaracji stałych - użycie preprocesora, oraz wspomniane wyżej słowo kluczowe `const`. Przykład zastosowania preprocesora do zadeklarowania stałej:
@@ -335,7 +334,7 @@ Dla komputera każdy obszar w pamięci jest taki sam (sekwencja bajtów i nic wi
 
 Podczas pisania programu należy wskazać, w jaki sposób ten ciąg ma być interpretowany. Typ zmiennej określa sposób, w jaki pamięć będzie wykorzystywana. Określając go przekazuje się kompilatorowi informację, ile pamięci trzeba zarezerwować dla zmiennej, a także w jaki sposób wykonywać na niej operacje.
 
-/* ... */
+<!-- ... -->
 
 Każda zmienna musi mieć określony swój typ w miejscu deklaracji i tego typu nie może już zmienić. Lecz co jeśli mamy zmienną jednego typu, ale potrzebujemy w pewnym miejscu programu innego typu danych? W takim wypadku stosujemy konwersję (rzutowanie) jednej zmiennej na inną zmienną. Rzutowanie zostanie opisane później, w następnym podrozdziale.
 
