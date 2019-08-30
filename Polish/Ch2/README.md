@@ -365,19 +365,18 @@ Typy zdefiniowane przez bibliotekę standardową C (definiowane implementacyjnie
  * `FILE`
  * `fpos_t`
  * `*div_t`
- * 
 
 Istnieją również typy złożone (np. struktury, unie, typy wyliczeniowe), oraz typy zdefiniowane przez użytkownika (za pomocą `typedef`).
 
-* int - typ przeznaczony jest do liczb całkowitych. Liczby te możemy zapisać na kilka sposobów, dziesiętnie: `12,42,15`, oktalnie: `044, 031` i heksadecymalnie: `0xFF, 0x1A, 0x80`.
+`int` jest typem przeznaczonym do przechowywania liczb całkowitych. Liczby całkowite można zapisać na wiele sposobów - dziesiętnie (`13, 37`), oktalnie (`018, 044`) i heksadecymalnie (`0xF0, 0x0F, 0xDE`).
 
-* float - przeznaczony jest do liczb zmiennoprzecinkowych. Istnieją dwa sposoby zapisu, dziesiętny: `3.14, 1.72` i wykładniczy: `8e3, 9.2e-4`
+`float` jest typem przeznaczonym do przechowywania liczb zmiennoprzecinkowych. Istnieją możliwe dwa sposoby zapisu liczb zmiennoprzecinkowych - dziesiętny (`3.14, 1.72`) i wykładniczy (`1e2, 3.4e-5`)
 
-* double ("podwójny") - przeznaczony dla liczb zmiennoprzecinkowych podwójnej precyzji. Oznacza to, że liczba zajmuje zazwyczaj w dwa razy więcej pamięci niż float, ale ma też dwa razy lepszą dokładność. Domyślnie ułamki wpisane w kodzie są typu double. Możemy to zmienić dodając na końcu literę "f":
+`double` jest typem przeznaczonym do przechowywania liczb zmiennoprzecinkowych podwójnej precyzji. Liczba podwójnej precyzji zajmuje zazwyczaj w dwa razy więcej pamięci niż float, ale ma też dwa razy lepszą dokładność. Domyślnie ułamki znajdujące się w kodzie mają typ `double`. Można to zmienić dodając na końcu literę "f":
 
 ```c
-1.5f /* <-- float */
-1.5  /* <-- double */
+1.2f /* <-- float */
+3.4  /* <-- double */
 ```
 
 * char - typ znakowy umożliwiający zapis znaków w ASCII. Może być traktowany jako liczba z zakresu 0 do 255. Znaki zapisujemy w pojedynczych cudzysłowach, by odróżnić je od łańcuchów tekstowych. Przykład:   `'x'. '#'. ']'`. Pojedynczy cudzysłów zapisujemy jako '\'' a null (czyli zero, które kończy napisy) jako '\0' lub 0.
