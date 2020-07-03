@@ -361,7 +361,6 @@ Typy zdefiniowane przez bibliotekę standardową C (definiowane implementacyjnie
  * `va_list`
  * `ptrdiff_t`
  * `size_t`
- * `int*_t`
  * `FILE`
  * `fpos_t`
  * `*div_t`
