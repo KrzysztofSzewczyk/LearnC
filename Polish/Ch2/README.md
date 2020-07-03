@@ -186,7 +186,7 @@ Podczas deklaracji można też przypisać zmiennej wartość:
 int a = 42;
 ```
 
-**W C zmienne deklaruje się na samym początku bloku (czyli przed pierwszą instrukcją).** Ta zasada dotyczy wyłącznie C89, ponieważ jest to limitacja starszych kompilatorów, która ostała się w języku. Kod w C89 który posiada deklarację w środku bloku skompiluje się z użyciem gcc (jeśli nie użyto flagi `-pedantic`, ponieważ GCC wprowadza rozszerzenia do standardu zwane "GNU Excensions", które m.in. pozwalają na deklarację zmiennej w środku bloku), lecz nie skompiluje się z użyciem MSVC w trybie C (`/TC`). 
+**W C zmienne deklaruje się na samym początku bloku (czyli przed pierwszą instrukcją).** Ta zasada dotyczy wyłącznie C89, ponieważ jest to limitacja starszych kompilatorów, która ostała się w języku. Kod w C89 który posiada deklarację w środku bloku skompiluje się z użyciem gcc (jeśli nie użyto flagi `-pedantic`, ponieważ GCC wprowadza rozszerzenia do standardu zwane "GNU Extensions", które m.in. pozwalają na deklarację zmiennej w środku bloku), lecz nie skompiluje się z użyciem MSVC w trybie C (`/TC`). 
 
 Niepoprawna wg. standardu deklaracja zmiennej:
 
